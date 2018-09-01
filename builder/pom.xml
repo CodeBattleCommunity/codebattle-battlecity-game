@@ -6,7 +6,7 @@
 
     <groupId>com.codenjoy</groupId>
     <artifactId>codenjoy-builder</artifactId>
-    <version>1.0.27-SNAPSHOT</version>
+    <version>1.0.25</version>
     <packaging>war</packaging>
 
     <properties>
@@ -61,6 +61,14 @@
             <url>https://github.com/codenjoyme/codenjoy-repo/raw/master/snapshots</url>
         </repository>
     </repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.codenjoy</groupId>
+        <artifactId>codenjoy-builder</artifactId>
+        <version>1.0.25</version>
+    </dependency>
+</dependencies>
 
     <profiles>
         <!-- Games dependencies (put your game here - replace YOURGAME) -->
