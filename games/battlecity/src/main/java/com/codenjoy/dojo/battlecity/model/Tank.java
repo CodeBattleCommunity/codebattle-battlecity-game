@@ -69,7 +69,6 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void down() {
         direction = Direction.DOWN;
-        System.out.println();
         if(isItTurn(direction)) {
             moving = false;
         } else {
@@ -81,7 +80,6 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void right() {
         direction = Direction.RIGHT;
-        System.out.println();
         if(isItTurn(direction)) {
             moving = false;
         } else {
@@ -93,7 +91,6 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void left() {
         direction = Direction.LEFT;
-        System.out.println();
         if(isItTurn(direction)) {
             moving = false;
         } else {
