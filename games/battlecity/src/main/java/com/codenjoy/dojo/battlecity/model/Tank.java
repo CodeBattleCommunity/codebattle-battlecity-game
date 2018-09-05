@@ -38,6 +38,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     protected Field field;
     private boolean alive;
     private Gun gun;
+    private Direction previousDirection;
 
     public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo) {
         super(x, y, direction);
@@ -57,25 +58,48 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void up() {
         direction = Direction.UP;
-        moving = true;
+        if(isItTurn(direction)) {
+            moving = false;
+        } else {
+            previousDirection = direction;
+            moving = true;
+        }
     }
 
     @Override
     public void down() {
         direction = Direction.DOWN;
-        moving = true;
+        System.out.println();
+        if(isItTurn(direction)) {
+            moving = false;
+        } else {
+            previousDirection = direction;
+            moving = true;
+        }
     }
 
     @Override
     public void right() {
         direction = Direction.RIGHT;
-        moving = true;
+        System.out.println();
+        if(isItTurn(direction)) {
+            moving = false;
+        } else {
+            previousDirection = direction;
+            moving = true;
+        }
     }
 
     @Override
     public void left() {
         direction = Direction.LEFT;
-        moving = true;
+        System.out.println();
+        if(isItTurn(direction)) {
+            moving = false;
+        } else {
+            previousDirection = direction;
+            moving = true;
+        }
     }
 
     @Override
@@ -163,6 +187,11 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void tick() {
         gun.tick();
+        resetPreviousDirection();
+    }
+
+    private void resetPreviousDirection() {
+        previousDirection = null;
     }
 
 
@@ -203,4 +232,19 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     public enum Type {
         Player, AI
     }
+
+  private boolean isItTurn(Direction nextDirection) {
+    if (previousDirection != null) {
+      if (nextDirection == Direction.DOWN && previousDirection == Direction.UP) {
+        return true;
+      } else if (nextDirection == Direction.UP && previousDirection == Direction.DOWN) {
+        return true;
+      } else if (nextDirection == Direction.LEFT && previousDirection == Direction.RIGHT) {
+        return true;
+      } else if (nextDirection == Direction.RIGHT && previousDirection == Direction.LEFT) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
