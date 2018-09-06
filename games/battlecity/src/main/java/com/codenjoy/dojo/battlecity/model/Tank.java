@@ -58,45 +58,25 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void up() {
         direction = Direction.UP;
-        if(isItTurn(direction)) {
-            moving = false;
-        } else {
-            previousDirection = direction;
-            moving = true;
-        }
+        isTankMove();
     }
 
     @Override
     public void down() {
         direction = Direction.DOWN;
-        if(isItTurn(direction)) {
-            moving = false;
-        } else {
-            previousDirection = direction;
-            moving = true;
-        }
+        isTankMove();
     }
 
     @Override
     public void right() {
         direction = Direction.RIGHT;
-        if(isItTurn(direction)) {
-            moving = false;
-        } else {
-            previousDirection = direction;
-            moving = true;
-        }
+        isTankMove();
     }
 
     @Override
     public void left() {
         direction = Direction.LEFT;
-        if(isItTurn(direction)) {
-            moving = false;
-        } else {
-            previousDirection = direction;
-            moving = true;
-        }
+        isTankMove();
     }
 
     @Override
@@ -243,5 +223,14 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
       }
     }
     return false;
+  }
+
+  private void isTankMove() {
+      if(isItTurn(direction)) {
+          moving = false;
+      } else {
+          previousDirection = direction;
+          moving = true;
+      }
   }
 }
