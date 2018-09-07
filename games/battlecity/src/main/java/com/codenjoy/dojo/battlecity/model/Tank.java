@@ -100,8 +100,6 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             ammoBonus.pickedUp();
             ammunition.replenishAmmo(ammoBonus.getAmmoQuantity());
 
-        }else {
-
         } else if (tankHasObstacleEffect()) {
             if (!obstacleEffect.isActive()) {
                 removeObstacleEffect();

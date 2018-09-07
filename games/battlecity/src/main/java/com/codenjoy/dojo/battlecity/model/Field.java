@@ -74,7 +74,6 @@ public interface Field {
 
     WormHole getWormHole(int newX, int newY);
 
-    boolean isFieldOccupied(int x, int y);
 
     Obstacle getObstacle(int x, int y);
 }

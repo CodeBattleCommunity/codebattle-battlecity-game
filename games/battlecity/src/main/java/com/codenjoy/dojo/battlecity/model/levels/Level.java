@@ -98,10 +98,7 @@ public class Level implements Field {
         return false;
     }
 
-    @Override
-    public boolean isFieldOccupied(int x, int y) {
-       return false;
-    }
+
 
     @Override
     public boolean isWormHole(int x, int y) {
