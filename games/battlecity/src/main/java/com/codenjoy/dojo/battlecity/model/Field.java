@@ -23,6 +23,10 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.obstacle.Bog;
+import com.codenjoy.dojo.battlecity.model.obstacle.Moat;
+import com.codenjoy.dojo.battlecity.model.obstacle.Obstacle;
+import com.codenjoy.dojo.battlecity.model.obstacle.Sand;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
 import java.util.List;
@@ -31,6 +35,8 @@ public interface Field {
     int size();
 
     List<Border> getBorders();
+
+    List<HedgeHog> getHedgeHogs();
 
     List<Tank> getTanks();
 
@@ -44,7 +50,17 @@ public interface Field {
 
     boolean isBarrier(int x, int y);
 
+    boolean isFieldOccupied(int x, int y);
+
     boolean isWormHole(int x, int y);
+
+    boolean isObstacle(int x, int y);
+
+    List<Bog> getBogs();
+
+    List<Sand> getSands();
+
+    List<Moat> getMoats();
 
     boolean outOfField(int x, int y);
 
@@ -59,4 +75,6 @@ public interface Field {
     WormHole getWormHole(int newX, int newY);
 
     boolean isFieldOccupied(int x, int y);
+
+    Obstacle getObstacle(int x, int y);
 }

@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model;
+package com.codenjoy.dojo.battlecity.model.obstacle;
 
 /*-
  * #%L
@@ -22,20 +22,9 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.settings.Parameter;
 
-public interface GameSettings {
-    Parameter<Integer> getInitialPlayerAmmoCount();
-    Parameter<Integer> getInitialAIAmmoCount();
-    Parameter<String> getGameMode();
-    Parameter<String> getMap();
-    Parameter<Integer> getAmmoBonusCountOnMap();
-    Parameter<Integer> getAmmoBonusLifeCycle();
-    Parameter<Integer> getAmmoQuantityInAmmoBonus();
-    Parameter<Integer> getMaxHedgeHogsOnMap();
-    Parameter<Integer> getTicksToUpdateHedgehogs();
-    Parameter<Integer> getMaxHedgehogLifetime();
-    Parameter<Integer> getMinHedgehogLifetime();
+import com.codenjoy.dojo.services.Tickable;
 
-
+public interface ObstacleEffect extends Tickable {
+    boolean isActive();
 }

@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model;
+package com.codenjoy.dojo.battlecity.model.obstacle;
 
 /*-
  * #%L
@@ -22,20 +22,35 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.settings.Parameter;
+import com.codenjoy.dojo.battlecity.model.Elements;
+import com.codenjoy.dojo.battlecity.model.Player;
+import com.codenjoy.dojo.services.Point;
 
-public interface GameSettings {
-    Parameter<Integer> getInitialPlayerAmmoCount();
-    Parameter<Integer> getInitialAIAmmoCount();
-    Parameter<String> getGameMode();
-    Parameter<String> getMap();
-    Parameter<Integer> getAmmoBonusCountOnMap();
-    Parameter<Integer> getAmmoBonusLifeCycle();
-    Parameter<Integer> getAmmoQuantityInAmmoBonus();
-    Parameter<Integer> getMaxHedgeHogsOnMap();
-    Parameter<Integer> getTicksToUpdateHedgehogs();
-    Parameter<Integer> getMaxHedgehogLifetime();
-    Parameter<Integer> getMinHedgehogLifetime();
+public class Bog extends Obstacle {
 
+    private static final int DELAY = -1;
 
+    public Bog(int x, int y) {
+        super(x, y);
+    }
+
+    public Bog(Point point) {
+        super(point);
+    }
+
+    @Override
+    public int getDelay() {
+        return DELAY;
+    }
+
+    @Override
+    public ObstacleEffect getObstacleEffect(){
+        return new InfinityObstacleEffect();
+    }
+
+    @Override
+    public Elements state(Player player, Object... alsoAtPoint) {
+        return Elements.BOG;
+    }
 }
+

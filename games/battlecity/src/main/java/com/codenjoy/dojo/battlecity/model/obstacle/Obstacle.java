@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model;
+package com.codenjoy.dojo.battlecity.model.obstacle;
 
 /*-
  * #%L
@@ -22,20 +22,22 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.settings.Parameter;
+import com.codenjoy.dojo.battlecity.model.Elements;
+import com.codenjoy.dojo.battlecity.model.Player;
+import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.PointImpl;
+import com.codenjoy.dojo.services.State;
 
-public interface GameSettings {
-    Parameter<Integer> getInitialPlayerAmmoCount();
-    Parameter<Integer> getInitialAIAmmoCount();
-    Parameter<String> getGameMode();
-    Parameter<String> getMap();
-    Parameter<Integer> getAmmoBonusCountOnMap();
-    Parameter<Integer> getAmmoBonusLifeCycle();
-    Parameter<Integer> getAmmoQuantityInAmmoBonus();
-    Parameter<Integer> getMaxHedgeHogsOnMap();
-    Parameter<Integer> getTicksToUpdateHedgehogs();
-    Parameter<Integer> getMaxHedgehogLifetime();
-    Parameter<Integer> getMinHedgehogLifetime();
+public abstract class Obstacle extends PointImpl implements State<Elements, Player> {
 
+    public Obstacle(int x, int y) {
+        super(x, y);
+    }
 
+    public Obstacle(Point point) {
+        super(point);
+    }
+
+    public abstract int getDelay();
+    public abstract ObstacleEffect getObstacleEffect();
 }

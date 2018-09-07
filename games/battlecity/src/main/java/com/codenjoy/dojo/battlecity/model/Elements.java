@@ -60,6 +60,8 @@ public enum Elements implements CharElements {
 
     CONSTRUCTION_DESTROYED(' ', 0),
 
+    HEDGEHOG('ͱ', 3),
+
     BULLET('•'),
 
     TANK_UP('▲'),
@@ -77,7 +79,15 @@ public enum Elements implements CharElements {
     AI_TANK_DOWN('¿'),
     AI_TANK_LEFT('«'),
 
-    WORM_HOLE('ʘ');
+    WORM_HOLE('ʘ'),
+
+    BOG('@'),
+    SAND('□'),
+    MOAT_HORIZONTAL('='),
+    MOAT_VERTICAL('‖');
+
+
+
 
     public final char ch;
     int power;

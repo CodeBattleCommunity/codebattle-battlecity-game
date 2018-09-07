@@ -24,17 +24,16 @@ package com.codenjoy.dojo.battlecity.model.levels;
 
 
 import com.codenjoy.dojo.battlecity.model.*;
+import com.codenjoy.dojo.battlecity.model.obstacle.*;
 import com.codenjoy.dojo.services.*;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Level implements Field {
 
     private final LengthToXY xy;
     private TankFactory aiTankFactory;
-
 
     private String map;
 
@@ -58,6 +57,7 @@ public class Level implements Field {
     public int size() {
         return (int) Math.sqrt(map.length());
     }
+
 
     @Override
     public List<Construction> getConstructions() {
@@ -95,11 +95,21 @@ public class Level implements Field {
 
     @Override
     public boolean isBarrier(int x, int y) {
-        return false; // do nothing
+        return false;
+    }
+
+    @Override
+    public boolean isFieldOccupied(int x, int y) {
+       return false;
     }
 
     @Override
     public boolean isWormHole(int x, int y) {
+        return false;
+    }
+
+    @Override
+    public boolean isObstacle(int x, int y) {
         return false;
     }
 
@@ -132,9 +142,13 @@ public class Level implements Field {
                 result.addAll(Level.this.getBorders());
                 result.addAll(Level.this.getAmmoBonuses());
                 result.addAll(Level.this.getWormHoles());
+                result.addAll(Level.this.getBogs());
+                result.addAll(Level.this.getSands());
+                result.addAll(Level.this.getMoats());
                 result.addAll(Level.this.getBullets());
                 result.addAll(Level.this.getConstructions());
                 result.addAll(Level.this.getTanks());
+                result.addAll(Level.this.getHedgeHogs());
                 return result;
             }
         };
@@ -165,6 +179,17 @@ public class Level implements Field {
     }
 
     @Override
+    public List<HedgeHog> getHedgeHogs() {
+        List<HedgeHog> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.HEDGEHOG.ch) {
+                result.add(new HedgeHog(xy.getXY(index)));
+            }
+        }
+        return result;
+    }
+
+    @Override
     public List<WormHole> getWormHoles() {
         List<WormHole> result = new LinkedList<>();
 
@@ -184,5 +209,46 @@ public class Level implements Field {
     @Override
     public boolean isFieldOccupied(int x, int y) {
         return false;
+    }
+
+    @Override
+    public List<Bog> getBogs() {
+        List<Bog> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.BOG.ch) {
+                result.add(new Bog(xy.getXY(index)));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Sand> getSands() {
+        List<Sand> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.SAND.ch) {
+                result.add(new Sand(xy.getXY(index)));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Moat> getMoats() {
+        List<Moat> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.MOAT_HORIZONTAL.ch) {
+                result.add(new Moat(xy.getXY(index), MoatType.HORIZONTAL));
+            }
+            if (map.charAt(index) == Elements.MOAT_VERTICAL.ch) {
+                result.add(new Moat(xy.getXY(index), MoatType.VERTICAL));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Obstacle getObstacle(int x, int y) {
+        return null; // do nothing
     }
 }
