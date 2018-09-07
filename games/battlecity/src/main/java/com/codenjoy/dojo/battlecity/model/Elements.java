@@ -36,7 +36,7 @@ public enum Elements implements CharElements {
     BANG('Ѡ'),
 
 
-    BONUS_AMMO('@'),
+    BONUS_AMMO('◊'),
 
     CONSTRUCTION('╬', 3),
 

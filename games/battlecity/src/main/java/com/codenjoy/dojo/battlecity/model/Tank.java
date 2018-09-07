@@ -91,13 +91,16 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
                     setTankPosition(p.getX(), p.getY());
                 }
             });
-        } else {
+        }else  if (field.isAmmoBonus(newX, newY)) {
+            AmmoBonus ammoBonus = field.getAmmoBonus(newX, newY);
+            setTankPosition(newX, newY);
+            ammoBonus.pickedUp();
+            ammunition.replenishAmmo(ammoBonus.getAmmoQuantity());
+
+        }else {
             setTankPosition(newX, newY);
         }
 
-        if (field.isAmmoBonus(newX, newY)) {
-            ammunition.replenishAmmo(5); // TODO: pass Ammo Bonus value
-        }
         moving = false;
     }
 

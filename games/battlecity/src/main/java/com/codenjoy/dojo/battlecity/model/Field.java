@@ -38,6 +38,10 @@ public interface Field {
 
     boolean isAmmoBonus(int x, int y);
 
+    AmmoBonus getAmmoBonus(int newX, int newY);
+
+    List<AmmoBonus> getAmmoBonuses();
+
     boolean isBarrier(int x, int y);
 
     boolean isWormHole(int x, int y);
@@ -53,4 +57,6 @@ public interface Field {
     BoardReader reader();
 
     WormHole getWormHole(int newX, int newY);
+
+    boolean isFieldOccupied(int x, int y);
 }
