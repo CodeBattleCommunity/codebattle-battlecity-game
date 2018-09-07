@@ -469,9 +469,9 @@ public class Battlecity implements Tickable, ITanks, Field {
                 do {
                     x = dice.next(size);
                     c++;
-                } while (isBarrier(x, y) & c < size);
+                } while (isFieldOccupied(x, y) && c < size);
 
-                if (!isBarrier(x, y)) {
+                if (!isFieldOccupied(x, y)) {
                     addAI(aiTankFactory.createTank(
                             TankParams.newAITankParams(x, y, Direction.DOWN)));
                 }
