@@ -24,6 +24,7 @@ package com.codenjoy.dojo.battlecity.model.levels;
 
 
 import com.codenjoy.dojo.battlecity.model.*;
+import com.codenjoy.dojo.battlecity.model.obstacle.*;
 import com.codenjoy.dojo.services.*;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
@@ -93,6 +94,11 @@ public class Level implements Field {
     }
 
     @Override
+    public boolean isObstacle(int x, int y) {
+        return false;
+    }
+
+    @Override
     public boolean outOfField(int x, int y) {
         return false;  // do nothing
     }
@@ -120,6 +126,9 @@ public class Level implements Field {
                 List<Point> result = new LinkedList<>();
                 result.addAll(Level.this.getBorders());
                 result.addAll(Level.this.getWormHoles());
+                result.addAll(Level.this.getBogs());
+                result.addAll(Level.this.getSands());
+                result.addAll(Level.this.getMoats());
                 result.addAll(Level.this.getBullets());
                 result.addAll(Level.this.getConstructions());
                 result.addAll(Level.this.getTanks());
@@ -179,5 +188,46 @@ public class Level implements Field {
     @Override
     public WormHole getWormHole(int newX, int newY) {
         return null;
+    }
+
+    @Override
+    public List<Bog> getBogs() {
+        List<Bog> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.BOG.ch) {
+                result.add(new Bog(xy.getXY(index)));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Sand> getSands() {
+        List<Sand> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.SAND.ch) {
+                result.add(new Sand(xy.getXY(index)));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Moat> getMoats() {
+        List<Moat> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.MOAT_HORIZONTAL.ch) {
+                result.add(new Moat(xy.getXY(index), MoatType.HORIZONTAL));
+            }
+            if (map.charAt(index) == Elements.MOAT_VERTICAL.ch) {
+                result.add(new Moat(xy.getXY(index), MoatType.VERTICAL));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Obstacle getObstacle(int x, int y) {
+        return null; // do nothing
     }
 }

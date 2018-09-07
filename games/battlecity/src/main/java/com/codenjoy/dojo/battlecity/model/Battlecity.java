@@ -30,6 +30,10 @@ import com.codenjoy.dojo.battlecity.model.levels.LevelInfo;
 import com.codenjoy.dojo.battlecity.model.levels.LevelRegistry;
 import com.codenjoy.dojo.battlecity.model.modes.BattlecityGameMode;
 import com.codenjoy.dojo.battlecity.model.modes.GameModeRegistry;
+import com.codenjoy.dojo.battlecity.model.obstacle.Bog;
+import com.codenjoy.dojo.battlecity.model.obstacle.Moat;
+import com.codenjoy.dojo.battlecity.model.obstacle.Obstacle;
+import com.codenjoy.dojo.battlecity.model.obstacle.Sand;
 import com.codenjoy.dojo.battlecity.services.Scores;
 import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Direction;
@@ -52,6 +56,9 @@ public class Battlecity implements Tickable, ITanks, Field {
     private List<Border> borders;
     private List<HedgeHog> hedgeHogs;
     private List<WormHole> wormHoles;
+    private List<Bog> bogs;
+    private List<Sand> sands;
+    private List<Moat> moats;
     private List<Player> players = new LinkedList<>();
     private TankFactory aiTankFactory;
     private GameSettings settings;
@@ -91,6 +98,9 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.wormHoles = new LinkedList<>(level.getWormHoles());
         this.hedgeHogs = new LinkedList<>(level.getHedgeHogs());
         hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
+        this.bogs = new LinkedList<>(level.getBogs());
+        this.sands = new LinkedList<>(level.getSands());
+        this.moats = new LinkedList<>(level.getMoats());
     }
 
     @Override
@@ -346,6 +356,28 @@ public class Battlecity implements Tickable, ITanks, Field {
     }
 
     @Override
+    public boolean isObstacle(int x, int y) {
+        return getObstacles().stream()
+                .anyMatch(obstacle -> obstacle.itsMe(x, y));
+    }
+
+    @Override
+    public Obstacle getObstacle(int x, int y) {
+        return getObstacles().stream()
+                .filter(obstacle -> obstacle.itsMe(x, y))
+                .findAny()
+                .orElse(null);
+    }
+
+    private List<Obstacle> getObstacles(){
+        List<Obstacle> obstacles = new LinkedList<>();
+        obstacles.addAll(bogs);
+        obstacles.addAll(sands);
+        obstacles.addAll(moats);
+        return obstacles;
+    }
+
+    @Override
     public boolean outOfField(int x, int y) { // TODO заменить все есть в point
         return x < 0 || y < 0 || y > size - 1 || x > size - 1;
     }
@@ -408,6 +440,9 @@ public class Battlecity implements Tickable, ITanks, Field {
                 result.addAll(Battlecity.this.getConstructions());
                 result.addAll(Battlecity.this.getWormHoles());
                 result.addAll(Battlecity.this.getHedgeHogs());
+                result.addAll(Battlecity.this.getBogs());
+                result.addAll(Battlecity.this.getSands());
+                result.addAll(Battlecity.this.getMoats());
                 result.addAll(Battlecity.this.getBullets());
                 return result;
             }
@@ -438,6 +473,21 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public List<HedgeHog> getHedgeHogs() {
         return hedgeHogs;
+    }
+
+    @Override
+    public List<Bog> getBogs() {
+        return bogs;
+    }
+
+    @Override
+    public List<Sand> getSands() {
+        return sands;
+    }
+
+    @Override
+    public List<Moat> getMoats() {
+        return moats;
     }
 
     public void setDice(Dice dice) {

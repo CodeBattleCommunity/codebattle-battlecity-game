@@ -23,6 +23,7 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.obstacle.ObstacleEffect;
 import com.codenjoy.dojo.services.*;
 import com.codenjoy.dojo.services.settings.Parameter;
 
@@ -39,6 +40,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     private boolean alive;
     private Gun gun;
     private Direction previousDirection;
+    private ObstacleEffect obstacleEffect;
 
     public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo) {
         super(x, y, direction);
@@ -92,6 +94,15 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
                     setTankPosition(p.getX(), p.getY());
                 }
             });
+
+        } else if (tankHasObstacleEffect()) {
+            if (!obstacleEffect.isActive()) {
+                removeObstacleEffect();
+            }
+        } else if (field.isObstacle(newX, newY)) {
+            obstacleEffect = field.getObstacle(newX, newY).getObstacleEffect();
+            setTankPosition(newX, newY);
+
         } else {
             setTankPosition(newX, newY);
         }
@@ -100,6 +111,14 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             ammunition.replenishAmmo(5); // TODO: pass Ammo Bonus value
         }
         moving = false;
+    }
+
+    private void removeObstacleEffect() {
+        obstacleEffect = null;
+    }
+
+    private boolean tankHasObstacleEffect() {
+        return obstacleEffect != null;
     }
 
     private void setTankPosition(int newX, int newY) {
@@ -165,6 +184,9 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     public void tick() {
         gun.tick();
         resetPreviousDirection();
+        if (tankHasObstacleEffect()) {
+            obstacleEffect.tick();
+        }
     }
 
     private void resetPreviousDirection() {

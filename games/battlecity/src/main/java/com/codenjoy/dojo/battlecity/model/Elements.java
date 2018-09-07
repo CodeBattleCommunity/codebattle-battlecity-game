@@ -76,7 +76,12 @@ public enum Elements implements CharElements {
     AI_TANK_DOWN('¿'),
     AI_TANK_LEFT('«'),
 
-    WORM_HOLE('ʘ');
+    WORM_HOLE('ʘ'),
+
+    BOG('@'),
+    SAND('□'),
+    MOAT_HORIZONTAL('='),
+    MOAT_VERTICAL('‖');
 
 
 

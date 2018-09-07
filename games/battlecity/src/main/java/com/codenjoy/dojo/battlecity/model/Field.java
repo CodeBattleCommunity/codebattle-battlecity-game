@@ -23,6 +23,10 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.obstacle.Bog;
+import com.codenjoy.dojo.battlecity.model.obstacle.Moat;
+import com.codenjoy.dojo.battlecity.model.obstacle.Obstacle;
+import com.codenjoy.dojo.battlecity.model.obstacle.Sand;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
 import java.util.List;
@@ -46,6 +50,14 @@ public interface Field {
 
     boolean isWormHole(int x, int y);
 
+    boolean isObstacle(int x, int y);
+
+    List<Bog> getBogs();
+
+    List<Sand> getSands();
+
+    List<Moat> getMoats();
+
     boolean outOfField(int x, int y);
 
     void affect(Bullet bullet);
@@ -57,4 +69,6 @@ public interface Field {
     BoardReader reader();
 
     WormHole getWormHole(int newX, int newY);
+
+    Obstacle getObstacle(int x, int y);
 }
