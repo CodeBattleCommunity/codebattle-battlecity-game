@@ -36,6 +36,8 @@ public interface Field {
 
     List<Border> getBorders();
 
+    List<HedgeHog> getHedgeHogs();
+
     List<Tank> getTanks();
 
     List<Construction> getConstructions();
@@ -43,6 +45,8 @@ public interface Field {
     boolean isAmmoBonus(int x, int y);
 
     boolean isBarrier(int x, int y);
+
+    boolean isFieldOccupied(int x, int y);
 
     boolean isWormHole(int x, int y);
 

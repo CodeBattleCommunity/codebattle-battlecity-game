@@ -28,7 +28,7 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.EventListener;
 
 public class Player {
-    public static final int TICKS_PER_BULLETS = 4;
+    private static final int TICKS_PER_BULLETS = 4;
 
     private Tank tank;
     private EventListener listener;

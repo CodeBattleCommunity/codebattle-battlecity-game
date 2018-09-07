@@ -54,6 +54,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private int size;
     private List<Construction> constructions;
     private List<Border> borders;
+    private List<HedgeHog> hedgeHogs;
     private List<WormHole> wormHoles;
     private List<Bog> bogs;
     private List<Sand> sands;
@@ -65,6 +66,8 @@ public class Battlecity implements Tickable, ITanks, Field {
     private GameController gameController;
     private GameModeRegistry modeRegistry;
     private LevelRegistry levelRegistry;
+    private Level level;
+    private HedgeHogController hedgeHogController;
 
     public Battlecity(TankFactory aiTankFactory,
                       GameSettings settings,
@@ -74,6 +77,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.aiTankFactory = aiTankFactory;
         this.settings = settings;
         this.gameController = new BattleCityGameController();
+
         setDice(new RandomDice()); // TODO вынести это чудо за пределы конструктора
     }
 
@@ -84,7 +88,7 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     private void loadLevel(String mapName) {
         LevelInfo levelInfo = levelRegistry.getLevelByName(mapName);
-        Level level = new Level(levelInfo.getMap(), aiTankFactory);
+        level = new Level(levelInfo.getMap(), aiTankFactory);
 
         aiCount = level.getTanks().size();
         this.size = level.size();
@@ -92,6 +96,8 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.constructions = new LinkedList<>(level.getConstructions());
         this.borders = new LinkedList<>(level.getBorders());
         this.wormHoles = new LinkedList<>(level.getWormHoles());
+        this.hedgeHogs = new LinkedList<>(level.getHedgeHogs());
+        hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
         this.bogs = new LinkedList<>(level.getBogs());
         this.sands = new LinkedList<>(level.getSands());
         this.moats = new LinkedList<>(level.getMoats());
@@ -172,6 +178,8 @@ public class Battlecity implements Tickable, ITanks, Field {
                 construction.tick();
             }
         }
+
+        hedgeHogController.refreshHedgeHogs();
     }
 
     private void removeDeadTanks() {
@@ -297,8 +305,37 @@ public class Battlecity implements Tickable, ITanks, Field {
                 return true;
             }
         }
+        for (Point hedgehog : hedgeHogs) {
+            if (hedgehog.itsMe(x, y)) {
+                return true;
+            }
+        }
         return outOfField(x, y);
     }
+
+    @Override
+    public boolean isFieldOccupied(int x, int y) {
+        boolean isBarrier = isBarrier(x, y);
+
+        if (!isBarrier) {
+            for (Point bullet : getBullets()) {
+                if (bullet.itsMe(x, y)) {
+                    return true;
+                }
+            }
+
+            for (Point hole : getWormHoles()) {
+                if (hole.itsMe(x, y)) {
+                    return true;
+                }
+            }
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public boolean isAmmoBonus(int x, int y) {
         return false; //реализовать проверку на бонусные патроны
@@ -402,6 +439,7 @@ public class Battlecity implements Tickable, ITanks, Field {
                 result.addAll(Battlecity.this.getTanks());
                 result.addAll(Battlecity.this.getConstructions());
                 result.addAll(Battlecity.this.getWormHoles());
+                result.addAll(Battlecity.this.getHedgeHogs());
                 result.addAll(Battlecity.this.getBogs());
                 result.addAll(Battlecity.this.getSands());
                 result.addAll(Battlecity.this.getMoats());
@@ -430,6 +468,11 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public List<WormHole> getWormHoles() {
         return wormHoles;
+    }
+
+    @Override
+    public List<HedgeHog> getHedgeHogs() {
+        return hedgeHogs;
     }
 
     @Override
@@ -476,9 +519,9 @@ public class Battlecity implements Tickable, ITanks, Field {
                 do {
                     x = dice.next(size);
                     c++;
-                } while (isBarrier(x, y) & c < size);
+                } while (isFieldOccupied(x, y) && c < size);
 
-                if (!isBarrier(x, y)) {
+                if (!isFieldOccupied(x, y)) {
                     addAI(aiTankFactory.createTank(
                             TankParams.newAITankParams(x, y, Direction.DOWN)));
                 }

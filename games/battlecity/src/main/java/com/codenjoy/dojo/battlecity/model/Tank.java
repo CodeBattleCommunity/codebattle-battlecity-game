@@ -39,6 +39,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     protected Field field;
     private boolean alive;
     private Gun gun;
+    private Direction previousDirection;
     private ObstacleEffect obstacleEffect;
 
     public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo) {
@@ -59,25 +60,25 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void up() {
         direction = Direction.UP;
-        moving = true;
+        moving = isTankMove();
     }
 
     @Override
     public void down() {
         direction = Direction.DOWN;
-        moving = true;
+        moving = isTankMove();
     }
 
     @Override
     public void right() {
         direction = Direction.RIGHT;
-        moving = true;
+        moving = isTankMove();
     }
 
     @Override
     public void left() {
         direction = Direction.LEFT;
-        moving = true;
+        moving = isTankMove();
     }
 
     @Override
@@ -182,9 +183,14 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void tick() {
         gun.tick();
+        resetPreviousDirection();
         if (tankHasObstacleEffect()) {
             obstacleEffect.tick();
         }
+    }
+
+    private void resetPreviousDirection() {
+        previousDirection = null;
     }
 
 
@@ -225,4 +231,28 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     public enum Type {
         Player, AI
     }
+
+  private boolean isItTurn(Direction nextDirection) {
+    if (previousDirection != null) {
+      if (nextDirection == Direction.DOWN && previousDirection == Direction.UP) {
+        return true;
+      } else if (nextDirection == Direction.UP && previousDirection == Direction.DOWN) {
+        return true;
+      } else if (nextDirection == Direction.LEFT && previousDirection == Direction.RIGHT) {
+        return true;
+      } else if (nextDirection == Direction.RIGHT && previousDirection == Direction.LEFT) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean isTankMove() {
+      if(isItTurn(direction)) {
+          return false;
+      } else {
+          previousDirection = direction;
+          return true;
+      }
+  }
 }
