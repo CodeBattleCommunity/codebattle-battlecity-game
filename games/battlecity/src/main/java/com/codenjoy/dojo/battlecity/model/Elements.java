@@ -61,6 +61,8 @@ public enum Elements implements CharElements {
 
     BULLET('•'),
 
+    HEALTH_BONUS('☺'),
+
     TANK_UP('▲'),
     TANK_RIGHT('►'),
     TANK_DOWN('▼'),

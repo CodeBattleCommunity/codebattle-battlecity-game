@@ -79,6 +79,11 @@ public class Level implements Field {
     }
 
     @Override
+    public boolean isHealthBonus(int x, int y) {
+        return false;
+    }
+
+    @Override
     public boolean isBarrier(int x, int y) {
         return false;
     }
@@ -130,6 +135,7 @@ public class Level implements Field {
                 result.addAll(Level.this.getSands());
                 result.addAll(Level.this.getMoats());
                 result.addAll(Level.this.getBullets());
+                result.addAll(Level.this.getHealthBonuses());
                 result.addAll(Level.this.getConstructions());
                 result.addAll(Level.this.getTanks());
                 result.addAll(Level.this.getHedgeHogs());
@@ -168,6 +174,17 @@ public class Level implements Field {
         for (int index = 0; index < map.length(); index++) {
             if (map.charAt(index) == Elements.HEDGEHOG.ch) {
                 result.add(new HedgeHog(xy.getXY(index)));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<HealthBonus> getHealthBonuses() {
+        List<HealthBonus> result = new LinkedList<>();
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.HEALTH_BONUS.ch) {
+                result.add(new HealthBonus(xy.getXY(index)));
             }
         }
         return result;

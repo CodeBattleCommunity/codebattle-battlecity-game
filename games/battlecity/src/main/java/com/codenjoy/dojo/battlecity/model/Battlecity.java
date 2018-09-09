@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -53,6 +53,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private int aiCount;
     private int size;
     private List<Construction> constructions;
+    private List<HealthBonus> healthBonuses;
     private List<Border> borders;
     private List<HedgeHog> hedgeHogs;
     private List<WormHole> wormHoles;
@@ -83,7 +84,7 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     public void startOrRestartGame() {
         loadLevel(settings.getMap().getValue());
-        loadGameMode( settings.getGameMode().getValue());
+        loadGameMode(settings.getGameMode().getValue());
     }
 
     private void loadLevel(String mapName) {
@@ -96,6 +97,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.constructions = new LinkedList<>(level.getConstructions());
         this.borders = new LinkedList<>(level.getBorders());
         this.wormHoles = new LinkedList<>(level.getWormHoles());
+        this.healthBonuses = new LinkedList<>(level.getHealthBonuses());
         this.hedgeHogs = new LinkedList<>(level.getHedgeHogs());
         hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
         this.bogs = new LinkedList<>(level.getBogs());
@@ -197,7 +199,7 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     @Override
     public Joystick getJoystick() {
-       return players.get(0).getTank();
+        return players.get(0).getTank();
     }
 
     void addAI(Tank tank) {
@@ -221,10 +223,10 @@ public class Battlecity implements Tickable, ITanks, Field {
             if (tank == bullet.getOwner()) {
                 return;
             }
-
+            tank.getHealth().getDamage();
             triggerEventForTankKill(bullet, tank);
-
-            tank.kill(bullet);
+            if(!tank.getHealth().isAlive())
+                tank.kill(bullet);
             bullet.onDestroy();  // TODO заимплементить взрыв
             return;
         }
@@ -330,6 +332,12 @@ public class Battlecity implements Tickable, ITanks, Field {
                 }
             }
 
+            for (Point healthBonus : getHealthBonuses()) {
+                if (healthBonus.itsMe(x, y)) {
+                    return true;
+                }
+            }
+
             return false;
         } else {
             return true;
@@ -339,6 +347,12 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public boolean isAmmoBonus(int x, int y) {
         return false; //реализовать проверку на бонусные патроны
+    }
+
+    @Override
+    public boolean isHealthBonus(int x, int y) {
+        return healthBonuses.stream()
+                .anyMatch(healthBonus -> healthBonus.itsMe(x, y));
     }
 
     @Override
@@ -369,7 +383,7 @@ public class Battlecity implements Tickable, ITanks, Field {
                 .orElse(null);
     }
 
-    private List<Obstacle> getObstacles(){
+    private List<Obstacle> getObstacles() {
         List<Obstacle> obstacles = new LinkedList<>();
         obstacles.addAll(bogs);
         obstacles.addAll(sands);
@@ -398,7 +412,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         LinkedList<Tank> result = new LinkedList<>(aiTanks);
         for (Player player : players) {
 //            if (player.getTank().isAlive()) { // TODO разремарить с тестом
-                result.add(player.getTank());
+            result.add(player.getTank());
 //            }
         }
         return result;
@@ -444,6 +458,7 @@ public class Battlecity implements Tickable, ITanks, Field {
                 result.addAll(Battlecity.this.getSands());
                 result.addAll(Battlecity.this.getMoats());
                 result.addAll(Battlecity.this.getBullets());
+                result.addAll(Battlecity.this.getHealthBonuses());
                 return result;
             }
         };
@@ -468,6 +483,11 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public List<WormHole> getWormHoles() {
         return wormHoles;
+    }
+
+    @Override
+    public List<HealthBonus> getHealthBonuses() {
+        return healthBonuses;
     }
 
     @Override

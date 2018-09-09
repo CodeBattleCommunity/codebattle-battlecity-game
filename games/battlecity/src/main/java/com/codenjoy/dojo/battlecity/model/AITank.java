@@ -31,8 +31,8 @@ public class AITank extends Tank {
 
     private int act;
 
-    public AITank(int x, int y, Dice dice, Direction direction, Parameter<Integer> initialAmmo) {
-        super(x, y, direction, dice, 1, initialAmmo);
+    public AITank(int x, int y, Dice dice, Direction direction, Parameter<Integer> initialAmmo, Parameter<Integer> initialHealth) {
+        super(x, y, direction, dice, 1, initialAmmo, initialHealth);
     }
 
     @Override

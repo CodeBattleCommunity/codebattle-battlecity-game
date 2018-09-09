@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -30,8 +30,12 @@ import java.util.Arrays;
 
 public class GameSettingsImpl implements GameSettings {
 
+    private Parameter<Integer> healthBonusLifeCycle;
+    private Parameter<Integer> healthBonusOnMap;
     private Parameter<Integer> initialPlayerAmmoCount;
     private Parameter<Integer> initialAIAmmoCount;
+    private Parameter<Integer> initialPlayerHealthCount;
+    private Parameter<Integer> initialAIHealthCount;
     private Parameter<String> gameModeName;
     private Parameter<String> map;
     private Parameter<Integer> maxHedgeHogsOnMap;
@@ -40,10 +44,11 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> minHedgehogLifetime;
 
 
-
     public GameSettingsImpl(Settings settings) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
         initialAIAmmoCount = settings.addEditBox("Initial AI Ammo Count").type(Integer.class).def(5000);
+        initialPlayerHealthCount = settings.addEditBox("Initial Player Health Count").type(Integer.class).def(1);
+        initialAIHealthCount = settings.addEditBox("Initial AI Health Count").type(Integer.class).def(1);
         gameModeName = settings.addSelect("Game Mode",
                 Arrays.asList(BattlecityGameModes.CLASSIC.getName(),
                         BattlecityGameModes.PLAYERS_VERSUS_AI.getName(),
@@ -55,6 +60,8 @@ public class GameSettingsImpl implements GameSettings {
         maxHedgehogLifetime = settings.addEditBox("Maximum Hedgehogs lifetime").type(Integer.class).def(30);
         minHedgehogLifetime = settings.addEditBox("Minimum Hedgehogs lifetime").type(Integer.class).def(4);
 
+        healthBonusOnMap = settings.addEditBox("Health Bonus On Map").type(Integer.class).def(4);
+        healthBonusLifeCycle = settings.addEditBox("Health Bonus Life Cycle").type(Integer.class).def(15);
 
         map = settings.addEditBox("Map").type(String.class).def("default");
     }
@@ -70,9 +77,30 @@ public class GameSettingsImpl implements GameSettings {
     }
 
     @Override
+    public Parameter<Integer> getInitialPlayerHealthCount() {
+        return initialPlayerHealthCount;
+    }
+
+    @Override
+    public Parameter<Integer> getInitialAIHealthCount() {
+        return initialAIHealthCount;
+    }
+
+    @Override
+    public Parameter<Integer> getHealthBonusLifeCycle() {
+        return healthBonusLifeCycle;
+    }
+
+    @Override
+    public Parameter<Integer> getHealthBonusOnMap() {
+        return healthBonusOnMap;
+    }
+
+    @Override
     public Parameter<String> getGameMode() {
         return gameModeName;
     }
+
     @Override
     public Parameter<String> getMap() {
         return map;
