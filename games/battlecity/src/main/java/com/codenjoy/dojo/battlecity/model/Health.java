@@ -16,8 +16,8 @@ public class Health {
         return healthCount;
     }
 
-    public void getHealthBonus(int healthBonus) {
-        healthCount += healthBonus;
+    public void getHealthBonus() {
+        healthCount = 2;
     }
 
     public void refreshHealth() {
