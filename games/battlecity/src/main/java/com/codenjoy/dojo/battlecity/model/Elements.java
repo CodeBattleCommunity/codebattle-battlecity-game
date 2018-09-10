@@ -25,9 +25,12 @@ package com.codenjoy.dojo.battlecity.model;
 
 import com.codenjoy.dojo.services.printer.CharElements;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public enum Elements implements CharElements {
 
@@ -87,10 +90,11 @@ public enum Elements implements CharElements {
     MOAT_VERTICAL('‖');
 
 
-
-
     public final char ch;
     int power;
+
+    public final static Set<Character> TELEPORT_CHARS = new HashSet<>(
+            Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
 
     // TODO test me
     private static List<Elements> result = null;

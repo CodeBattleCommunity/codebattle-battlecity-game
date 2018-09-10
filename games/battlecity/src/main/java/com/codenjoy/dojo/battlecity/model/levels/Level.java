@@ -29,6 +29,8 @@ import com.codenjoy.dojo.services.*;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Level implements Field {
 
@@ -188,14 +190,64 @@ public class Level implements Field {
 
     @Override
     public List<WormHole> getWormHoles() {
-        List<WormHole> result = new LinkedList<>();
+        return Stream.of(getSimpleWormHoles(),
+                getNumberedWormHoles())
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    private List<WormHole> getNumberedWormHoles() {
+        List<PointWithChar> numberedWormHolesPoints = new ArrayList<>();
+
+        for (int index = 0; index < map.length(); index++) {
+            if (Elements.TELEPORT_CHARS.contains(map.charAt(index))) {
+                numberedWormHolesPoints.add(
+                        new PointWithChar(map.charAt(index), xy.getXY(index)));
+            }
+        }
+
+        Map<Character, List<Point>> map = new HashMap<>();
+
+        for (PointWithChar p : numberedWormHolesPoints) {
+            if (!map.containsKey(p.ch)) {
+                map.put(p.ch, new ArrayList<>());
+            }
+            map.get(p.ch).add(p.point);
+        }
+
+        List<WormHole> numberedWormHoles = new ArrayList<>();
+
+        for (PointWithChar p : numberedWormHolesPoints) {
+            List<Point> allLinkedPoints = map.get(p.ch);
+
+            numberedWormHoles.add(new NumberedWormHoles(p.point.getX(), p.point.getY(),
+                    allLinkedPoints.stream()
+                            .filter(point -> !point.equals(p.point))
+            .collect(Collectors.toList())));
+        }
+
+        return numberedWormHoles;
+    }
+
+    private static class PointWithChar {
+        char ch;
+        Point point;
+
+        public PointWithChar(char ch, Point point) {
+            this.ch = ch;
+            this.point = point;
+        }
+    }
+
+    private List<WormHole> getSimpleWormHoles() {
+        List<WormHole> simpleWormHoles = new LinkedList<>();
 
         for (int index = 0; index < map.length(); index++) {
             if (map.charAt(index) == Elements.WORM_HOLE.ch) {
-                result.add(new WormHole(xy.getXY(index), result));
+                simpleWormHoles.add(new SimpleWormHoleImpl(xy.getXY(index), simpleWormHoles));
             }
         }
-        return result;
+        return simpleWormHoles;
     }
 
     @Override
