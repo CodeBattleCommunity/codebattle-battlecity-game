@@ -41,13 +41,11 @@ public class BattlecityPlayersVersusAIGameMode extends DefaultBattlecityGameMode
     @Override
     public void startGame() {
         controller.createAITanks();
-//        controller.createAmmoBonus();
     }
 
     @Override
     public void beforeTick() {
         controller.newAI();
-//        controller.newAmmoBonus();
     }
 
     @Override

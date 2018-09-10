@@ -43,15 +43,16 @@ import com.codenjoy.dojo.services.RandomDice;
 import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Battlecity implements Tickable, ITanks, Field {
 
     private Dice dice;
     private LinkedList<Tank> aiTanks;
     private int aiCount;
-    private int bonusCount;
     private int size;
     private List<Construction> constructions;
     private List<Border> borders;
@@ -68,7 +69,6 @@ public class Battlecity implements Tickable, ITanks, Field {
     private GameController gameController;
     private GameModeRegistry modeRegistry;
     private LevelRegistry levelRegistry;
-    private Level level;
     private HedgeHogController hedgeHogController;
     private AmmoBonusController ammoBonusController;
 
@@ -91,12 +91,10 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     private void loadLevel(String mapName) {
         LevelInfo levelInfo = levelRegistry.getLevelByName(mapName);
-        level = new Level(levelInfo.getMap(), aiTankFactory);
+        Level level = new Level(levelInfo.getMap(), aiTankFactory);
         ammoBonusController = new AmmoBonusController(this, settings);
 
-
         aiCount = level.getTanks().size();
-        bonusCount = level.getAmmoBonuses().size();
         this.size = level.size();
         this.aiTanks = new LinkedList<>();
         this.constructions = new LinkedList<>(level.getConstructions());
@@ -512,24 +510,12 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public boolean isFieldOccupied(int x, int y) {
         if (!isBarrier(x, y)) {
-            for (Point bullet : getBullets()) {
-                if (bullet.itsMe(x, y)) {
-                    return true;
-                }
-            }
-            for (Point hole : getWormHoles()) {
-                if (hole.itsMe(x, y)) {
-                    return true;
-                }
-            }
-
-            for (Point ammoBonus : getAmmoBonuses()) {
-                if (ammoBonus.itsMe(x, y)) {
-                    return true;
-                }
-            }
-
-            return false;
+            return Stream.of(getBullets(),
+                    getWormHoles(),
+                    getAmmoBonuses(),
+                    getObstacles())
+                    .flatMap(Collection::stream)
+                    .anyMatch(point -> point.itsMe(x, y));
         } else {
             return true;
         }
