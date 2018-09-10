@@ -24,59 +24,10 @@ package com.codenjoy.dojo.battlecity.model;
 
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
 
-import java.util.List;
 import java.util.Optional;
 
-public class WormHole extends PointImpl implements State<Elements, Player> {
-
-    private List<WormHole> allWormHoles;
-
-    public WormHole(int x, int y, List<WormHole> allWormHoles) {
-        super(x, y);
-        this.allWormHoles = allWormHoles;
-    }
-
-    public WormHole(Point point, List<WormHole> allWormHoles) {
-        super(point);
-        this.allWormHoles = allWormHoles;
-    }
-
-    @Override
-    public Elements state(Player player, Object... alsoAtPoint) {
-        return Elements.WORM_HOLE;
-    }
-
-    Optional<Point> getExit(Direction direction) {
-        if (Direction.DOWN.equals(direction) ||
-                Direction.UP.equals(direction)) {
-
-            return allWormHoles.stream()
-                    .filter(hole -> x == hole.x && y != hole.y)
-                    .findAny()
-                    .map(exitHole -> calculateTankExit(exitHole.x, exitHole.y, direction));
-
-        } else {
-            return allWormHoles.stream()
-                    .filter(hole -> y == hole.y && x != hole.x)
-                    .findAny()
-                    .map(exitHole -> calculateTankExit(exitHole.x, exitHole.y, direction));
-        }
-    }
-
-    Point calculateTankExit(int exitX, int exitY, Direction direction) {
-        switch (direction) {
-            case UP: return XY(exitX, exitY + 1);
-            case DOWN: return XY(exitX, exitY - 1);
-            case LEFT: return XY(exitX - 1, exitY);
-            default:
-                return XY(exitX + 1, exitY);
-        }
-    }
-
-    private Point XY(int x, int y) {
-        return new PointImpl(x, y);
-    }
+public interface WormHole extends Point, State<Elements, Player> {
+    Optional<Point> getExit(Direction direction);
 }
