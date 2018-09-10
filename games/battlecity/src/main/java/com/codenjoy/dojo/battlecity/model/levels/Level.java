@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model.levels;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -34,8 +34,6 @@ public class Level implements Field {
 
     private final LengthToXY xy;
     private TankFactory aiTankFactory;
-
-
 
     private String map;
 
@@ -72,10 +70,27 @@ public class Level implements Field {
         return result;
     }
 
-
     @Override
     public boolean isAmmoBonus(int x, int y) {
         return false; // do nothing
+    }
+
+    @Override
+    public AmmoBonus getAmmoBonus(int newX, int newY) {
+        return null;
+    }
+
+    @Override
+    public List<AmmoBonus> getAmmoBonuses() {
+        List<AmmoBonus> result = new LinkedList<>();
+
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.BONUS_AMMO.ch) {
+                Point pt = xy.getXY(index);
+                result.add(new AmmoBonus(pt));
+            }
+        }
+        return result;
     }
 
     @Override
@@ -83,10 +98,7 @@ public class Level implements Field {
         return false;
     }
 
-    @Override
-    public boolean isFieldOccupied(int x, int y) {
-       return false;
-    }
+
 
     @Override
     public boolean isWormHole(int x, int y) {
@@ -125,6 +137,7 @@ public class Level implements Field {
             public Iterable<? extends Point> elements() {
                 List<Point> result = new LinkedList<>();
                 result.addAll(Level.this.getBorders());
+                result.addAll(Level.this.getAmmoBonuses());
                 result.addAll(Level.this.getWormHoles());
                 result.addAll(Level.this.getBogs());
                 result.addAll(Level.this.getSands());
@@ -188,6 +201,11 @@ public class Level implements Field {
     @Override
     public WormHole getWormHole(int newX, int newY) {
         return null;
+    }
+
+    @Override
+    public boolean isFieldOccupied(int x, int y) {
+        return false;
     }
 
     @Override

@@ -24,15 +24,8 @@ package com.codenjoy.dojo.battlecity.services;
 
 
 import com.codenjoy.dojo.battlecity.client.ai.ApofigSolver;
-import com.codenjoy.dojo.battlecity.model.AITankFactory;
-import com.codenjoy.dojo.battlecity.model.Battlecity;
-import com.codenjoy.dojo.battlecity.model.Elements;
-import com.codenjoy.dojo.battlecity.model.GameSettings;
-import com.codenjoy.dojo.battlecity.model.GameSettingsImpl;
-import com.codenjoy.dojo.battlecity.model.PlayerTankFactory;
-import com.codenjoy.dojo.battlecity.model.Single;
+import com.codenjoy.dojo.battlecity.model.*;
 import com.codenjoy.dojo.battlecity.model.levels.ResourcesLevelRegistryImpl;
-import com.codenjoy.dojo.battlecity.model.TankFactory;
 import com.codenjoy.dojo.battlecity.model.modes.GameModeRegistry;
 import com.codenjoy.dojo.battlecity.model.modes.StaticGameModeRegistryImpl;
 import com.codenjoy.dojo.client.WebSocketRunner;
