@@ -13,6 +13,11 @@ public class HealthBonus extends PointImpl implements Tickable, State<Elements, 
         super(x, y);
     }
 
+    public HealthBonus(Point point, int lifeCycle) {
+        super(point);
+        this.lifeCycle = lifeCycle;
+    }
+
     public HealthBonus(Point point) {
         super(point);
     }
@@ -24,10 +29,14 @@ public class HealthBonus extends PointImpl implements Tickable, State<Elements, 
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         if (isAlive()) {
-            return Elements.HEALTH_BONUS;
+            return Elements.MEDICINE;
         } else {
             return Elements.NONE;
         }
+    }
+
+    public void setLifeCycle(int lifeCycle) {
+        this.lifeCycle = lifeCycle;
     }
 
     @Override

@@ -82,7 +82,7 @@ public class TankTest {
 
     public Tank tank(int x, int y, Direction direction) {
         Dice dice = getDice(x, y);
-        return new Tank(x, y, direction, dice, ticksPerBullets, null);
+        return new Tank(x, y, direction, dice, ticksPerBullets, null, null);
     }
 
     private static Dice getDice(int x, int y) {

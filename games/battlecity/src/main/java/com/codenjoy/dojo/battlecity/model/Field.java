@@ -64,6 +64,8 @@ public interface Field {
 
     void affect(Bullet bullet);
 
+    HealthBonus getHealthBonus(int x, int y);
+
     List<HealthBonus> getHealthBonuses();
 
     List<Bullet> getBullets();

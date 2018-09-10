@@ -27,6 +27,7 @@
         <maven-resources.version>2.7</maven-resources.version>
         <maven-antrun.version>1.8</maven-antrun.version>
         <maven-license.version>1.9</maven-license.version>
+        <module.name>battlecity</module.name>
 
         <user.resources>src/main/webapp/resources/user</user.resources>
         <client.sources>${user.resources}/${module.name}-servers.zip</client.sources>

@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model.levels;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -34,7 +34,6 @@ public class Level implements Field {
 
     private final LengthToXY xy;
     private TankFactory aiTankFactory;
-
 
 
     private String map;
@@ -90,7 +89,7 @@ public class Level implements Field {
 
     @Override
     public boolean isFieldOccupied(int x, int y) {
-       return false;
+        return false;
     }
 
     @Override
@@ -111,6 +110,11 @@ public class Level implements Field {
     @Override
     public void affect(Bullet bullet) {
         // do nothing
+    }
+
+    @Override
+    public HealthBonus getHealthBonus(int x, int y) {
+        return null;
     }
 
     @Override
@@ -183,7 +187,7 @@ public class Level implements Field {
     public List<HealthBonus> getHealthBonuses() {
         List<HealthBonus> result = new LinkedList<>();
         for (int index = 0; index < map.length(); index++) {
-            if (map.charAt(index) == Elements.HEALTH_BONUS.ch) {
+            if (map.charAt(index) == Elements.MEDICINE.ch) {
                 result.add(new HealthBonus(xy.getXY(index)));
             }
         }

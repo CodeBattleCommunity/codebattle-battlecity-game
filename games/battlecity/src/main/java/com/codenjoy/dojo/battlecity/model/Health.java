@@ -20,19 +20,11 @@ public class Health {
         healthCount = initialHealthCount.getValue();
     }
 
-    public void getDamage(){
+    public void getDamage() {
         healthCount--;
     }
 
-    public int getHealthCount() {
-        return healthCount;
-    }
-
-    public void setHealthCount(int healthCount) {
-        this.healthCount = healthCount;
-    }
-
-    public boolean isAlive(){
+    public boolean isAlive() {
         return healthCount > 0;
     }
 

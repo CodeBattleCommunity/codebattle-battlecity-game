@@ -69,6 +69,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private LevelRegistry levelRegistry;
     private Level level;
     private HedgeHogController hedgeHogController;
+    private HealthBonusController healthBonusController;
 
     public Battlecity(TankFactory aiTankFactory,
                       GameSettings settings,
@@ -100,6 +101,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.healthBonuses = new LinkedList<>(level.getHealthBonuses());
         this.hedgeHogs = new LinkedList<>(level.getHedgeHogs());
         hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
+        healthBonusController = new HealthBonusController(this, settings);
         this.bogs = new LinkedList<>(level.getBogs());
         this.sands = new LinkedList<>(level.getSands());
         this.moats = new LinkedList<>(level.getMoats());
@@ -180,7 +182,7 @@ public class Battlecity implements Tickable, ITanks, Field {
                 construction.tick();
             }
         }
-
+        healthBonusController.refreshHealthBonus();
         hedgeHogController.refreshHedgeHogs();
     }
 
@@ -224,9 +226,10 @@ public class Battlecity implements Tickable, ITanks, Field {
                 return;
             }
             tank.getHealth().getDamage();
-            triggerEventForTankKill(bullet, tank);
-            if(!tank.getHealth().isAlive())
+            if (!tank.getHealth().isAlive()) {
                 tank.kill(bullet);
+                triggerEventForTankKill(bullet, tank);
+            }
             bullet.onDestroy();  // TODO заимплементить взрыв
             return;
         }
@@ -249,6 +252,14 @@ public class Battlecity implements Tickable, ITanks, Field {
 
             return;
         }
+    }
+
+    @Override
+    public HealthBonus getHealthBonus(int x, int y) {
+        return healthBonuses.stream()
+                .filter(healthBonus -> healthBonus.itsMe(x, y))
+                .findAny()
+                .orElse(null);
     }
 
     private Construction getConstructionAt(Bullet bullet) {

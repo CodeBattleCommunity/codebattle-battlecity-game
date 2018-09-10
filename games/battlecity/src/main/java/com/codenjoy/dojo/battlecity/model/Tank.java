@@ -97,6 +97,11 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
                 }
             });
 
+        } else if (field.isHealthBonus(newX, newY)) {
+            HealthBonus healthBonus = field.getHealthBonus(newX, newY);
+            setTankPosition(newX, newY);
+            healthBonus.setLifeCycle(0);
+            health.getHealthBonus(1);
         } else if (tankHasObstacleEffect()) {
             if (!obstacleEffect.isActive()) {
                 removeObstacleEffect();
@@ -107,10 +112,6 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
 
         } else {
             setTankPosition(newX, newY);
-        }
-
-        if (field.isHealthBonus(newX, newY)) {
-            health.getHealthBonus(1);
         }
 
         if (field.isAmmoBonus(newX, newY)) {
