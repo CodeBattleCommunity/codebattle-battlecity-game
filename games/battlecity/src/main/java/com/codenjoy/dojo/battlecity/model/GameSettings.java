@@ -40,7 +40,10 @@ public interface GameSettings {
     Parameter<String> getGameMode();
 
     Parameter<String> getMap();
-
+  
+    Parameter<Integer> getAmmoBonusCountOnMap();
+    Parameter<Integer> getAmmoBonusLifeCycle();
+    Parameter<Integer> getAmmoQuantityInAmmoBonus();
     Parameter<Integer> getMaxHedgeHogsOnMap();
 
     Parameter<Integer> getTicksToUpdateHedgehogs();

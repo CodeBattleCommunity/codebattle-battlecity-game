@@ -35,7 +35,6 @@ public class Level implements Field {
     private final LengthToXY xy;
     private TankFactory aiTankFactory;
 
-
     private String map;
 
     public Level(String map, TankFactory aiTankFactory) {
@@ -71,13 +70,13 @@ public class Level implements Field {
         return result;
     }
 
-
     @Override
     public boolean isAmmoBonus(int x, int y) {
         return false; // do nothing
     }
 
     @Override
+
     public boolean isHealthBonus(int x, int y) {
         return false;
     }
@@ -90,7 +89,30 @@ public class Level implements Field {
     @Override
     public boolean isFieldOccupied(int x, int y) {
         return false;
+
+    public AmmoBonus getAmmoBonus(int newX, int newY) {
+        return null;
     }
+
+    @Override
+    public List<AmmoBonus> getAmmoBonuses() {
+        List<AmmoBonus> result = new LinkedList<>();
+
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.BONUS_AMMO.ch) {
+                Point pt = xy.getXY(index);
+                result.add(new AmmoBonus(pt));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isBarrier(int x, int y) {
+        return false;
+    }
+
+
 
     @Override
     public boolean isWormHole(int x, int y) {
@@ -134,6 +156,7 @@ public class Level implements Field {
             public Iterable<? extends Point> elements() {
                 List<Point> result = new LinkedList<>();
                 result.addAll(Level.this.getBorders());
+                result.addAll(Level.this.getAmmoBonuses());
                 result.addAll(Level.this.getWormHoles());
                 result.addAll(Level.this.getBogs());
                 result.addAll(Level.this.getSands());
@@ -209,6 +232,11 @@ public class Level implements Field {
     @Override
     public WormHole getWormHole(int newX, int newY) {
         return null;
+    }
+
+    @Override
+    public boolean isFieldOccupied(int x, int y) {
+        return false;
     }
 
     @Override

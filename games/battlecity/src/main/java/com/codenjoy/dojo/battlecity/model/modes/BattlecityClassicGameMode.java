@@ -33,6 +33,7 @@ public class BattlecityClassicGameMode extends DefaultBattlecityGameMode {
     @Override
     public void startGame() {
         controller.createAITanks();
+
     }
 
     @Override

@@ -43,6 +43,9 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> maxHedgehogLifetime;
     private Parameter<Integer> minHedgehogLifetime;
 
+    private Parameter<Integer> ammoBonusCountOnMap;
+    private Parameter<Integer> ammoBonusLifeCycle;
+    private Parameter<Integer> ammoQuantityInAmmoBonus;
 
     public GameSettingsImpl(Settings settings) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
@@ -64,6 +67,9 @@ public class GameSettingsImpl implements GameSettings {
         healthBonusLifeCycle = settings.addEditBox("Health Bonus Life Cycle").type(Integer.class).def(15);
 
         map = settings.addEditBox("Map").type(String.class).def("default");
+        ammoBonusCountOnMap = settings.addEditBox("Ammo Bonus Count On Map").type(Integer.class).def(4);
+        ammoBonusLifeCycle = settings.addEditBox("Ammo Bonus Life Cycle").type(Integer.class).def(15);
+        ammoQuantityInAmmoBonus = settings.addEditBox("Number Of Ammo In Ammo Bonus").type(Integer.class).def(5);
     }
 
     @Override
@@ -105,6 +111,23 @@ public class GameSettingsImpl implements GameSettings {
     public Parameter<String> getMap() {
         return map;
     }
+
+    @Override
+    public Parameter<Integer> getAmmoBonusCountOnMap() {
+        return ammoBonusCountOnMap;
+    }
+
+    @Override
+    public Parameter<Integer> getAmmoBonusLifeCycle() {
+        return ammoBonusLifeCycle;
+    }
+
+    @Override
+    public Parameter<Integer> getAmmoQuantityInAmmoBonus() {
+        return ammoQuantityInAmmoBonus;
+    }
+
+
 
     @Override
     public Parameter<Integer> getMaxHedgeHogsOnMap() {
