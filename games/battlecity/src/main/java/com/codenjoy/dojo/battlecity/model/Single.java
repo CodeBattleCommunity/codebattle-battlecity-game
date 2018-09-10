@@ -23,11 +23,16 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
-import com.codenjoy.dojo.services.*;
-import com.codenjoy.dojo.services.hero.GameMode;
+import com.codenjoy.dojo.services.EventListener;
+import com.codenjoy.dojo.services.Game;
+import com.codenjoy.dojo.services.Joystick;
+import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.hero.HeroData;
+import com.codenjoy.dojo.services.hero.HeroDataImpl;
 import com.codenjoy.dojo.services.printer.Printer;
 import com.codenjoy.dojo.services.printer.PrinterFactory;
+
+import java.lang.reflect.Constructor;
 
 public class Single implements Game {    // TODO test me
 
@@ -81,7 +86,28 @@ public class Single implements Game {    // TODO test me
 
     @Override
     public HeroData getHero() {
-        return GameMode.allHeroesOnSingeBoard(player.getTank());
+        try {
+            return getHeroData(player, true,
+                    new GamePlayerAdditionalInfo.Builder()
+                            .setAmmo(player.getTank().getAmmunition().getAmmoCount())
+                            .setLife(1) // TODO: Replace by life count taken from tank when it is implemented
+                            .createGamePlayerAdditionalInfo());
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private static HeroData getHeroData(Player player, boolean isSingleMode, Object additionalParameters) throws NoSuchMethodException, InstantiationException, IllegalAccessException, java.lang.reflect.InvocationTargetException {
+        /**
+         * Uses reflection to create HeroData to pass additional parameters
+         * due to package-private access of HeroDataImpl constructor
+         */
+        Constructor<? extends HeroDataImpl> constructor = HeroDataImpl.class.getDeclaredConstructor(
+                int.class, Point.class, boolean.class, Object.class);
+        constructor.setAccessible(true);
+
+        HeroDataImpl heroData = constructor.newInstance(0, player.getTank(), isSingleMode, additionalParameters);
+        return heroData;
     }
 
     @Override
