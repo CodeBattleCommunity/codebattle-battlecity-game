@@ -34,10 +34,10 @@ import com.codenjoy.dojo.services.RandomDice;
 public class YourSolver implements Solver<Board> {
 
     // this is your email
-    private static final String USER_NAME = "bakon2@gmail.com";
+    private static final String USER_NAME = "client@ai.ru";
     // you can get this code after registration on the server with your email
     // http://server-ip:8080/codenjoy-contest/board/player/your@email.com?code=12345678901234567890
-    private static final String CODE = "14210784881070354251";
+    private static final String CODE = "19944435002139229632";
 
     private Dice dice;
     private Board board;
@@ -50,8 +50,7 @@ public class YourSolver implements Solver<Board> {
     public String get(Board board) {
         this.board = board;
         if (board.isGameOver()) return "";
-
-        return Direction.UP.toString() + Direction.ACT();
+        return Direction.RIGHT.toString();
 
     }
 

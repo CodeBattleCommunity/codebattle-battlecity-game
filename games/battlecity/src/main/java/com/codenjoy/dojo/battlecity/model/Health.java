@@ -12,6 +12,10 @@ public class Health {
         this.initialHealthCount = initialHealthCount;
     }
 
+    public int getHealthCount() {
+        return healthCount;
+    }
+
     public void getHealthBonus(int healthBonus) {
         healthCount += healthBonus;
     }

@@ -47,8 +47,8 @@ public class GameSettingsImpl implements GameSettings {
     public GameSettingsImpl(Settings settings) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
         initialAIAmmoCount = settings.addEditBox("Initial AI Ammo Count").type(Integer.class).def(5000);
-        initialPlayerHealthCount = settings.addEditBox("Initial Player Health Count").type(Integer.class).def(1);
-        initialAIHealthCount = settings.addEditBox("Initial AI Health Count").type(Integer.class).def(1);
+        initialPlayerHealthCount = settings.addEditBox("Initial Player Health Count").type(Integer.class).def(2);
+        initialAIHealthCount = settings.addEditBox("Initial AI Health Count").type(Integer.class).def(2);
         gameModeName = settings.addSelect("Game Mode",
                 Arrays.asList(BattlecityGameModes.CLASSIC.getName(),
                         BattlecityGameModes.PLAYERS_VERSUS_AI.getName(),

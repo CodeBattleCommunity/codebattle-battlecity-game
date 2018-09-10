@@ -212,33 +212,53 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         if (isAlive()) {
-            if (player.getTank() == this) {
-                switch (direction) {
-                    case LEFT:
-                        return Elements.TANK_LEFT;
-                    case RIGHT:
-                        return Elements.TANK_RIGHT;
-                    case UP:
-                        return Elements.TANK_UP;
-                    case DOWN:
-                        return Elements.TANK_DOWN;
-                    default:
-                        throw new RuntimeException("Неправильное состояние танка!");
+            if (getHealth().getHealthCount() == 2) {
+                if (player.getTank() == this) {
+                    switch (direction) {
+                        case LEFT:
+                            return Elements.TANK_LEFT;
+                        case RIGHT:
+                            return Elements.TANK_RIGHT;
+                        case UP:
+                            return Elements.TANK_UP;
+                        case DOWN:
+                            return Elements.TANK_DOWN;
+                        default:
+                            throw new RuntimeException("Неправильное состояние танка!");
+                    }
+                } else {
+                    switch (direction) {
+                        case LEFT:
+                            return Elements.OTHER_TANK_LEFT;
+                        case RIGHT:
+                            return Elements.OTHER_TANK_RIGHT;
+                        case UP:
+                            return Elements.OTHER_TANK_UP;
+                        case DOWN:
+                            return Elements.OTHER_TANK_DOWN;
+                        default:
+                            throw new RuntimeException("Неправильное состояние танка!");
+                    }
                 }
-            } else {
-                switch (direction) {
-                    case LEFT:
-                        return Elements.OTHER_TANK_LEFT;
-                    case RIGHT:
-                        return Elements.OTHER_TANK_RIGHT;
-                    case UP:
-                        return Elements.OTHER_TANK_UP;
-                    case DOWN:
-                        return Elements.OTHER_TANK_DOWN;
-                    default:
-                        throw new RuntimeException("Неправильное состояние танка!");
+            } else if (getHealth().getHealthCount() == 1) {
+                if (player.getTank() == this) {
+                    switch (direction) {
+                        case LEFT:
+                            return Elements.HALF_TANK_LEFT;
+                        case RIGHT:
+                            return Elements.HALF_TANK_RIGHT;
+                        case UP:
+                            return Elements.HALF_TANK_UP;
+                        case DOWN:
+                            return Elements.HALF_TANK_DOWN;
+                        default:
+                            throw new RuntimeException("Неправильное состояние танка!");
+                    }
                 }
+                else throw new RuntimeException("НЕвозможно!");
             }
+            else throw new RuntimeException("НЕвозможно!");
+
         } else {
             return Elements.BANG;
         }

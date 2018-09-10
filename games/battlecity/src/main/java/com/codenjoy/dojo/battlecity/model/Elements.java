@@ -68,6 +68,11 @@ public enum Elements implements CharElements {
     TANK_DOWN('▼'),
     TANK_LEFT('◄'),
 
+    HALF_TANK_UP('↑'),
+    HALF_TANK_RIGHT('→'),
+    HALF_TANK_DOWN('↓'),
+    HALF_TANK_LEFT('←'),
+
     OTHER_TANK_UP('˄'),
     OTHER_TANK_RIGHT('˃'),
     OTHER_TANK_DOWN('˅'),
