@@ -25,6 +25,7 @@ package com.codenjoy.dojo.battlecity.services;
 
 import com.codenjoy.dojo.battlecity.client.ai.ApofigSolver;
 import com.codenjoy.dojo.battlecity.model.*;
+import com.codenjoy.dojo.battlecity.model.levels.YmlLevelSettingsLoaderImpl;
 import com.codenjoy.dojo.battlecity.model.levels.ResourcesLevelRegistryImpl;
 import com.codenjoy.dojo.battlecity.model.modes.GameModeRegistry;
 import com.codenjoy.dojo.battlecity.model.modes.StaticGameModeRegistryImpl;
@@ -49,6 +50,7 @@ public class GameRunner extends AbstractGameType implements GameType {
     private static final String MAPS_PREFIX = "battlecity/maps/";
     private static final String MAP_FILES_EXTENSION = ".map";
     private static final String BATTLECITY_GAME_NAME = "battlecity";
+    private static final String SETTINGS_EXTENSION = ".settings.yml";
 
     private Battlecity battleCityGame;
     private TankFactory aiTankFactory;
@@ -71,7 +73,9 @@ public class GameRunner extends AbstractGameType implements GameType {
         Battlecity battlecity = new Battlecity(
                 aiTankFactory,
                 gameSettings,
-                new ResourcesLevelRegistryImpl(MAPS_PREFIX, MAP_FILES_EXTENSION));
+                new ResourcesLevelRegistryImpl(
+                        MAPS_PREFIX, MAP_FILES_EXTENSION, SETTINGS_EXTENSION,
+                        new YmlLevelSettingsLoaderImpl()));
 
         GameModeRegistry modeRegistry = new StaticGameModeRegistryImpl(battlecity.getGameController());
         battlecity.setModeRegistry(modeRegistry);

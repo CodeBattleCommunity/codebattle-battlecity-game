@@ -28,6 +28,8 @@ import com.codenjoy.dojo.battlecity.model.events.YourTankWasKilledEvent;
 import com.codenjoy.dojo.battlecity.model.levels.Level;
 import com.codenjoy.dojo.battlecity.model.levels.LevelInfo;
 import com.codenjoy.dojo.battlecity.model.levels.LevelRegistry;
+import com.codenjoy.dojo.battlecity.model.levels.LevelSettings;
+import com.codenjoy.dojo.battlecity.model.levels.LevelSettingsApplier;
 import com.codenjoy.dojo.battlecity.model.modes.BattlecityGameMode;
 import com.codenjoy.dojo.battlecity.model.modes.GameModeRegistry;
 import com.codenjoy.dojo.battlecity.model.obstacle.Bog;
@@ -92,6 +94,10 @@ public class Battlecity implements Tickable, ITanks, Field {
     private void loadLevel(String mapName) {
         LevelInfo levelInfo = levelRegistry.getLevelByName(mapName);
         Level level = new Level(levelInfo.getMap(), aiTankFactory);
+
+        LevelSettings levelSettings = levelInfo.getLevelSettings();
+        new LevelSettingsApplier().applyGameSettings(settings, levelSettings);
+
         ammoBonusController = new AmmoBonusController(this, settings);
 
         aiCount = level.getTanks().size();

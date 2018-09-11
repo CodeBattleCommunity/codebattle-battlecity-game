@@ -1,0 +1,11 @@
+gameMode: 'Classic'
+initialPlayerAmmoCount: 10
+initialAIAmmoCount: 500
+ammoBonusCountOnMap: 6
+ammoBonusLifeCycle: 20
+ammoQuantityInAmmoBonus: 10
+maxHedgeHogsOnMap: 5
+ticksToUpdateHedgehogs: 20
+maxHedgehogLifetime: 30
+minHedgehogLifetime: 15
+
