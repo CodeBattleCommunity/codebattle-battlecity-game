@@ -1,6 +1,7 @@
 gameMode: 'Classic'
-initialPlayerAmmoCount: 10
-initialAIAmmoCount: 500
+gameSpeed: 200
+initialPlayerAmmoCount: 20
+initialAIAmmoCount: 200
 ammoBonusCountOnMap: 6
 ammoBonusLifeCycle: 20
 ammoQuantityInAmmoBonus: 10

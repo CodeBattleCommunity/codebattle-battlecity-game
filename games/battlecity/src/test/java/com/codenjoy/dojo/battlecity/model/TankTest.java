@@ -27,7 +27,6 @@ import com.codenjoy.dojo.services.Direction;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.Assert.*;
@@ -104,7 +103,7 @@ public class TankTest {
     }
 
     private void givenGame(Tank tank, Construction... constructions) {
-        game = new Battlecity(null, null, null);
+        game = new Battlecity(null, null, null, null);
         initPlayer(game, tank);
     }
 

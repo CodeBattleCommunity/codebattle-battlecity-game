@@ -37,6 +37,7 @@ import com.codenjoy.dojo.battlecity.model.obstacle.Moat;
 import com.codenjoy.dojo.battlecity.model.obstacle.Obstacle;
 import com.codenjoy.dojo.battlecity.model.obstacle.Sand;
 import com.codenjoy.dojo.battlecity.services.Scores;
+import com.codenjoy.dojo.services.AdminControlService;
 import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Joystick;
@@ -67,6 +68,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private List<Player> players = new LinkedList<>();
     private TankFactory aiTankFactory;
     private GameSettings settings;
+    private AdminControlService adminControlService;
     private BattlecityGameMode gameMode;
     private GameController gameController;
     private GameModeRegistry modeRegistry;
@@ -76,11 +78,13 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     public Battlecity(TankFactory aiTankFactory,
                       GameSettings settings,
-                      LevelRegistry levelRegistry) {
+                      LevelRegistry levelRegistry,
+                      AdminControlService adminControlService) {
 
         this.levelRegistry = levelRegistry;
         this.aiTankFactory = aiTankFactory;
         this.settings = settings;
+        this.adminControlService = adminControlService;
         this.gameController = new BattleCityGameController();
 
         setDice(new RandomDice()); // TODO вынести это чудо за пределы конструктора
@@ -96,7 +100,8 @@ public class Battlecity implements Tickable, ITanks, Field {
         Level level = new Level(levelInfo.getMap(), aiTankFactory);
 
         LevelSettings levelSettings = levelInfo.getLevelSettings();
-        new LevelSettingsApplier().applyGameSettings(settings, levelSettings);
+        new LevelSettingsApplier(adminControlService)
+                .applyGameSettings(settings, levelSettings);
 
         ammoBonusController = new AmmoBonusController(this, settings);
 
@@ -140,10 +145,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     }
 
     private void checkRequireReloadLevel() {
-        if (settings.getGameMode().changed()) {
-            settings.getGameMode().changesReacted();
-            reloadLevelAndMode();
-        } else if (settings.getMap().changed()) {
+        if (settings.getMap().changed()) {
             settings.getMap().changesReacted();
             reloadLevelAndMode();
         }
