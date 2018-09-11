@@ -23,7 +23,6 @@ package com.codenjoy.dojo.battlecity.model.levels;
  */
 
 import com.codenjoy.dojo.battlecity.model.GameSettings;
-import com.codenjoy.dojo.services.AdminControlService;
 import com.codenjoy.dojo.services.settings.Parameter;
 
 import org.slf4j.Logger;
