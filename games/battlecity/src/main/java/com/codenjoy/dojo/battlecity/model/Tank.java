@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -36,13 +36,14 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     private Dice dice;
     private List<Bullet> bullets;
     private Ammunition ammunition;
+    private Health health;
     protected Field field;
     private boolean alive;
     private Gun gun;
     private Direction previousDirection;
     private ObstacleEffect obstacleEffect;
 
-    public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo) {
+    public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo, Parameter<Integer> initialHealth) {
         super(x, y, direction);
         gun = new Gun(ticksPerBullets);
         bullets = new LinkedList<>();
@@ -50,6 +51,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         moving = false;
         alive = true;
         this.dice = dice;
+        this.health = new Health(initialHealth);
         this.ammunition = new Ammunition(initialAmmo);
     }
 
@@ -108,6 +110,11 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             obstacleEffect = field.getObstacle(newX, newY).getObstacleEffect();
             setTankPosition(newX, newY);
 
+        } else if (field.isHealthBonus(newX, newY)) {
+            HealthBonus healthBonus = field.getHealthBonus(newX, newY);
+            setTankPosition(newX, newY);
+            healthBonus.setLifeCycle(0);
+            health.getHealthBonus();
         } else {
             setTankPosition(newX, newY);
         }
@@ -131,7 +138,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     private Direction getMovingDirection(int x, int y, int newX, int newY) {
         if (newX - x > 0) return Direction.RIGHT;
         else if (newX - x < 0) return Direction.LEFT;
-        else if (newY - y  < 0) return Direction.DOWN;
+        else if (newY - y < 0) return Direction.DOWN;
         return Direction.UP;
     }
 
@@ -200,25 +207,54 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         return ammunition;
     }
 
+    public Health getHealth() {
+        return health;
+    }
 
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         if (isAlive()) {
             if (player.getTank() == this) {
-                switch (direction) {
-                    case LEFT:  return Elements.TANK_LEFT;
-                    case RIGHT: return Elements.TANK_RIGHT;
-                    case UP:    return Elements.TANK_UP;
-                    case DOWN:  return Elements.TANK_DOWN;
-                    default:    throw new RuntimeException("Неправильное состояние танка!");
+                if (getHealth().getHealthCount() == 2) {
+                    switch (direction) {
+                        case LEFT:
+                            return Elements.TANK_LEFT;
+                        case RIGHT:
+                            return Elements.TANK_RIGHT;
+                        case UP:
+                            return Elements.TANK_UP;
+                        case DOWN:
+                            return Elements.TANK_DOWN;
+                        default:
+                            throw new RuntimeException("Неправильное состояние танка!");
+                    }
+                } else {
+
+                    switch (direction) {
+                        case LEFT:
+                            return Elements.HALF_TANK_LEFT;
+                        case RIGHT:
+                            return Elements.HALF_TANK_RIGHT;
+                        case UP:
+                            return Elements.HALF_TANK_UP;
+                        case DOWN:
+                            return Elements.HALF_TANK_DOWN;
+                        default:
+                            throw new RuntimeException("Неправильное состояние танка!");
+                    }
                 }
             } else {
                 switch (direction) {
-                    case LEFT:  return Elements.OTHER_TANK_LEFT;
-                    case RIGHT: return Elements.OTHER_TANK_RIGHT;
-                    case UP:    return Elements.OTHER_TANK_UP;
-                    case DOWN:  return Elements.OTHER_TANK_DOWN;
-                    default:    throw new RuntimeException("Неправильное состояние танка!");
+                    case LEFT:
+                        return Elements.OTHER_TANK_LEFT;
+                    case RIGHT:
+                        return Elements.OTHER_TANK_RIGHT;
+                    case UP:
+                        return Elements.OTHER_TANK_UP;
+                    case DOWN:
+                        return Elements.OTHER_TANK_DOWN;
+                    default:
+                        throw new RuntimeException("Неправильное состояние танка!");
                 }
             }
         } else {
@@ -228,33 +264,34 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
 
     public void refreshState() {
         ammunition.refreshAmmo();
+        health.refreshHealth();
     }
 
     public enum Type {
         Player, AI
     }
 
-  private boolean isItTurn(Direction nextDirection) {
-    if (previousDirection != null) {
-      if (nextDirection == Direction.DOWN && previousDirection == Direction.UP) {
-        return true;
-      } else if (nextDirection == Direction.UP && previousDirection == Direction.DOWN) {
-        return true;
-      } else if (nextDirection == Direction.LEFT && previousDirection == Direction.RIGHT) {
-        return true;
-      } else if (nextDirection == Direction.RIGHT && previousDirection == Direction.LEFT) {
-        return true;
-      }
+    private boolean isItTurn(Direction nextDirection) {
+        if (previousDirection != null) {
+            if (nextDirection == Direction.DOWN && previousDirection == Direction.UP) {
+                return true;
+            } else if (nextDirection == Direction.UP && previousDirection == Direction.DOWN) {
+                return true;
+            } else if (nextDirection == Direction.LEFT && previousDirection == Direction.RIGHT) {
+                return true;
+            } else if (nextDirection == Direction.RIGHT && previousDirection == Direction.LEFT) {
+                return true;
+            }
+        }
+        return false;
     }
-    return false;
-  }
 
-  private boolean isTankMove() {
-      if(isItTurn(direction)) {
-          return false;
-      } else {
-          previousDirection = direction;
-          return true;
-      }
-  }
+    private boolean isTankMove() {
+        if (isItTurn(direction)) {
+            return false;
+        } else {
+            previousDirection = direction;
+            return true;
+        }
+    }
 }

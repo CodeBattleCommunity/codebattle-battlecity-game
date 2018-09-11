@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.client;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -34,11 +34,12 @@ import com.codenjoy.dojo.services.RandomDice;
 public class YourSolver implements Solver<Board> {
 
     // this is your email
-    private static final String USER_NAME = "bakon2@gmail.com";
+    private static final String USER_NAME = "client@ai.ru";
     // you can get this code after registration on the server with your email
     // http://server-ip:8080/codenjoy-contest/board/player/your@email.com?code=12345678901234567890
-    private static final String CODE = "14210784881070354251";
+    private static final String CODE = "19944435002139229632";
 
+    private static int count = 0;
     private Dice dice;
     private Board board;
 
@@ -48,11 +49,12 @@ public class YourSolver implements Solver<Board> {
 
     @Override
     public String get(Board board) {
+        count++;
         this.board = board;
         if (board.isGameOver()) return "";
-
-        return Direction.UP.toString() + Direction.ACT();
-
+        if (count / 10 % 2 == 1)
+            return Direction.RIGHT.toString();
+        else return  Direction.LEFT.toString();
     }
 
     public static void main(String[] args) {

@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.client;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -72,7 +72,10 @@ public class Board extends AbstractBoard<Elements> {
         return get(Elements.TANK_UP,
                 Elements.TANK_DOWN,
                 Elements.TANK_LEFT,
-                Elements.TANK_RIGHT).isEmpty();
+                Elements.TANK_RIGHT).isEmpty() && get(Elements.HALF_TANK_UP,
+                Elements.HALF_TANK_DOWN,
+                Elements.HALF_TANK_LEFT,
+                Elements.HALF_TANK_RIGHT).isEmpty();
     }
 
     public boolean isBulletAt(int x, int y) {
