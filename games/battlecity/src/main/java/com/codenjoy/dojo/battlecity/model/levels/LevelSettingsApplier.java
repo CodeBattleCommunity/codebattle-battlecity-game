@@ -23,6 +23,7 @@ package com.codenjoy.dojo.battlecity.model.levels;
  */
 
 import com.codenjoy.dojo.battlecity.model.GameSettings;
+import com.codenjoy.dojo.services.AdminControlService;
 import com.codenjoy.dojo.services.settings.Parameter;
 
 import org.slf4j.Logger;
@@ -38,6 +39,11 @@ import java.util.Optional;
 public class LevelSettingsApplier {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private AdminControlService adminControlService;
+
+    public LevelSettingsApplier(AdminControlService adminControlService) {
+        this.adminControlService = adminControlService;
+    }
 
     /**
      * If property is present in Level Setting configuration it will be updated in Game Setting
@@ -69,6 +75,12 @@ public class LevelSettingsApplier {
                         Parameter parameter = (Parameter<?>) gameSettingsProperty.getReadMethod().invoke(settings);
                         parameter.update(levelPropertyValue.get());
                     }
+                }
+
+                if (levelSettings.getGameSpeed().isPresent()) {
+                    logger.info("Override game speed by level setting, speed = " + levelSettings.getGameSpeed().get());
+
+                    adminControlService.changeGameSpeed(levelSettings.getGameSpeed().get());
                 }
             }
         } catch (Exception e) {

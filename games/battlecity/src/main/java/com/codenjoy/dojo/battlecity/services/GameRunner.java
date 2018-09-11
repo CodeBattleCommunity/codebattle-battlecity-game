@@ -74,8 +74,8 @@ public class GameRunner extends AbstractGameType implements GameType {
                 aiTankFactory,
                 gameSettings,
                 new ResourcesLevelRegistryImpl(
-                        MAPS_PREFIX, MAP_FILES_EXTENSION, SETTINGS_EXTENSION,
-                        new YmlLevelSettingsLoaderImpl()));
+                        MAPS_PREFIX, MAP_FILES_EXTENSION, SETTINGS_EXTENSION, new YmlLevelSettingsLoaderImpl()),
+                adminControlService);
 
         GameModeRegistry modeRegistry = new StaticGameModeRegistryImpl(battlecity.getGameController());
         battlecity.setModeRegistry(modeRegistry);

@@ -32,8 +32,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
@@ -53,7 +51,7 @@ public class TanksEventsTest {
     public void setup() {
         enemy = utils.tank(1, 5, Direction.DOWN);
 
-        game = new Battlecity(null, null,null);
+        game = new Battlecity(null, null,null, null);
 
         events = mock(EventListener.class);
         player = utils.player(1, 1, 2, 2, events);

@@ -36,6 +36,7 @@ public class LevelSettingsImpl implements LevelSettings {
     private Integer ticksToUpdateHedgehogs;
     private Integer maxHedgehogLifetime;
     private Integer minHedgehogLifetime;
+    private Integer gameSpeed;
 
     @Override
     public Optional<String> getGameMode() {
@@ -125,5 +126,14 @@ public class LevelSettingsImpl implements LevelSettings {
 
     public void setMinHedgehogLifetime(int minHedgehogLifetime) {
         this.minHedgehogLifetime = minHedgehogLifetime;
+    }
+
+    @Override
+    public Optional<Integer> getGameSpeed() {
+        return Optional.ofNullable(gameSpeed);
+    }
+
+    public void setGameSpeed(Integer gameSpeed) {
+        this.gameSpeed = gameSpeed;
     }
 }

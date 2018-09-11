@@ -29,8 +29,6 @@ import com.codenjoy.dojo.services.printer.PrinterFactoryImpl;
 import org.junit.Test;
 import org.mockito.stubbing.OngoingStubbing;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
@@ -51,7 +49,7 @@ public class SingleTest {
     private TankFactory playerTankFactory = new PlayerTankFactory(dice1, null);
 
     public void givenGame() {
-        game = new Battlecity(null, null, null);
+        game = new Battlecity(null, null, null, null);
         tanks1 = new Single(game, null, printerFactory, new PlayerTankFactory(dice1, null));
         tanks2 = new Single(game, null, printerFactory, new PlayerTankFactory(dice2, null));
         player1 = tanks1.getPlayer();
