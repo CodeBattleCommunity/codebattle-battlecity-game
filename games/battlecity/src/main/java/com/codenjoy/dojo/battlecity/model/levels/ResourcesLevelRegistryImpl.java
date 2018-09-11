@@ -30,20 +30,43 @@ import java.util.stream.Collectors;
 public class ResourcesLevelRegistryImpl implements LevelRegistry {
 
     private String classPathPrefix;
-    private String extension;
+    private String mapExt;
+    private String settingsExt;
+    private LevelSettingsLoader levelSettingsLoader;
 
-    public ResourcesLevelRegistryImpl(String classPathPrefix, String extension) {
+    public ResourcesLevelRegistryImpl(String classPathPrefix, String mapExt, String settingsExt,
+                                      LevelSettingsLoader levelSettingsLoader) {
         this.classPathPrefix = classPathPrefix;
-        this.extension = extension;
+        this.mapExt = mapExt;
+        this.settingsExt = settingsExt;
+        this.levelSettingsLoader = levelSettingsLoader;
     }
 
     @Override
     public LevelInfo getLevelByName(String levelName) {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(classPathPrefix + levelName + extension);
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(classPathPrefix + levelName + mapExt);
 
         String mapBody = new BufferedReader(new InputStreamReader(inputStream))
                 .lines().collect(Collectors.joining("\n"));
 
-        return new LevelInfo(mapBody);
+        LevelSettings levelSettings = getLevelSettings(levelName);
+
+        return new LevelInfo(mapBody, levelSettings);
+    }
+
+    private LevelSettings getLevelSettings(String levelName) {
+        InputStream settingsInputStream =
+                getClass().getClassLoader().getResourceAsStream(getBaseName(levelName) + settingsExt);
+
+        LevelSettings levelSettings = null;
+
+        if (settingsInputStream != null) {
+            levelSettings = levelSettingsLoader.loadLevelSettings(settingsInputStream);
+        }
+        return levelSettings;
+    }
+
+    private String getBaseName(String levelName) {
+        return classPathPrefix + levelName;
     }
 }

@@ -22,20 +22,17 @@ package com.codenjoy.dojo.battlecity.model.levels;
  * #L%
  */
 
-public class LevelInfo {
-    private String map;
-    private LevelSettings levelSettings;
+import java.util.Optional;
 
-    public LevelInfo(String map, LevelSettings levelSettings) {
-        this.map = map;
-        this.levelSettings = levelSettings;
-    }
-
-    public String getMap() {
-        return map;
-    }
-
-    public LevelSettings getLevelSettings() {
-        return levelSettings;
-    }
+public interface LevelSettings {
+    Optional<String> getGameMode();
+    Optional<Integer> getInitialPlayerAmmoCount();
+    Optional<Integer> getInitialAIAmmoCount();
+    Optional<Integer> getAmmoBonusCountOnMap();
+    Optional<Integer> getAmmoBonusLifeCycle();
+    Optional<Integer> getAmmoQuantityInAmmoBonus();
+    Optional<Integer> getMaxHedgeHogsOnMap();
+    Optional<Integer> getTicksToUpdateHedgehogs();
+    Optional<Integer> getMaxHedgehogLifetime();
+    Optional<Integer> getMinHedgehogLifetime();
 }

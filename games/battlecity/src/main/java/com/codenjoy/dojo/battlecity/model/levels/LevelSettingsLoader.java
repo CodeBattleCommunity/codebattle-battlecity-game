@@ -22,20 +22,8 @@ package com.codenjoy.dojo.battlecity.model.levels;
  * #L%
  */
 
-public class LevelInfo {
-    private String map;
-    private LevelSettings levelSettings;
+import java.io.InputStream;
 
-    public LevelInfo(String map, LevelSettings levelSettings) {
-        this.map = map;
-        this.levelSettings = levelSettings;
-    }
-
-    public String getMap() {
-        return map;
-    }
-
-    public LevelSettings getLevelSettings() {
-        return levelSettings;
-    }
+public interface LevelSettingsLoader {
+    LevelSettings loadLevelSettings(InputStream inputStream);
 }

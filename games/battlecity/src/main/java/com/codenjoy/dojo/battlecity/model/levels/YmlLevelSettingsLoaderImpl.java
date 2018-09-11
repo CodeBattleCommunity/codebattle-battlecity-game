@@ -22,20 +22,24 @@ package com.codenjoy.dojo.battlecity.model.levels;
  * #L%
  */
 
-public class LevelInfo {
-    private String map;
-    private LevelSettings levelSettings;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
-    public LevelInfo(String map, LevelSettings levelSettings) {
-        this.map = map;
-        this.levelSettings = levelSettings;
-    }
+import java.io.InputStream;
 
-    public String getMap() {
-        return map;
-    }
+public class YmlLevelSettingsLoaderImpl implements LevelSettingsLoader {
 
-    public LevelSettings getLevelSettings() {
-        return levelSettings;
+    @Override
+    public LevelSettings loadLevelSettings(InputStream inputStream) {
+        Yaml yaml = new Yaml(new Constructor(LevelSettingsImpl.class));
+        yaml.setBeanAccess(BeanAccess.FIELD);
+
+        try {
+            LevelSettingsImpl settings = yaml.load(inputStream);
+            return settings;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
 }
