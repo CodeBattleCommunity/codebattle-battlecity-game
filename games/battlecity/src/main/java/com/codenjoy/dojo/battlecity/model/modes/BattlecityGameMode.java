@@ -22,6 +22,8 @@ package com.codenjoy.dojo.battlecity.model.modes;
  * #L%
  */
 
+import com.codenjoy.dojo.battlecity.model.Battlecity;
+import com.codenjoy.dojo.battlecity.model.Player;
 import com.codenjoy.dojo.battlecity.services.Scores;
 
 public interface BattlecityGameMode {
@@ -33,4 +35,6 @@ public interface BattlecityGameMode {
     void afterTick();
 
     void onScoresEvent(Object event, Scores scores);
+
+    void onPlayerIsDead(Battlecity game, Player player);
 }

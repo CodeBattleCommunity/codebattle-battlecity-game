@@ -1,14 +1,13 @@
-gameMode: 'Classic'
+gameMode: 'Deathmatch'
 gameSpeed: 200
-initialPlayerAmmoCount: 20
+initialPlayerAmmoCount: 15
 initialAIAmmoCount: 200
 ammoBonusCountOnMap: 6
 ammoBonusLifeCycle: 20
 ammoQuantityInAmmoBonus: 10
-maxHedgeHogsOnMap: 5
+maxHedgeHogsOnMap: 0
 ticksToUpdateHedgehogs: 20
-maxHedgehogLifetime: 30
-minHedgehogLifetime: 15
+maxHedgehogLifetime: 0
+minHedgehogLifetime: 0
 playerTicksPerBullet: 4
 aiTicksPerBullet: 1
-

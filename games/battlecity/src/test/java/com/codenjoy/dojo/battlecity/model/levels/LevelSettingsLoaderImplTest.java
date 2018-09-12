@@ -52,6 +52,8 @@ public class LevelSettingsLoaderImplTest {
         assertThat(settings.getTicksToUpdateHedgehogs(), equalTo(Optional.of(7)));
         assertThat(settings.getMaxHedgehogLifetime(), equalTo(Optional.of(8)));
         assertThat(settings.getMinHedgehogLifetime(), equalTo(Optional.of(9)));
+        assertThat(settings.getPlayerTicksPerBullet(), equalTo(Optional.of(10)));
+        assertThat(settings.getAiTicksPerBullet(), equalTo(Optional.of(11)));
     }
 
     private ByteArrayInputStream getInputStream(String content) {
@@ -69,5 +71,7 @@ public class LevelSettingsLoaderImplTest {
             "ticksToUpdateHedgehogs: 7\n" +
             "maxHedgehogLifetime: 8\n" +
             "minHedgehogLifetime: 9\n" +
+            "playerTicksPerBullet: 10\n" +
+            "aiTicksPerBullet: 11\n" +
             "";
 }

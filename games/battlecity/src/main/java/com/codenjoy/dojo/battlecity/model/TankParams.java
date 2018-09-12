@@ -26,28 +26,24 @@ import com.codenjoy.dojo.services.Direction;
 
 public class TankParams {
 
-    private static final int DEFAULT_AI_TICKS_PER_BULLETS = 1;
-
     private int x;
     private int y;
     private Direction direction;
-    private int ticksPerBullets;
 
     private TankParams() {}
 
-    public static TankParams newTankParams(int x, int y, Direction direction, int ticksPerBullets) {
+    public static TankParams newTankParams(int x, int y, Direction direction) {
         TankParams instance = new TankParams();
 
         instance.x = x;
         instance.y = y;
         instance.direction = direction;
-        instance.ticksPerBullets = ticksPerBullets;
 
         return instance;
     }
 
     public static TankParams newAITankParams(int x, int y, Direction direction) {
-        return newTankParams(x, y, direction, DEFAULT_AI_TICKS_PER_BULLETS);
+        return newTankParams(x, y, direction);
     }
 
     public int getX() {
@@ -60,9 +56,5 @@ public class TankParams {
 
     public Direction getDirection() {
         return direction;
-    }
-
-    public int getTicksPerBullets() {
-        return ticksPerBullets;
     }
 }

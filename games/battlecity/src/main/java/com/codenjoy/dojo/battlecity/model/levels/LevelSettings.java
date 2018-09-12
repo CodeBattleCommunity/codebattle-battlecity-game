@@ -36,4 +36,6 @@ public interface LevelSettings {
     Optional<Integer> getMaxHedgehogLifetime();
     Optional<Integer> getMinHedgehogLifetime();
     Optional<Integer> getGameSpeed();
+    Optional<Integer> getPlayerTicksPerBullet();
+    Optional<Integer> getAiTicksPerBullet();
 }

@@ -27,6 +27,8 @@ import com.codenjoy.dojo.services.settings.Parameter;
 import com.codenjoy.dojo.services.settings.Settings;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameSettingsImpl implements GameSettings {
 
@@ -42,15 +44,14 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> ammoBonusCountOnMap;
     private Parameter<Integer> ammoBonusLifeCycle;
     private Parameter<Integer> ammoQuantityInAmmoBonus;
+    private Parameter<Integer> playerTicksPerBullet;
+    private Parameter<Integer> aiTicksPerBullet;
 
 
     public GameSettingsImpl(Settings settings) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
         initialAIAmmoCount = settings.addEditBox("Initial AI Ammo Count").type(Integer.class).def(5000);
-        gameModeName = settings.addSelect("Game Mode",
-                Arrays.asList(BattlecityGameModes.CLASSIC.getName(),
-                        BattlecityGameModes.PLAYERS_VERSUS_AI.getName(),
-                        BattlecityGameModes.PLAYERS_ONLY.getName()))
+        gameModeName = settings.addSelect("Game Mode", getGameModes())
                 .type(String.class).def(BattlecityGameModes.CLASSIC.getName());
 
         ticksToUpdateHedgehogs = settings.addEditBox("Ticks to update Hedgehogs").type(Integer.class).def(10);
@@ -63,6 +64,15 @@ public class GameSettingsImpl implements GameSettings {
         ammoBonusCountOnMap = settings.addEditBox("Ammo Bonus Count On Map").type(Integer.class).def(4);
         ammoBonusLifeCycle = settings.addEditBox("Ammo Bonus Life Cycle").type(Integer.class).def(15);
         ammoQuantityInAmmoBonus = settings.addEditBox("Number Of Ammo In Ammo Bonus").type(Integer.class).def(5);
+
+        playerTicksPerBullet = settings.addEditBox("Player Ticks per Bullet").type(Integer.class).def(4);
+        aiTicksPerBullet = settings.addEditBox("AI Ticks per Bullet").type(Integer.class).def(1);
+    }
+
+    private List<Object> getGameModes() {
+        return Arrays.stream(BattlecityGameModes.values())
+                .map(BattlecityGameModes::getName)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -119,5 +129,15 @@ public class GameSettingsImpl implements GameSettings {
     @Override
     public Parameter<Integer> getMinHedgehogLifetime() {
         return minHedgehogLifetime;
+    }
+
+    @Override
+    public Parameter<Integer> getPlayerTicksPerBullet() {
+        return playerTicksPerBullet;
+    }
+
+    @Override
+    public Parameter<Integer> getAiTicksPerBullet() {
+        return aiTicksPerBullet;
     }
 }

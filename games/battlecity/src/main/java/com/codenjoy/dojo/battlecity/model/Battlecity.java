@@ -66,6 +66,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private List<Moat> moats;
     private List<AmmoBonus> ammoBonuses;
     private List<Player> players = new LinkedList<>();
+    private List<Player> alivePlayers = new LinkedList<>();
     private TankFactory aiTankFactory;
     private GameSettings settings;
     private AdminControlService adminControlService;
@@ -102,6 +103,8 @@ public class Battlecity implements Tickable, ITanks, Field {
         LevelSettings levelSettings = levelInfo.getLevelSettings();
         new LevelSettingsApplier(adminControlService)
                 .applyGameSettings(settings, levelSettings);
+
+        alivePlayers = new LinkedList<>(players);
 
         ammoBonusController = new AmmoBonusController(this, settings);
 
@@ -210,7 +213,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         }
         for (Player player : players.toArray(new Player[0])) {
             if (!player.getTank().isAlive()) {
-                players.remove(player);
+                alivePlayers.remove(player);
             }
         }
     }
@@ -408,7 +411,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public List<Tank> getTanks() {
         LinkedList<Tank> result = new LinkedList<>(aiTanks);
-        for (Player player : players) {
+        for (Player player : alivePlayers) {
 //            if (player.getTank().isAlive()) { // TODO разремарить с тестом
             result.add(player.getTank());
 //            }
@@ -419,14 +422,19 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public void remove(Player player) {   // TODO test me
         players.remove(player);
+        alivePlayers.remove(player);
     }
 
     @Override
     public void newGame(Player player) {  // TODO test me
         if (!players.contains(player)) {
             players.add(player);
+            alivePlayers.add(player);
+            
+            player.newHero(this);
+        } else {
+            gameMode.onPlayerIsDead(this, player);
         }
-        player.newHero(this);
     }
 
     @Override
@@ -553,11 +561,16 @@ public class Battlecity implements Tickable, ITanks, Field {
                 }
             }
         }
+
+        @Override
+        public void resurrectPlayer(Player player) {
+            if (players.contains(player) && !alivePlayers.contains(player)) {
+                alivePlayers.add(player);
+            }
+        }
     }
 
     public GameController getGameController() {
         return gameController;
     }
-
-
 }
