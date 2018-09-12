@@ -22,22 +22,29 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.settings.Parameter;
+public class SimpleHealth implements Health {
+    private int lives;
 
-public interface GameSettings {
-    Parameter<Integer> getInitialPlayerAmmoCount();
-    Parameter<Integer> getInitialAIAmmoCount();
-    Parameter<String> getGameMode();
-    Parameter<String> getMap();
-    Parameter<Integer> getAmmoBonusCountOnMap();
-    Parameter<Integer> getAmmoBonusLifeCycle();
-    Parameter<Integer> getAmmoQuantityInAmmoBonus();
-    Parameter<Integer> getMaxHedgeHogsOnMap();
-    Parameter<Integer> getTicksToUpdateHedgehogs();
-    Parameter<Integer> getMaxHedgehogLifetime();
-    Parameter<Integer> getMinHedgehogLifetime();
-    Parameter<Integer> getPlayerTicksPerBullet();
-    Parameter<Integer> getAiTicksPerBullet();
-    Parameter<Integer> getInitialPlayerLivesCount();
-    Parameter<Integer> getInitialAILivesCount();
+    public SimpleHealth(int startLives) {
+        this.lives = startLives;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return lives > 0;
+    }
+
+    @Override
+    public void doDamage(int damagePower) {
+        lives -= damagePower;
+
+        if (lives < 0) {
+            lives = 0;
+        }
+    }
+
+    @Override
+    public void addLives(int livesCount) {
+        lives += livesCount;
+    }
 }

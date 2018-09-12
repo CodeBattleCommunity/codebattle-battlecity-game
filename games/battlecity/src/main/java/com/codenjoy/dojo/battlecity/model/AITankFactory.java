@@ -41,6 +41,7 @@ public class AITankFactory implements TankFactory {
                 dice,
                 tankParams.getDirection(),
                 gameSettings.getAiTicksPerBullet().getValue(),
-                gameSettings.getInitialAIAmmoCount());
+                gameSettings.getInitialAIAmmoCount(),
+                gameSettings.getInitialAILivesCount().getValue());
     }
 }

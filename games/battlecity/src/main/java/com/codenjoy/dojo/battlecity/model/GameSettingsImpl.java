@@ -47,6 +47,8 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> ammoQuantityInAmmoBonus;
     private Parameter<Integer> playerTicksPerBullet;
     private Parameter<Integer> aiTicksPerBullet;
+    private Parameter<Integer> initialPlayerLivesCount;
+    private Parameter<Integer> initialAILivesCount;
 
 
     public GameSettingsImpl(Settings settings, LevelRegistry levelRegistry) {
@@ -71,6 +73,9 @@ public class GameSettingsImpl implements GameSettings {
 
         playerTicksPerBullet = settings.addEditBox("Player Ticks per Bullet").type(Integer.class).def(4);
         aiTicksPerBullet = settings.addEditBox("AI Ticks per Bullet").type(Integer.class).def(1);
+
+        initialPlayerLivesCount = settings.addEditBox("Player Start Lives Count").type(Integer.class).def(1);
+        initialAILivesCount = settings.addEditBox("AI Start Lives Count").type(Integer.class).def(1);
     }
 
     private List<Object> getGameModes() {
@@ -113,8 +118,6 @@ public class GameSettingsImpl implements GameSettings {
         return ammoQuantityInAmmoBonus;
     }
 
-
-
     @Override
     public Parameter<Integer> getMaxHedgeHogsOnMap() {
         return maxHedgeHogsOnMap;
@@ -143,5 +146,15 @@ public class GameSettingsImpl implements GameSettings {
     @Override
     public Parameter<Integer> getAiTicksPerBullet() {
         return aiTicksPerBullet;
+    }
+
+    @Override
+    public Parameter<Integer> getInitialPlayerLivesCount() {
+        return initialPlayerLivesCount;
+    }
+
+    @Override
+    public Parameter<Integer> getInitialAILivesCount() {
+        return initialAILivesCount;
     }
 }

@@ -11,3 +11,5 @@ maxHedgehogLifetime: 0
 minHedgehogLifetime: 0
 playerTicksPerBullet: 4
 aiTicksPerBullet: 1
+initialPlayerLivesCount: 1
+initialAILivesCount: 1

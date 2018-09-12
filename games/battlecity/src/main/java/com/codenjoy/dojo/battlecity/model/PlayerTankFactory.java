@@ -41,6 +41,7 @@ public class PlayerTankFactory implements TankFactory {
                 tankParams.getDirection(),
                 dice,
                 gameSettings.getPlayerTicksPerBullet().getValue(),
-                gameSettings.getInitialPlayerAmmoCount());
+                gameSettings.getInitialPlayerAmmoCount(),
+                gameSettings.getInitialPlayerLivesCount().getValue());
     }
 }

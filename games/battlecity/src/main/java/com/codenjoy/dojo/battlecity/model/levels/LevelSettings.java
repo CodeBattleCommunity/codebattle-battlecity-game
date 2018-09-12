@@ -38,4 +38,6 @@ public interface LevelSettings {
     Optional<Integer> getGameSpeed();
     Optional<Integer> getPlayerTicksPerBullet();
     Optional<Integer> getAiTicksPerBullet();
+    Optional<Integer> getInitialPlayerLivesCount();
+    Optional<Integer> getInitialAILivesCount();
 }
