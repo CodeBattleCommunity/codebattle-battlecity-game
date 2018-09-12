@@ -22,6 +22,10 @@ package com.codenjoy.dojo.battlecity.model.levels;
  * #L%
  */
 
+import java.util.List;
+
 public interface LevelRegistry {
     LevelInfo getLevelByName(String levelName);
+
+    List<?> getAvailableMapsNames();
 }

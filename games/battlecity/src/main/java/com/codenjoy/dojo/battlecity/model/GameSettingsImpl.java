@@ -22,6 +22,7 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
+import com.codenjoy.dojo.battlecity.model.levels.LevelRegistry;
 import com.codenjoy.dojo.battlecity.model.modes.BattlecityGameModes;
 import com.codenjoy.dojo.services.settings.Parameter;
 import com.codenjoy.dojo.services.settings.Settings;
@@ -48,7 +49,7 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> aiTicksPerBullet;
 
 
-    public GameSettingsImpl(Settings settings) {
+    public GameSettingsImpl(Settings settings, LevelRegistry levelRegistry) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
         initialAIAmmoCount = settings.addEditBox("Initial AI Ammo Count").type(Integer.class).def(5000);
         gameModeName = settings.addSelect("Game Mode", getGameModes())
@@ -59,8 +60,11 @@ public class GameSettingsImpl implements GameSettings {
         maxHedgehogLifetime = settings.addEditBox("Maximum Hedgehogs lifetime").type(Integer.class).def(30);
         minHedgehogLifetime = settings.addEditBox("Minimum Hedgehogs lifetime").type(Integer.class).def(4);
 
+        List<?> maps = levelRegistry.getAvailableMapsNames();
+        map = settings.addSelect("Map", (List<Object>)maps)
+                .type(String.class)
+                .def("default");
 
-        map = settings.addEditBox("Map").type(String.class).def("default");
         ammoBonusCountOnMap = settings.addEditBox("Ammo Bonus Count On Map").type(Integer.class).def(4);
         ammoBonusLifeCycle = settings.addEditBox("Ammo Bonus Life Cycle").type(Integer.class).def(15);
         ammoQuantityInAmmoBonus = settings.addEditBox("Number Of Ammo In Ammo Bonus").type(Integer.class).def(5);
