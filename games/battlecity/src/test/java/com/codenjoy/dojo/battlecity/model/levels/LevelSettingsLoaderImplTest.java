@@ -54,6 +54,8 @@ public class LevelSettingsLoaderImplTest {
         assertThat(settings.getMinHedgehogLifetime(), equalTo(Optional.of(9)));
         assertThat(settings.getPlayerTicksPerBullet(), equalTo(Optional.of(10)));
         assertThat(settings.getAiTicksPerBullet(), equalTo(Optional.of(11)));
+        assertThat(settings.getInitialPlayerLivesCount(), equalTo(Optional.of(12)));
+        assertThat(settings.getInitialAILivesCount(), equalTo(Optional.of(13)));
     }
 
     private ByteArrayInputStream getInputStream(String content) {
@@ -73,5 +75,7 @@ public class LevelSettingsLoaderImplTest {
             "minHedgehogLifetime: 9\n" +
             "playerTicksPerBullet: 10\n" +
             "aiTicksPerBullet: 11\n" +
+            "initialPlayerLivesCount: 12\n" +
+            "initialAILivesCount: 13\n" +
             "";
 }

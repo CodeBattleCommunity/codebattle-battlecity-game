@@ -22,22 +22,8 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.settings.Parameter;
-
-public interface GameSettings {
-    Parameter<Integer> getInitialPlayerAmmoCount();
-    Parameter<Integer> getInitialAIAmmoCount();
-    Parameter<String> getGameMode();
-    Parameter<String> getMap();
-    Parameter<Integer> getAmmoBonusCountOnMap();
-    Parameter<Integer> getAmmoBonusLifeCycle();
-    Parameter<Integer> getAmmoQuantityInAmmoBonus();
-    Parameter<Integer> getMaxHedgeHogsOnMap();
-    Parameter<Integer> getTicksToUpdateHedgehogs();
-    Parameter<Integer> getMaxHedgehogLifetime();
-    Parameter<Integer> getMinHedgehogLifetime();
-    Parameter<Integer> getPlayerTicksPerBullet();
-    Parameter<Integer> getAiTicksPerBullet();
-    Parameter<Integer> getInitialPlayerLivesCount();
-    Parameter<Integer> getInitialAILivesCount();
+public interface Health {
+    boolean isAlive();
+    void doDamage(int damagePower);
+    void addLives(int livesCount);
 }

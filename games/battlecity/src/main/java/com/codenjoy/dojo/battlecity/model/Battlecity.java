@@ -246,9 +246,12 @@ public class Battlecity implements Tickable, ITanks, Field {
                 return;
             }
 
-            triggerEventForTankKill(bullet, tank);
+            tank.doDamage(bullet);
 
-            tank.kill(bullet);
+            if (!tank.isAlive()) {
+                triggerEventForTankKill(bullet, tank);
+            }
+
             bullet.onDestroy();  // TODO заимплементить взрыв
             return;
         }

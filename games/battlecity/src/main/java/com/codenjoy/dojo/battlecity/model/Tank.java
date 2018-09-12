@@ -40,8 +40,9 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     private boolean alive;
     private Gun gun;
     private ObstacleEffect obstacleEffect;
+    private final Health health;
 
-    public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo) {
+    public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo, int startLives) {
         super(x, y, direction);
         gun = new Gun(ticksPerBullets);
         bullets = new LinkedList<>();
@@ -50,6 +51,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         alive = true;
         this.dice = dice;
         this.ammunition = new Ammunition(initialAmmo);
+        this.health = new SimpleHealth(startLives);
     }
 
     void turn(Direction direction) {
@@ -221,6 +223,14 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             }
         } else {
             return Elements.BANG;
+        }
+    }
+
+    public void doDamage(Bullet bullet) {
+        health.doDamage(1);
+
+        if (!health.isAlive()) {
+            this.alive = false;
         }
     }
 

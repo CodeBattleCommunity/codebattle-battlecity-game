@@ -39,6 +39,8 @@ public class LevelSettingsImpl implements LevelSettings {
     private Integer gameSpeed;
     private Integer playerTicksPerBullet;
     private Integer aiTicksPerBullet;
+    private Integer initialPlayerLivesCount;
+    private Integer initialAILivesCount;
 
     @Override
     public Optional<String> getGameMode() {
@@ -155,5 +157,23 @@ public class LevelSettingsImpl implements LevelSettings {
 
     public void setAiTicksPerBullet(Integer aiTicksPerBullet) {
         this.aiTicksPerBullet = aiTicksPerBullet;
+    }
+
+    @Override
+    public Optional<Integer> getInitialPlayerLivesCount() {
+        return Optional.ofNullable(initialPlayerLivesCount);
+    }
+
+    @Override
+    public Optional<Integer> getInitialAILivesCount() {
+        return Optional.ofNullable(initialAILivesCount);
+    }
+
+    public void setInitialPlayerLivesCount(Integer initialPlayerLivesCount) {
+        this.initialPlayerLivesCount = initialPlayerLivesCount;
+    }
+
+    public void setInitialAILivesCount(Integer initialAILivesCount) {
+        this.initialAILivesCount = initialAILivesCount;
     }
 }
