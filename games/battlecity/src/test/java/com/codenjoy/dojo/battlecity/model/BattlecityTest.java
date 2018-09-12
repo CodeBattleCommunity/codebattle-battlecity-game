@@ -88,7 +88,7 @@ public class BattlecityTest {
         Player player = mock(Player.class);
         when(player.getTank()).thenReturn(tank);
         players.add(player);
-        tank.setField(game);
+        tank.locateTankOnRandomField(game);
         game.newGame(player);
         return player;
     }

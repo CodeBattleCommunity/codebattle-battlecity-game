@@ -93,7 +93,7 @@ public class TankTest {
     private Player initPlayer(Battlecity game, Tank tank) {
         Player player = mock(Player.class);
         when(player.getTank()).thenReturn(tank);
-        tank.setField(game);
+        tank.locateTankOnRandomField(game);
         game.newGame(player);
         return player;
     }

@@ -55,7 +55,7 @@ public class Player {
 
     public void newHero(Battlecity game) {
         createNewPlayerTank(game);
-        tank.setField(game);
+        tank.locateTankOnRandomField(game);
     }
 
     private void createNewPlayerTank(Battlecity tanks) {
