@@ -23,13 +23,19 @@ package com.codenjoy.dojo.battlecity.services;
  */
 
 
-import com.codenjoy.dojo.battlecity.client.ai.ApofigSolver;
-import com.codenjoy.dojo.battlecity.model.*;
-import com.codenjoy.dojo.battlecity.model.levels.YmlLevelSettingsLoaderImpl;
+import com.codenjoy.dojo.battlecity.model.AITankFactory;
+import com.codenjoy.dojo.battlecity.model.Battlecity;
+import com.codenjoy.dojo.battlecity.model.Elements;
+import com.codenjoy.dojo.battlecity.model.GameSettings;
+import com.codenjoy.dojo.battlecity.model.GameSettingsImpl;
+import com.codenjoy.dojo.battlecity.model.PlayerTankFactory;
+import com.codenjoy.dojo.battlecity.model.Single;
+import com.codenjoy.dojo.battlecity.model.TankFactory;
+import com.codenjoy.dojo.battlecity.model.levels.LevelRegistry;
 import com.codenjoy.dojo.battlecity.model.levels.ResourcesLevelRegistryImpl;
+import com.codenjoy.dojo.battlecity.model.levels.YmlLevelSettingsLoaderImpl;
 import com.codenjoy.dojo.battlecity.model.modes.GameModeRegistry;
 import com.codenjoy.dojo.battlecity.model.modes.StaticGameModeRegistryImpl;
-import com.codenjoy.dojo.client.WebSocketRunner;
 import com.codenjoy.dojo.services.AbstractGameType;
 import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.Game;
@@ -47,34 +53,38 @@ public class GameRunner extends AbstractGameType implements GameType {
 
     public final static boolean SINGLE = GameMode.SINGLE_MODE;
 
+    private static final String BATTLECITY_GAME_NAME = "battlecity";
+
     private static final String MAPS_PREFIX = "battlecity/maps/";
     private static final String MAP_FILES_EXTENSION = ".map";
-    private static final String BATTLECITY_GAME_NAME = "battlecity";
     private static final String SETTINGS_EXTENSION = ".settings.yml";
 
     private Battlecity battleCityGame;
     private TankFactory aiTankFactory;
     private TankFactory playerTankFactory;
     private GameSettings gameSettings;
+    private final LevelRegistry levelRegistry;
 
     public GameRunner() {
-        gameSettings = getGameSettings(settings);
+        levelRegistry = new ResourcesLevelRegistryImpl(
+                MAPS_PREFIX, MAP_FILES_EXTENSION, SETTINGS_EXTENSION, new YmlLevelSettingsLoaderImpl());
+
+        gameSettings = getGameSettings(settings, levelRegistry);
 
         RandomDice dice = new RandomDice();
         aiTankFactory = new AITankFactory(dice, gameSettings);
         playerTankFactory = new PlayerTankFactory(dice, gameSettings);
     }
 
-    private GameSettings getGameSettings(Settings settings) {
-        return new GameSettingsImpl(settings);
+    private GameSettings getGameSettings(Settings settings, LevelRegistry levelRegistry) {
+        return new GameSettingsImpl(settings, levelRegistry);
     }
 
     private Battlecity newBattleCityGame() {
         Battlecity battlecity = new Battlecity(
                 aiTankFactory,
                 gameSettings,
-                new ResourcesLevelRegistryImpl(
-                        MAPS_PREFIX, MAP_FILES_EXTENSION, SETTINGS_EXTENSION, new YmlLevelSettingsLoaderImpl()),
+                levelRegistry,
                 adminControlService);
 
         GameModeRegistry modeRegistry = new StaticGameModeRegistryImpl(battlecity.getGameController());
