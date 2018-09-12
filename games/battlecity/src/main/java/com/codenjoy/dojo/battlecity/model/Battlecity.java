@@ -225,9 +225,9 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     void addAI(Tank tank) {
         if (tank != null) {
-            tank.setField(this);
+            tank.locateTankOnRandomField(this);
         }
-        tank.setField(this);
+        tank.locateTankOnRandomField(this);
         aiTanks.add(tank);
     }
 

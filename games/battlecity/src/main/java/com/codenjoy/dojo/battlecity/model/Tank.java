@@ -161,11 +161,11 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         return new LinkedList<>(bullets);
     }
 
-    public void setField(Field field) {
+    public void locateTankOnRandomField(Field field) {
         this.field = field;
         int xx = x;
         int yy = y;
-        while (field.isBarrier(xx, yy)) {
+        while (field.isFieldOccupied(xx, yy)) {
             xx = dice.next(field.size());
             yy = dice.next(field.size());
         }
