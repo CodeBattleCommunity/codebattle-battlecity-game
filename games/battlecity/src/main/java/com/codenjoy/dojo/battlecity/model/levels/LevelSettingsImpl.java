@@ -37,6 +37,8 @@ public class LevelSettingsImpl implements LevelSettings {
     private Integer maxHedgehogLifetime;
     private Integer minHedgehogLifetime;
     private Integer gameSpeed;
+    private Integer playerTicksPerBullet;
+    private Integer aiTicksPerBullet;
 
     @Override
     public Optional<String> getGameMode() {
@@ -92,39 +94,39 @@ public class LevelSettingsImpl implements LevelSettings {
         this.gameMode = gameMode;
     }
 
-    public void setInitialPlayerAmmoCount(int initialPlayerAmmoCount) {
+    public void setInitialPlayerAmmoCount(Integer initialPlayerAmmoCount) {
         this.initialPlayerAmmoCount = initialPlayerAmmoCount;
     }
 
-    public void setInitialAIAmmoCount(int initialAIAmmoCount) {
+    public void setInitialAIAmmoCount(Integer initialAIAmmoCount) {
         this.initialAIAmmoCount = initialAIAmmoCount;
     }
 
-    public void setAmmoBonusCountOnMap(int ammoBonusCountOnMap) {
+    public void setAmmoBonusCountOnMap(Integer ammoBonusCountOnMap) {
         this.ammoBonusCountOnMap = ammoBonusCountOnMap;
     }
 
-    public void setAmmoBonusLifeCycle(int ammoBonusLifeCycle) {
+    public void setAmmoBonusLifeCycle(Integer ammoBonusLifeCycle) {
         this.ammoBonusLifeCycle = ammoBonusLifeCycle;
     }
 
-    public void setAmmoQuantityInAmmoBonus(int ammoQuantityInAmmoBonus) {
+    public void setAmmoQuantityInAmmoBonus(Integer ammoQuantityInAmmoBonus) {
         this.ammoQuantityInAmmoBonus = ammoQuantityInAmmoBonus;
     }
 
-    public void setMaxHedgeHogsOnMap(int maxHedgeHogsOnMap) {
+    public void setMaxHedgeHogsOnMap(Integer maxHedgeHogsOnMap) {
         this.maxHedgeHogsOnMap = maxHedgeHogsOnMap;
     }
 
-    public void setTicksToUpdateHedgehogs(int ticksToUpdateHedgehogs) {
+    public void setTicksToUpdateHedgehogs(Integer ticksToUpdateHedgehogs) {
         this.ticksToUpdateHedgehogs = ticksToUpdateHedgehogs;
     }
 
-    public void setMaxHedgehogLifetime(int maxHedgehogLifetime) {
+    public void setMaxHedgehogLifetime(Integer maxHedgehogLifetime) {
         this.maxHedgehogLifetime = maxHedgehogLifetime;
     }
 
-    public void setMinHedgehogLifetime(int minHedgehogLifetime) {
+    public void setMinHedgehogLifetime(Integer minHedgehogLifetime) {
         this.minHedgehogLifetime = minHedgehogLifetime;
     }
 
@@ -135,5 +137,23 @@ public class LevelSettingsImpl implements LevelSettings {
 
     public void setGameSpeed(Integer gameSpeed) {
         this.gameSpeed = gameSpeed;
+    }
+
+    @Override
+    public Optional<Integer> getPlayerTicksPerBullet() {
+        return Optional.ofNullable(playerTicksPerBullet);
+    }
+
+    @Override
+    public Optional<Integer> getAiTicksPerBullet() {
+        return Optional.ofNullable(aiTicksPerBullet);
+    }
+
+    public void setPlayerTicksPerBullet(Integer playerTicksPerBullet) {
+        this.playerTicksPerBullet = playerTicksPerBullet;
+    }
+
+    public void setAiTicksPerBullet(Integer aiTicksPerBullet) {
+        this.aiTicksPerBullet = aiTicksPerBullet;
     }
 }

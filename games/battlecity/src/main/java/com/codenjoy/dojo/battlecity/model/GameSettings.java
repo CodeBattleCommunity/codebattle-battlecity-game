@@ -36,6 +36,6 @@ public interface GameSettings {
     Parameter<Integer> getTicksToUpdateHedgehogs();
     Parameter<Integer> getMaxHedgehogLifetime();
     Parameter<Integer> getMinHedgehogLifetime();
-
-
+    Parameter<Integer> getPlayerTicksPerBullet();
+    Parameter<Integer> getAiTicksPerBullet();
 }

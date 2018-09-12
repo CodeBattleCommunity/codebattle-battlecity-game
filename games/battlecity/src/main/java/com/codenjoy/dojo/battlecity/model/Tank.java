@@ -224,10 +224,6 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         }
     }
 
-    public void refreshState() {
-        ammunition.refreshAmmo();
-    }
-
     public enum Type {
         Player, AI
     }

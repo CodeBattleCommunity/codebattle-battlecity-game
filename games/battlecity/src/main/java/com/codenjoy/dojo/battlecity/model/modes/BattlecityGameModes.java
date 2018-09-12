@@ -27,7 +27,8 @@ import java.util.Arrays;
 public enum BattlecityGameModes {
     CLASSIC("Classic"),
     PLAYERS_VERSUS_AI("PlayersVersusAI"),
-    PLAYERS_ONLY("PlayersOnly");
+    PLAYERS_ONLY("PlayersOnly"),
+    DEATH_MATCH("Deathmatch");
 
     private String name;
 

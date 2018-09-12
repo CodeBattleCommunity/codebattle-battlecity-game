@@ -47,6 +47,9 @@ public class StaticGameModeRegistryImpl implements GameModeRegistry {
             case PLAYERS_ONLY:
                 return new BattlecityPlayersOnlyGameMode(controller);
 
+            case DEATH_MATCH:
+                return new DeathMatchGameMode(controller);
+
             default: return defaultMode();
         }
     }

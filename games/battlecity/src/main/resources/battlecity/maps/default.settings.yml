@@ -9,4 +9,6 @@ maxHedgeHogsOnMap: 0
 ticksToUpdateHedgehogs: 10
 maxHedgehogLifetime: 20
 minHedgehogLifetime: 10
+playerTicksPerBullet: 4
+aiTicksPerBullet: 1
 

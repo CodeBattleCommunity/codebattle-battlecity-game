@@ -28,15 +28,15 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.EventListener;
 
 public class Player {
-    private static final int TICKS_PER_BULLETS = 4;
-
     private Tank tank;
+    private TankFactory playerTankFactory;
     private EventListener listener;
 
     public Player(EventListener listener, TankFactory playerTankFactory) {
         this.listener = listener;
         tank = playerTankFactory.createTank(
-                TankParams.newTankParams(0, 0, Direction.UP, TICKS_PER_BULLETS));
+                TankParams.newTankParams(0, 0, Direction.UP));
+        this.playerTankFactory = playerTankFactory;
     }
 
     public Tank getTank() {
@@ -53,9 +53,16 @@ public class Player {
         tank.kill(null);
     }
 
-    public void newHero(Battlecity tanks) {
-        tank.removeBullets();
-        tank.setField(tanks);
-        tank.refreshState();
+    public void newHero(Battlecity game) {
+        createNewPlayerTank(game);
+        tank.setField(game);
+    }
+
+    private void createNewPlayerTank(Battlecity tanks) {
+        tanks.getTanks().remove(tank);
+
+        tank = playerTankFactory.createTank(
+                TankParams.newTankParams(0, 0, Direction.UP));
+        tanks.getTanks().add(tank);
     }
 }

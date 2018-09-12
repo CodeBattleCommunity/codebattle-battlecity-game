@@ -22,8 +22,10 @@ package com.codenjoy.dojo.battlecity.model.modes;
  * #L%
  */
 
-import com.codenjoy.dojo.battlecity.model.scores.DefaultScoresCalculator;
+import com.codenjoy.dojo.battlecity.model.Battlecity;
 import com.codenjoy.dojo.battlecity.model.GameController;
+import com.codenjoy.dojo.battlecity.model.Player;
+import com.codenjoy.dojo.battlecity.model.scores.DefaultScoresCalculator;
 import com.codenjoy.dojo.battlecity.model.scores.ScoresCalculator;
 import com.codenjoy.dojo.battlecity.services.Scores;
 
@@ -50,6 +52,12 @@ public class DefaultBattlecityGameMode implements BattlecityGameMode {
     @Override
     public void afterTick() {
 
+    }
+
+    @Override
+    public void onPlayerIsDead(Battlecity battlecity, Player player) {
+        controller.resurrectPlayer(player);
+        player.newHero(battlecity);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model;
+package com.codenjoy.dojo.battlecity.model.modes;
 
 /*-
  * #%L
@@ -22,11 +22,28 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
-public interface GameController {
+import com.codenjoy.dojo.battlecity.model.Battlecity;
+import com.codenjoy.dojo.battlecity.model.GameController;
+import com.codenjoy.dojo.battlecity.model.Player;
 
-    void createAITanks();
+public class DeathMatchGameMode extends DefaultBattlecityGameMode {
 
-    void newAI();
+    public DeathMatchGameMode(GameController controller) {
+        super(controller);
+    }
 
-    void resurrectPlayer(Player player);
+    @Override
+    public void onPlayerIsDead(Battlecity battlecity, Player player) {
+        // do not respawn tank
+    }
+
+    @Override
+    public void startGame() {
+        controller.createAITanks();
+    }
+
+    @Override
+    public void beforeTick() {
+        controller.newAI();
+    }
 }
