@@ -54,6 +54,10 @@ public class HedgeHogController implements Tickable {
     }
 
     private void createNewHedgeHogs() {
+        if (!hasCorrectSettings()) {
+            return;
+        }
+
         LengthToXY xy = new LengthToXY(fieldController.size());
         final int numberOfHedgehogsForCreation =
                 maxHedgeHogsOnMap.getValue() - fieldController.getHedgeHogs().size();
@@ -78,6 +82,10 @@ public class HedgeHogController implements Tickable {
         } else {
             tick++;
         }
+    }
+
+    private boolean hasCorrectSettings() {
+        return maxHedgehogLifetime.getValue() > 0 && maxHedgeHogsOnMap.getValue() > 0;
     }
 
     private void removeDeadHedgeHogs() {

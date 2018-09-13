@@ -58,6 +58,10 @@ public class AmmoBonusController implements Tickable {
     }
 
     private void createNewAmmoBonus() {
+        if (!hasCorrectSettings()) {
+            return;
+        }
+
         if (tick >= ticksToUpdateGeneration.getValue()) {
             LengthToXY xy = new LengthToXY(field.size());
             final int numberOfAmmoBonusForCreation = maxAmmoBonusOnMap.getValue() - field.getAmmoBonuses().size();
@@ -84,14 +88,20 @@ public class AmmoBonusController implements Tickable {
         }
     }
 
+    private boolean hasCorrectSettings() {
+        return maxAmmoBonusOnMap.getValue() > 0 && maxLifeTime.getValue() > 0;
+    }
+
     private void removePickedAmmoBonus() {
         field.getAmmoBonuses().removeIf(ammoBonus -> !ammoBonus.isAlive());
     }
 
     private int getLifeTime() {
+        if (maxLifeTime.getValue() <= 0) {
+            return 0;
+        }
+
         return minLifeTime.getValue()
                 + dice.next(maxLifeTime.getValue() - minLifeTime.getValue());
     }
-
-
 }

@@ -64,6 +64,10 @@ public class MedKitBonusController implements Tickable {
     }
 
     private void createNewMedKitBonuses() {
+        if (!hasCorrectSettings()) {
+            return;
+        }
+
         if (tick >= ticksToUpdateGeneration.getValue()) {
             LengthToXY xy = new LengthToXY(field.size());
 
@@ -90,11 +94,19 @@ public class MedKitBonusController implements Tickable {
 
     }
 
+    private boolean hasCorrectSettings() {
+        return maxElementsOnMap.getValue() > 0 && maxLifeTime.getValue() > 0;
+    }
+
     private int howManyElementsToCreate() {
         return randomElementsCount(minElementsOnMap, maxElementsOnMap) - elements.size();
     }
 
     private int randomElementsCount(Parameter<Integer> minElementsOnMap, Parameter<Integer> maxElementsOnMap) {
+        if (maxElementsOnMap.getValue() <= 0) {
+            return 0;
+        }
+
         return minElementsOnMap.getValue()
                 + dice.next(maxElementsOnMap.getValue() - minElementsOnMap.getValue());
     }
