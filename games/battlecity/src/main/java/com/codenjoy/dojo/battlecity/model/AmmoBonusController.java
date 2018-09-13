@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -27,8 +27,6 @@ import com.codenjoy.dojo.services.LengthToXY;
 import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.settings.Parameter;
 
-import java.util.Random;
-
 public class AmmoBonusController implements Tickable {
 
     private Field field;
@@ -37,7 +35,6 @@ public class AmmoBonusController implements Tickable {
     private Dice dice;
     private final Parameter<Integer> maxLifeTime;
     private final Parameter<Integer> ammoQuantityInAmmoBonus;
-    private Random random = new Random();
     private int tick = 0;
     private Parameter<Integer> ticksToUpdateGeneration;
 
@@ -61,17 +58,17 @@ public class AmmoBonusController implements Tickable {
     }
 
     private void createNewAmmoBonus() {
-        LengthToXY xy = new LengthToXY(field.size());
-        final int numberOfAmmoBonusForCreation = maxAmmoBonusOnMap.getValue() - field.getAmmoBonuses().size();
-
-        boolean fieldOccupied;
-        int coverage = field.size() * field.size();
-
-        int createdElements = 0;
-
         if (tick >= ticksToUpdateGeneration.getValue()) {
-            while (createdElements <= numberOfAmmoBonusForCreation) {
-                int index = random.nextInt(coverage);
+            LengthToXY xy = new LengthToXY(field.size());
+            final int numberOfAmmoBonusForCreation = maxAmmoBonusOnMap.getValue() - field.getAmmoBonuses().size();
+
+            boolean fieldOccupied;
+            int coverage = field.size() * field.size();
+
+            int createdElements = 0;
+
+            while (createdElements < numberOfAmmoBonusForCreation) {
+                int index = dice.next(coverage);
                 int lifeCycleRandom = getLifeTime();
 
                 fieldOccupied = field.isFieldOccupied(xy.getXY(index).getX(), xy.getXY(index).getY());

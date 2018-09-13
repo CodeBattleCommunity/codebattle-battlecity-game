@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -60,24 +60,24 @@ public class MedKitBonusController implements Tickable {
     public void tick() {
         elements.forEach(MedKitBonus::tick);
         removeDeadMedKitBonuses();
-        createNewHMedKitBonuses();
+        createNewMedKitBonuses();
     }
 
-    private void createNewHMedKitBonuses() {
-        LengthToXY xy = new LengthToXY(field.size());
-
-        final int numberOfElementsForCreation = howManyElementsToCreate();
-        boolean fieldOccupied;
-        int coverage = field.size() * field.size();
-
-        int createdElements = 0;
-
+    private void createNewMedKitBonuses() {
         if (tick >= ticksToUpdateGeneration.getValue()) {
-            while (createdElements <= numberOfElementsForCreation) {
+            LengthToXY xy = new LengthToXY(field.size());
+
+            final int numberOfElementsForCreation = howManyElementsToCreate();
+
+            int coverage = field.size() * field.size();
+
+            int createdElements = 0;
+
+            while (createdElements < numberOfElementsForCreation) {
                 int index = dice.next(coverage);
                 int lifeCount = getLifeTime();
 
-                fieldOccupied = field.isFieldOccupied(xy.getXY(index).getX(), xy.getXY(index).getY());
+                boolean fieldOccupied = field.isFieldOccupied(xy.getXY(index).getX(), xy.getXY(index).getY());
                 if (!fieldOccupied) {
                     elements.add(new MedKitBonus(xy.getXY(index), lifeCount));
                     createdElements++;
@@ -91,13 +91,16 @@ public class MedKitBonusController implements Tickable {
     }
 
     private int howManyElementsToCreate() {
+        return randomElementsCount(minElementsOnMap, maxElementsOnMap) - elements.size();
+    }
+
+    private int randomElementsCount(Parameter<Integer> minElementsOnMap, Parameter<Integer> maxElementsOnMap) {
         return minElementsOnMap.getValue()
                 + dice.next(maxElementsOnMap.getValue() - minElementsOnMap.getValue());
     }
 
     private int getLifeTime() {
-        return minLifeTime.getValue()
-                + dice.next(maxLifeTime.getValue() - minLifeTime.getValue());
+        return randomElementsCount(minLifeTime, maxLifeTime);
     }
 
     private void removeDeadMedKitBonuses() {
