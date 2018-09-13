@@ -70,14 +70,17 @@ public class MedKitBonusController implements Tickable {
         boolean fieldOccupied;
         int coverage = field.size() * field.size();
 
+        int createdElements = 0;
+
         if (tick >= ticksToUpdateGeneration.getValue()) {
-            while (elements.size() < numberOfElementsForCreation) {
+            while (createdElements <= numberOfElementsForCreation) {
                 int index = dice.next(coverage);
                 int lifeCount = getLifeTime();
 
                 fieldOccupied = field.isFieldOccupied(xy.getXY(index).getX(), xy.getXY(index).getY());
                 if (!fieldOccupied) {
                     elements.add(new MedKitBonus(xy.getXY(index), lifeCount));
+                    createdElements++;
                 }
             }
             tick = 0;

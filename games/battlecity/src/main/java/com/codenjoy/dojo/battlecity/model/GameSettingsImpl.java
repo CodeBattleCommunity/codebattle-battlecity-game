@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 
 public class GameSettingsImpl implements GameSettings {
 
+
     private Parameter<Integer> initialPlayerAmmoCount;
     private Parameter<Integer> initialAIAmmoCount;
     private Parameter<String> gameModeName;
@@ -43,7 +44,9 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> minHedgehogLifetime;
 
     private Parameter<Integer> ammoBonusCountOnMap;
-    private Parameter<Integer> ammoBonusLifeCycle;
+    private Parameter<Integer> minAmmoBonusLifeCycle;
+    private Parameter<Integer> maxAmmoBonusLifeCycle;
+    private Parameter<Integer> ammoBonusGenerationCycle;
     private Parameter<Integer> ammoQuantityInAmmoBonus;
     private Parameter<Integer> playerTicksPerBullet;
     private Parameter<Integer> aiTicksPerBullet;
@@ -74,8 +77,10 @@ public class GameSettingsImpl implements GameSettings {
                 .def("default");
 
         ammoBonusCountOnMap = settings.addEditBox("Ammo Bonus Count On Map").type(Integer.class).def(4);
-        ammoBonusLifeCycle = settings.addEditBox("Ammo Bonus Life Cycle").type(Integer.class).def(15);
         ammoQuantityInAmmoBonus = settings.addEditBox("Number Of Ammo In Ammo Bonus").type(Integer.class).def(5);
+        minAmmoBonusLifeCycle = settings.addEditBox("Minimum Ammo Bonus LifeTime").type(Integer.class).def(20);
+        maxAmmoBonusLifeCycle = settings.addEditBox("Maximum Ammo Bonus LifeTime").type(Integer.class).def(30);
+        ammoBonusGenerationCycle = settings.addEditBox("Ammo Bonus Generation Life Cycle").type(Integer.class).def(20);
 
         playerTicksPerBullet = settings.addEditBox("Player Ticks per Bullet").type(Integer.class).def(4);
         aiTicksPerBullet = settings.addEditBox("AI Ticks per Bullet").type(Integer.class).def(1);
@@ -83,11 +88,12 @@ public class GameSettingsImpl implements GameSettings {
         initialPlayerLivesCount = settings.addEditBox("Player Start Lives Count").type(Integer.class).def(1);
         initialAILivesCount = settings.addEditBox("AI Start Lives Count").type(Integer.class).def(1);
 
-        medKitBonusLifeCycle = settings.addEditBox("MedKit Bonus Life Cycle").type(Integer.class).def(20);
+        medKitBonusLifeCycle = settings.addEditBox("MedKit Bonus Generation Life Cycle").type(Integer.class).def(20);
         minMedKitBonusOnMap = settings.addEditBox("Minimum MedKit Bonus On Map").type(Integer.class).def(0);
         maxMedKitBonusOnMap = settings.addEditBox("Maximum MedKit Bonus On Map").type(Integer.class).def(5);
         minMedKitBonusLifeTime = settings.addEditBox("Minimum MedKit Bonus LifeTime").type(Integer.class).def(20);
         maxMedKitBonusLifeTime = settings.addEditBox("Maximum MedKit Bonus LifeTime").type(Integer.class).def(30);
+
     }
 
     private List<Object> getGameModes() {
@@ -121,13 +127,23 @@ public class GameSettingsImpl implements GameSettings {
     }
 
     @Override
-    public Parameter<Integer> getAmmoBonusLifeCycle() {
-        return ammoBonusLifeCycle;
+    public Parameter<Integer> getAmmoQuantityInAmmoBonus() {
+        return ammoQuantityInAmmoBonus;
     }
 
     @Override
-    public Parameter<Integer> getAmmoQuantityInAmmoBonus() {
-        return ammoQuantityInAmmoBonus;
+    public Parameter<Integer> getMaxAmmoBonusLifeCycle() {
+        return maxAmmoBonusLifeCycle;
+    }
+
+    @Override
+    public Parameter<Integer> getMinAmmoBonusLifeCycle() {
+        return minAmmoBonusLifeCycle;
+    }
+
+    @Override
+    public Parameter<Integer> getAmmoBonusGenerationCycle() {
+        return ammoBonusGenerationCycle;
     }
 
     @Override
