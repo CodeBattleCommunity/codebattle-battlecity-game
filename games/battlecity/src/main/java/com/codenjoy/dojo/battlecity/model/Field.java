@@ -44,6 +44,8 @@ public interface Field {
 
     boolean isAmmoBonus(int x, int y);
 
+    boolean isMedKitBonus(int x, int y);
+
     AmmoBonus getAmmoBonus(int newX, int newY);
 
     List<AmmoBonus> getAmmoBonuses();
@@ -70,10 +72,13 @@ public interface Field {
 
     List<WormHole> getWormHoles();
 
+    List<MedKitBonus> getMedKitBonuses();
+
     BoardReader reader();
 
     WormHole getWormHole(int newX, int newY);
 
-
     Obstacle getObstacle(int x, int y);
+
+    MedKitBonus getMedKitBonus(int newX, int newY);
 }

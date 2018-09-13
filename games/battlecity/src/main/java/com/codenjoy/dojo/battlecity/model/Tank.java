@@ -24,7 +24,12 @@ package com.codenjoy.dojo.battlecity.model;
 
 
 import com.codenjoy.dojo.battlecity.model.obstacle.ObstacleEffect;
-import com.codenjoy.dojo.services.*;
+import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.Direction;
+import com.codenjoy.dojo.services.Joystick;
+import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.State;
+import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.settings.Parameter;
 
 import java.util.LinkedList;
@@ -113,6 +118,12 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             obstacleEffect = field.getObstacle(newX, newY).getObstacleEffect();
             setTankPosition(newX, newY);
 
+        } else if (field.isMedKitBonus(newX, newY)) {
+            MedKitBonus healthBonus = field.getMedKitBonus(newX, newY);
+
+            setTankPosition(newX, newY);
+            health.addLives(healthBonus.getBonusLives());
+            healthBonus.destroy();
         } else {
             setTankPosition(newX, newY);
         }

@@ -38,9 +38,11 @@ public class Level implements Field {
     private TankFactory aiTankFactory;
 
     private String map;
+    private GameSettings gameSettings;
 
-    public Level(String map, TankFactory aiTankFactory) {
+    public Level(String map, TankFactory aiTankFactory, GameSettings gameSettings) {
         this.map = map;
+        this.gameSettings = gameSettings;
 
         removeSpaces();
         xy = new LengthToXY(size());
@@ -78,6 +80,11 @@ public class Level implements Field {
     }
 
     @Override
+    public boolean isMedKitBonus(int x, int y) {
+        return false;
+    }
+
+    @Override
     public AmmoBonus getAmmoBonus(int newX, int newY) {
         return null;
     }
@@ -90,6 +97,19 @@ public class Level implements Field {
             if (map.charAt(index) == Elements.BONUS_AMMO.ch) {
                 Point pt = xy.getXY(index);
                 result.add(new AmmoBonus(pt));
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<MedKitBonus> getMedKitBonuses() {
+        List<MedKitBonus> result = new LinkedList<>();
+
+        for (int index = 0; index < map.length(); index++) {
+            if (map.charAt(index) == Elements.MEDKIT.ch) {
+                Point pt = xy.getXY(index);
+                result.add(new MedKitBonus(pt, gameSettings.getMaxMedKitBonusLifeTime().getValue()));
             }
         }
         return result;
@@ -140,6 +160,7 @@ public class Level implements Field {
                 List<Point> result = new LinkedList<>();
                 result.addAll(Level.this.getBorders());
                 result.addAll(Level.this.getAmmoBonuses());
+                result.addAll(Level.this.getMedKitBonuses());
                 result.addAll(Level.this.getWormHoles());
                 result.addAll(Level.this.getBogs());
                 result.addAll(Level.this.getSands());
@@ -299,5 +320,10 @@ public class Level implements Field {
     @Override
     public Obstacle getObstacle(int x, int y) {
         return null; // do nothing
+    }
+
+    @Override
+    public MedKitBonus getMedKitBonus(int newX, int newY) {
+        return null;
     }
 }

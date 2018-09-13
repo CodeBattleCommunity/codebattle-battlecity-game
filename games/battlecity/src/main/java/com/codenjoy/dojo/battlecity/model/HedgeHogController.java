@@ -24,12 +24,13 @@ package com.codenjoy.dojo.battlecity.model;
 
 
 import com.codenjoy.dojo.services.LengthToXY;
+import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.settings.Parameter;
 
 import java.util.List;
 import java.util.Random;
 
-public class HedgeHogController {
+public class HedgeHogController implements Tickable {
 
     private Field fieldController;
     private final Parameter<Integer> maxHedgeHogsOnMap;
@@ -50,12 +51,6 @@ public class HedgeHogController {
         maxHedgehogLifetime = gameSettings.getMaxHedgehogLifetime();
         minHedgehogLifetime = gameSettings.getMinHedgehogLifetime();
         this.hedgeHogs = hedgeHogs;
-    }
-
-    public void refreshHedgeHogs() {
-        tick();
-        removeDeadHedgeHogs();
-        createNewHedgeHogs();
     }
 
     private void createNewHedgeHogs() {
@@ -83,16 +78,16 @@ public class HedgeHogController {
         } else {
             tick++;
         }
-
     }
 
     private void removeDeadHedgeHogs() {
         hedgeHogs.removeIf(h -> !h.isAlive());
     }
 
-    private void tick() {
+    @Override
+    public void tick() {
         hedgeHogs.forEach(HedgeHog::tick);
+        removeDeadHedgeHogs();
+        createNewHedgeHogs();
     }
-
-
 }
