@@ -74,7 +74,7 @@ public class GameSettingsImpl implements GameSettings {
         List<?> maps = levelRegistry.getAvailableMapsNames();
         map = settings.addSelect("Map", (List<Object>)maps)
                 .type(String.class)
-                .def("default");
+                .def("warmup");
 
         ammoBonusCountOnMap = settings.addEditBox("Ammo Bonus Count On Map").type(Integer.class).def(4);
         ammoQuantityInAmmoBonus = settings.addEditBox("Number Of Ammo In Ammo Bonus").type(Integer.class).def(5);
