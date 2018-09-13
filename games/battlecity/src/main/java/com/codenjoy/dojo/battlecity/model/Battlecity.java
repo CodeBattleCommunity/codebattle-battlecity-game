@@ -123,7 +123,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.ammoBonuses = new LinkedList<>(level.getAmmoBonuses());
         this.medKitBonuses = new LinkedList<>(level.getMedKitBonuses());
 
-        ammoBonusController = new AmmoBonusController(this, settings);
+        ammoBonusController = new AmmoBonusController(this, settings, dice);
         medKitBonusController = new MedKitBonusController(this, settings, dice);
     }
 

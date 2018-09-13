@@ -30,7 +30,9 @@ public interface GameSettings {
     Parameter<String> getGameMode();
     Parameter<String> getMap();
     Parameter<Integer> getAmmoBonusCountOnMap();
-    Parameter<Integer> getAmmoBonusLifeCycle();
+    Parameter<Integer> getMaxAmmoBonusLifeCycle();
+    Parameter<Integer> getMinAmmoBonusLifeCycle();
+    Parameter<Integer> getAmmoBonusGenerationCycle();
     Parameter<Integer> getAmmoQuantityInAmmoBonus();
     Parameter<Integer> getMaxHedgeHogsOnMap();
     Parameter<Integer> getTicksToUpdateHedgehogs();
@@ -46,4 +48,6 @@ public interface GameSettings {
     Parameter<Integer> getMaxMedKitBonusOnMap();
     Parameter<Integer> getMinMedKitBonusLifeTime();
     Parameter<Integer> getMaxMedKitBonusLifeTime();
+
+
 }

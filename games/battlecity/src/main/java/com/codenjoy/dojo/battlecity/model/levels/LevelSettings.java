@@ -29,7 +29,9 @@ public interface LevelSettings {
     Optional<Integer> getInitialPlayerAmmoCount();
     Optional<Integer> getInitialAIAmmoCount();
     Optional<Integer> getAmmoBonusCountOnMap();
-    Optional<Integer> getAmmoBonusLifeCycle();
+    Optional<Integer> getMaxAmmoBonusLifeCycle();
+    Optional<Integer> getMinAmmoBonusLifeCycle();
+    Optional<Integer> getAmmoBonusGenerationCycle();
     Optional<Integer> getAmmoQuantityInAmmoBonus();
     Optional<Integer> getMaxHedgeHogsOnMap();
     Optional<Integer> getTicksToUpdateHedgehogs();

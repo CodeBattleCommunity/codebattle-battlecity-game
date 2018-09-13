@@ -46,7 +46,6 @@ public class LevelSettingsLoaderImplTest {
         assertThat(settings.getInitialPlayerAmmoCount(), equalTo(Optional.of(1)));
         assertThat(settings.getInitialAIAmmoCount(), equalTo(Optional.of(2)));
         assertThat(settings.getAmmoBonusCountOnMap(), equalTo(Optional.of(3)));
-        assertThat(settings.getAmmoBonusLifeCycle(), equalTo(Optional.of(4)));
         assertThat(settings.getAmmoQuantityInAmmoBonus(), equalTo(Optional.of(5)));
         assertThat(settings.getMaxHedgeHogsOnMap(), equalTo(Optional.of(6)));
         assertThat(settings.getTicksToUpdateHedgehogs(), equalTo(Optional.of(7)));
@@ -61,6 +60,9 @@ public class LevelSettingsLoaderImplTest {
         assertThat(settings.getMaxMedKitBonusOnMap(), equalTo(Optional.of(16)));
         assertThat(settings.getMinMedKitBonusLifeTime(), equalTo(Optional.of(17)));
         assertThat(settings.getMaxMedKitBonusLifeTime(), equalTo(Optional.of(18)));
+        assertThat(settings.getMinAmmoBonusLifeCycle(), equalTo(Optional.of(19)));
+        assertThat(settings.getMaxAmmoBonusLifeCycle(), equalTo(Optional.of(20)));
+        assertThat(settings.getAmmoBonusGenerationCycle(), equalTo(Optional.of(21)));
     }
 
     private ByteArrayInputStream getInputStream(String content) {
@@ -72,7 +74,6 @@ public class LevelSettingsLoaderImplTest {
             "initialPlayerAmmoCount: 1\n" +
             "initialAIAmmoCount: 2\n" +
             "ammoBonusCountOnMap: 3\n" +
-            "ammoBonusLifeCycle: 4\n" +
             "ammoQuantityInAmmoBonus: 5\n" +
             "maxHedgeHogsOnMap: 6\n" +
             "ticksToUpdateHedgehogs: 7\n" +
@@ -87,5 +88,8 @@ public class LevelSettingsLoaderImplTest {
             "maxMedKitBonusOnMap: 16\n" +
             "minMedKitBonusLifeTime: 17\n" +
             "maxMedKitBonusLifeTime: 18\n" +
+            "minAmmoBonusLifeCycle: 19\n" +
+            "maxAmmoBonusLifeCycle: 20\n" +
+            "ammoBonusGenerationCycle: 21\n" +
             "";
 }

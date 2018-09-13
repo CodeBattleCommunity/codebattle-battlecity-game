@@ -2,9 +2,13 @@ gameMode: 'Deathmatch'
 gameSpeed: 200
 initialPlayerAmmoCount: 15
 initialAIAmmoCount: 200
-ammoBonusCountOnMap: 6
-ammoBonusLifeCycle: 20
-ammoQuantityInAmmoBonus: 10
+
+ammoBonusCountOnMap: 5
+minAmmoBonusLifeCycle: 20
+maxAmmoBonusLifeCycle: 30
+ammoBonusGenerationCycle: 20
+ammoQuantityInAmmoBonus: 5
+
 maxHedgeHogsOnMap: 0
 ticksToUpdateHedgehogs: 20
 maxHedgehogLifetime: 0
@@ -13,3 +17,9 @@ playerTicksPerBullet: 4
 aiTicksPerBullet: 1
 initialPlayerLivesCount: 1
 initialAILivesCount: 1
+
+medKitBonusLifeCycle: 20
+minMedKitBonusOnMap: 0
+maxMedKitBonusOnMap: 0
+minMedKitBonusLifeTime: 0
+maxMedKitBonusLifeTime: 0

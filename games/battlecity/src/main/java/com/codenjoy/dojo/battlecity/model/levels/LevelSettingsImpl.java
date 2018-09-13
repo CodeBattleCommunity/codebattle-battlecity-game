@@ -30,7 +30,9 @@ public class LevelSettingsImpl implements LevelSettings {
     private Integer initialPlayerAmmoCount;
     private Integer initialAIAmmoCount;
     private Integer ammoBonusCountOnMap;
-    private Integer ammoBonusLifeCycle;
+    private Integer minAmmoBonusLifeCycle;
+    private Integer maxAmmoBonusLifeCycle;
+    private Integer ammoBonusGenerationCycle;
     private Integer ammoQuantityInAmmoBonus;
     private Integer maxHedgeHogsOnMap;
     private Integer ticksToUpdateHedgehogs;
@@ -68,8 +70,18 @@ public class LevelSettingsImpl implements LevelSettings {
     }
 
     @Override
-    public Optional<Integer> getAmmoBonusLifeCycle() {
-        return Optional.ofNullable(ammoBonusLifeCycle);
+    public Optional<Integer> getMaxAmmoBonusLifeCycle() {
+        return Optional.ofNullable(maxAmmoBonusLifeCycle);
+    }
+
+    @Override
+    public Optional<Integer> getMinAmmoBonusLifeCycle() {
+        return Optional.ofNullable(minAmmoBonusLifeCycle);
+    }
+
+    @Override
+    public Optional<Integer> getAmmoBonusGenerationCycle() {
+        return Optional.ofNullable(ammoBonusGenerationCycle);
     }
 
     @Override
@@ -114,7 +126,6 @@ public class LevelSettingsImpl implements LevelSettings {
     }
 
     public void setAmmoBonusLifeCycle(Integer ammoBonusLifeCycle) {
-        this.ammoBonusLifeCycle = ammoBonusLifeCycle;
     }
 
     public void setAmmoQuantityInAmmoBonus(Integer ammoQuantityInAmmoBonus) {
@@ -225,5 +236,17 @@ public class LevelSettingsImpl implements LevelSettings {
 
     public void setMaxMedKitBonusLifeTime(Integer maxMedKitBonusLifeTime) {
         this.maxMedKitBonusLifeTime = maxMedKitBonusLifeTime;
+    }
+
+    public void setMinAmmoBonusLifeCycle(Integer minAmmoBonusLifeCycle) {
+        this.minAmmoBonusLifeCycle = minAmmoBonusLifeCycle;
+    }
+
+    public void setMaxAmmoBonusLifeCycle(Integer maxAmmoBonusLifeCycle) {
+        this.maxAmmoBonusLifeCycle = maxAmmoBonusLifeCycle;
+    }
+
+    public void setAmmoBonusGenerationCycle(Integer ammoBonusGenerationCycle) {
+        this.ammoBonusGenerationCycle = ammoBonusGenerationCycle;
     }
 }
