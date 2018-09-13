@@ -1,6 +1,6 @@
 gameMode: 'Classic'
 gameSpeed: 200
-initialPlayerAmmoCount: 20
+initialPlayerAmmoCount: 100
 initialAIAmmoCount: 200
 
 ammoBonusCountOnMap: 5
@@ -17,7 +17,7 @@ playerTicksPerBullet: 4
 aiTicksPerBullet: 1
 
 medKitBonusLifeCycle: 40
-minMedKitBonusOnMap: 3
-maxMedKitBonusOnMap: 6
+minMedKitBonusOnMap: 2
+maxMedKitBonusOnMap: 4
 minMedKitBonusLifeTime: 30
 maxMedKitBonusLifeTime: 40

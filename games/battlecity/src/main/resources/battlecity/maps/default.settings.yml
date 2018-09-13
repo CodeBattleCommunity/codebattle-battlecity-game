@@ -1,6 +1,6 @@
 gameMode: 'Classic'
-gameSpeed: 500
-initialPlayerAmmoCount: 5
+gameSpeed: 400
+initialPlayerAmmoCount: 20
 initialAIAmmoCount: 500
 
 ammoBonusCountOnMap: 5
