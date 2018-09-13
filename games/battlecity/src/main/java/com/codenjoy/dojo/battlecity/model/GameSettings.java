@@ -40,4 +40,10 @@ public interface GameSettings {
     Parameter<Integer> getAiTicksPerBullet();
     Parameter<Integer> getInitialPlayerLivesCount();
     Parameter<Integer> getInitialAILivesCount();
+
+    Parameter<Integer> getMedKitBonusGenerationCycle();
+    Parameter<Integer> getMinMedKitBonusOnMap();
+    Parameter<Integer> getMaxMedKitBonusOnMap();
+    Parameter<Integer> getMinMedKitBonusLifeTime();
+    Parameter<Integer> getMaxMedKitBonusLifeTime();
 }

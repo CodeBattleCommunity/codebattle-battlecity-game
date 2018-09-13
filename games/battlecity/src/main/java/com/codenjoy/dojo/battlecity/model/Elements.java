@@ -38,8 +38,8 @@ public enum Elements implements CharElements {
     BATTLE_WALL('☼'),
     BANG('Ѡ'),
 
-
     BONUS_AMMO('◊'),
+    MEDKIT('☺'),
 
     CONSTRUCTION('╬', 3),
 

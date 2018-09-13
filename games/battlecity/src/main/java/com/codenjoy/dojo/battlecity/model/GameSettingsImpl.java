@@ -49,6 +49,11 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> aiTicksPerBullet;
     private Parameter<Integer> initialPlayerLivesCount;
     private Parameter<Integer> initialAILivesCount;
+    private Parameter<Integer> medKitBonusLifeCycle;
+    private Parameter<Integer> minMedKitBonusOnMap;
+    private Parameter<Integer> maxMedKitBonusOnMap;
+    private Parameter<Integer> minMedKitBonusLifeTime;
+    private Parameter<Integer> maxMedKitBonusLifeTime;
 
 
     public GameSettingsImpl(Settings settings, LevelRegistry levelRegistry) {
@@ -59,8 +64,9 @@ public class GameSettingsImpl implements GameSettings {
 
         ticksToUpdateHedgehogs = settings.addEditBox("Ticks to update Hedgehogs").type(Integer.class).def(10);
         maxHedgeHogsOnMap = settings.addEditBox("Maximum Hedgehogs on the map ").type(Integer.class).def(20);
-        maxHedgehogLifetime = settings.addEditBox("Maximum Hedgehogs lifetime").type(Integer.class).def(30);
+
         minHedgehogLifetime = settings.addEditBox("Minimum Hedgehogs lifetime").type(Integer.class).def(4);
+        maxHedgehogLifetime = settings.addEditBox("Maximum Hedgehogs lifetime").type(Integer.class).def(30);
 
         List<?> maps = levelRegistry.getAvailableMapsNames();
         map = settings.addSelect("Map", (List<Object>)maps)
@@ -76,6 +82,12 @@ public class GameSettingsImpl implements GameSettings {
 
         initialPlayerLivesCount = settings.addEditBox("Player Start Lives Count").type(Integer.class).def(1);
         initialAILivesCount = settings.addEditBox("AI Start Lives Count").type(Integer.class).def(1);
+
+        medKitBonusLifeCycle = settings.addEditBox("MedKit Bonus Life Cycle").type(Integer.class).def(20);
+        minMedKitBonusOnMap = settings.addEditBox("Minimum MedKit Bonus On Map").type(Integer.class).def(0);
+        maxMedKitBonusOnMap = settings.addEditBox("Maximum MedKit Bonus On Map").type(Integer.class).def(5);
+        minMedKitBonusLifeTime = settings.addEditBox("Minimum MedKit Bonus LifeTime").type(Integer.class).def(20);
+        maxMedKitBonusLifeTime = settings.addEditBox("Maximum MedKit Bonus LifeTime").type(Integer.class).def(30);
     }
 
     private List<Object> getGameModes() {
@@ -156,5 +168,30 @@ public class GameSettingsImpl implements GameSettings {
     @Override
     public Parameter<Integer> getInitialAILivesCount() {
         return initialAILivesCount;
+    }
+
+    @Override
+    public Parameter<Integer> getMedKitBonusGenerationCycle() {
+        return medKitBonusLifeCycle;
+    }
+
+    @Override
+    public Parameter<Integer> getMinMedKitBonusOnMap() {
+        return minMedKitBonusOnMap;
+    }
+
+    @Override
+    public Parameter<Integer> getMaxMedKitBonusOnMap() {
+        return maxMedKitBonusOnMap;
+    }
+
+    @Override
+    public Parameter<Integer> getMinMedKitBonusLifeTime() {
+        return minMedKitBonusLifeTime;
+    }
+
+    @Override
+    public Parameter<Integer> getMaxMedKitBonusLifeTime() {
+        return maxMedKitBonusLifeTime;
     }
 }

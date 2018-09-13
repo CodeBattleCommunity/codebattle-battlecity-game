@@ -65,6 +65,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private List<Sand> sands;
     private List<Moat> moats;
     private List<AmmoBonus> ammoBonuses;
+    private List<MedKitBonus> medKitBonuses;
     private List<Player> players = new LinkedList<>();
     private List<Player> alivePlayers = new LinkedList<>();
     private TankFactory aiTankFactory;
@@ -76,6 +77,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private LevelRegistry levelRegistry;
     private HedgeHogController hedgeHogController;
     private AmmoBonusController ammoBonusController;
+    private MedKitBonusController medKitBonusController;
 
     public Battlecity(TankFactory aiTankFactory,
                       GameSettings settings,
@@ -98,15 +100,14 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     private void loadLevel(String mapName) {
         LevelInfo levelInfo = levelRegistry.getLevelByName(mapName);
-        Level level = new Level(levelInfo.getMap(), aiTankFactory);
 
         LevelSettings levelSettings = levelInfo.getLevelSettings();
         new LevelSettingsApplier(adminControlService)
                 .applyGameSettings(settings, levelSettings);
 
-        alivePlayers = new LinkedList<>(players);
+        Level level = new Level(levelInfo.getMap(), aiTankFactory, settings);
 
-        ammoBonusController = new AmmoBonusController(this, settings);
+        alivePlayers = new LinkedList<>(players);
 
         aiCount = level.getTanks().size();
         this.size = level.size();
@@ -120,6 +121,10 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.sands = new LinkedList<>(level.getSands());
         this.moats = new LinkedList<>(level.getMoats());
         this.ammoBonuses = new LinkedList<>(level.getAmmoBonuses());
+        this.medKitBonuses = new LinkedList<>(level.getMedKitBonuses());
+
+        ammoBonusController = new AmmoBonusController(this, settings);
+        medKitBonusController = new MedKitBonusController(this, settings, dice);
     }
 
     @Override
@@ -127,8 +132,6 @@ public class Battlecity implements Tickable, ITanks, Field {
         checkRequireReloadLevel();
 
         removeDeadTanks();
-
-        ammoBonusController.refreshAmmoBonus();
 
         gameMode.beforeTick();
 
@@ -168,8 +171,6 @@ public class Battlecity implements Tickable, ITanks, Field {
     }
 
     private void processGameElements() {
-        ammoBonusController.tick();
-
         for (Tank tank : getTanks()) {
             tank.tick();
         }
@@ -202,7 +203,9 @@ public class Battlecity implements Tickable, ITanks, Field {
             }
         }
 
-        hedgeHogController.refreshHedgeHogs();
+        ammoBonusController.tick();
+        medKitBonusController.tick();
+        hedgeHogController.tick();
     }
 
     private void removeDeadTanks() {
@@ -226,9 +229,8 @@ public class Battlecity implements Tickable, ITanks, Field {
     void addAI(Tank tank) {
         if (tank != null) {
             tank.locateTankOnRandomField(this);
+            aiTanks.add(tank);
         }
-        tank.locateTankOnRandomField(this);
-        aiTanks.add(tank);
     }
 
 
@@ -347,6 +349,12 @@ public class Battlecity implements Tickable, ITanks, Field {
     }
 
     @Override
+    public boolean isMedKitBonus(int x, int y) {
+        return medKitBonuses.stream()
+                .anyMatch(bonus -> bonus.itsMe(x, y));
+    }
+
+    @Override
     public AmmoBonus getAmmoBonus(int x, int y) {
         return ammoBonuses.stream()
                 .filter(ammoBonus -> ammoBonus.itsMe(x, y))
@@ -357,6 +365,11 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public List<AmmoBonus> getAmmoBonuses() {
         return ammoBonuses;
+    }
+
+    @Override
+    public List<MedKitBonus> getMedKitBonuses() {
+        return medKitBonuses;
     }
 
     @Override
@@ -383,6 +396,14 @@ public class Battlecity implements Tickable, ITanks, Field {
     public Obstacle getObstacle(int x, int y) {
         return getObstacles().stream()
                 .filter(obstacle -> obstacle.itsMe(x, y))
+                .findAny()
+                .orElse(null);
+    }
+
+    @Override
+    public MedKitBonus getMedKitBonus(int newX, int newY) {
+        return getMedKitBonuses().stream()
+                .filter(obstacle -> obstacle.itsMe(newX, newY))
                 .findAny()
                 .orElse(null);
     }
@@ -467,6 +488,7 @@ public class Battlecity implements Tickable, ITanks, Field {
                 result.addAll(Battlecity.this.getSands());
                 result.addAll(Battlecity.this.getMoats());
                 result.addAll(Battlecity.this.getAmmoBonuses());
+                result.addAll(Battlecity.this.getMedKitBonuses());
                 result.addAll(Battlecity.this.getBullets());
                 return result;
             }
@@ -532,7 +554,8 @@ public class Battlecity implements Tickable, ITanks, Field {
             return Stream.of(getBullets(),
                     getWormHoles(),
                     getAmmoBonuses(),
-                    getObstacles())
+                    getObstacles(),
+                    getMedKitBonuses())
                     .flatMap(Collection::stream)
                     .anyMatch(point -> point.itsMe(x, y));
         } else {

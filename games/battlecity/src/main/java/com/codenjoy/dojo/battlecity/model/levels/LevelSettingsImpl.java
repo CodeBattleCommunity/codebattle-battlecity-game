@@ -41,6 +41,11 @@ public class LevelSettingsImpl implements LevelSettings {
     private Integer aiTicksPerBullet;
     private Integer initialPlayerLivesCount;
     private Integer initialAILivesCount;
+    private Integer medKitBonusLifeCycle;
+    private Integer minMedKitBonusOnMap;
+    private Integer maxMedKitBonusOnMap;
+    private Integer minMedKitBonusLifeTime;
+    private Integer maxMedKitBonusLifeTime;
 
     @Override
     public Optional<String> getGameMode() {
@@ -175,5 +180,50 @@ public class LevelSettingsImpl implements LevelSettings {
 
     public void setInitialAILivesCount(Integer initialAILivesCount) {
         this.initialAILivesCount = initialAILivesCount;
+    }
+
+    @Override
+    public Optional<Integer> getMedKitBonusLifeCycle() {
+        return Optional.ofNullable(medKitBonusLifeCycle);
+    }
+
+    @Override
+    public Optional<Integer> getMinMedKitBonusOnMap() {
+        return Optional.ofNullable(minMedKitBonusOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMaxMedKitBonusOnMap() {
+        return Optional.ofNullable(maxMedKitBonusOnMap);
+    }
+
+    public void setMedKitBonusLifeCycle(Integer medKitBonusLifeCycle) {
+        this.medKitBonusLifeCycle = medKitBonusLifeCycle;
+    }
+
+    public void setMinMedKitBonusOnMap(Integer minMedKitBonusOnMap) {
+        this.minMedKitBonusOnMap = minMedKitBonusOnMap;
+    }
+
+    public void setMaxMedKitBonusOnMap(Integer maxMedKitBonusOnMap) {
+        this.maxMedKitBonusOnMap = maxMedKitBonusOnMap;
+    }
+
+    @Override
+    public Optional<Integer> getMinMedKitBonusLifeTime() {
+        return Optional.ofNullable(minMedKitBonusLifeTime);
+    }
+
+    @Override
+    public Optional<Integer> getMaxMedKitBonusLifeTime() {
+        return Optional.ofNullable(maxMedKitBonusLifeTime);
+    }
+
+    public void setMinMedKitBonusLifeTime(Integer minMedKitBonusLifeTime) {
+        this.minMedKitBonusLifeTime = minMedKitBonusLifeTime;
+    }
+
+    public void setMaxMedKitBonusLifeTime(Integer maxMedKitBonusLifeTime) {
+        this.maxMedKitBonusLifeTime = maxMedKitBonusLifeTime;
     }
 }

@@ -23,11 +23,12 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 import com.codenjoy.dojo.services.LengthToXY;
+import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.settings.Parameter;
 
 import java.util.Random;
 
-public class AmmoBonusController {
+public class AmmoBonusController implements Tickable {
 
 
     private static final int MIN_LIFECYCLE = 10;
@@ -70,13 +71,10 @@ public class AmmoBonusController {
         field.getAmmoBonuses().removeIf(ammoBonus -> !ammoBonus.isAlive());
     }
 
-    public void refreshAmmoBonus() {
-        removePickedAmmoBonus();
-        createNewAmmoBonus();
-
-    }
-
+    @Override
     public void tick() {
         field.getAmmoBonuses().forEach(AmmoBonus::tick);
+        removePickedAmmoBonus();
+        createNewAmmoBonus();
     }
 }

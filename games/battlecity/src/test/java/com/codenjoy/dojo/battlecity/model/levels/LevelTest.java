@@ -45,7 +45,7 @@ public class LevelTest {
 
     @Test
     public void test() {
-        Level level = new Level("", new PlayerTankFactory(new RandomDice(), null));
+        Level level = new Level("", new PlayerTankFactory(new RandomDice(), null), null);
 
         assertEquals(34, level.size());
 

@@ -40,4 +40,9 @@ public interface LevelSettings {
     Optional<Integer> getAiTicksPerBullet();
     Optional<Integer> getInitialPlayerLivesCount();
     Optional<Integer> getInitialAILivesCount();
+    Optional<Integer> getMedKitBonusLifeCycle();
+    Optional<Integer> getMinMedKitBonusOnMap();
+    Optional<Integer> getMaxMedKitBonusOnMap();
+    Optional<Integer> getMinMedKitBonusLifeTime();
+    Optional<Integer> getMaxMedKitBonusLifeTime();
 }

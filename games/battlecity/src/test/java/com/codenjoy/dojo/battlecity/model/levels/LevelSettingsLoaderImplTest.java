@@ -56,6 +56,11 @@ public class LevelSettingsLoaderImplTest {
         assertThat(settings.getAiTicksPerBullet(), equalTo(Optional.of(11)));
         assertThat(settings.getInitialPlayerLivesCount(), equalTo(Optional.of(12)));
         assertThat(settings.getInitialAILivesCount(), equalTo(Optional.of(13)));
+        assertThat(settings.getMedKitBonusLifeCycle(), equalTo(Optional.of(14)));
+        assertThat(settings.getMinMedKitBonusOnMap(), equalTo(Optional.of(15)));
+        assertThat(settings.getMaxMedKitBonusOnMap(), equalTo(Optional.of(16)));
+        assertThat(settings.getMinMedKitBonusLifeTime(), equalTo(Optional.of(17)));
+        assertThat(settings.getMaxMedKitBonusLifeTime(), equalTo(Optional.of(18)));
     }
 
     private ByteArrayInputStream getInputStream(String content) {
@@ -77,5 +82,10 @@ public class LevelSettingsLoaderImplTest {
             "aiTicksPerBullet: 11\n" +
             "initialPlayerLivesCount: 12\n" +
             "initialAILivesCount: 13\n" +
+            "medKitBonusLifeCycle: 14\n" +
+            "minMedKitBonusOnMap: 15\n" +
+            "maxMedKitBonusOnMap: 16\n" +
+            "minMedKitBonusLifeTime: 17\n" +
+            "maxMedKitBonusLifeTime: 18\n" +
             "";
 }
