@@ -90,7 +90,7 @@ public class Single implements Game {    // TODO test me
             return getHeroData(player, true,
                     new GamePlayerAdditionalInfo.Builder()
                             .setAmmo(player.getTank().getAmmunition().getAmmoCount())
-                            .setLife(1) // TODO: Replace by life count taken from tank when it is implemented
+                            .setLife(player.getTank().getLifeCount())
                             .createGamePlayerAdditionalInfo());
         } catch (Exception e) {
             throw new IllegalStateException(e);
