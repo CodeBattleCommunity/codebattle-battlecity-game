@@ -1,5 +1,5 @@
-gameMode: 'Classic'
-gameSpeed: 300
+gameMode: 'PlayersOnly'
+gameSpeed: 400
 initialPlayerAmmoCount: 100
 initialAIAmmoCount: 200
 
@@ -9,10 +9,10 @@ maxAmmoBonusLifeCycle: 40
 ammoBonusGenerationCycle: 40
 ammoQuantityInAmmoBonus: 5
 
-maxHedgeHogsOnMap: 5
-ticksToUpdateHedgehogs: 20
-maxHedgehogLifetime: 30
-minHedgehogLifetime: 15
+maxHedgeHogsOnMap: 0
+ticksToUpdateHedgehogs: 0
+maxHedgehogLifetime: 0
+minHedgehogLifetime: 0
 playerTicksPerBullet: 4
 aiTicksPerBullet: 1
 
