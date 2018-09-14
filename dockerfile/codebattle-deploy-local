@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ARG GAMES=battlecity
 ARG CONTEXT=codenjoy-contest
+ARG SPRING_PROFILES=ws_v2
 
 COPY ./games /tmp/codebattle-server/CodingDojo/games
 
@@ -14,9 +15,9 @@ RUN cd /tmp/codebattle-server/CodingDojo/ \
 RUN cd /tmp/codebattle-server/CodingDojo/builder \
  && if [ "x$GAMES" = "x" ] ; \
          then \
-             mvn clean install -DskipTests -Dcontext=${CONTEXT} -DallGames ; \
+             mvn clean install -DskipTests -Dcontext=${CONTEXT} -DallGames -Dspring.profiles.active=${SPRING_PROFILES} ; \
          else \
-             mvn clean install -DskipTests -Dcontext=${CONTEXT} -P${GAMES} ; \
+             mvn clean install -DskipTests -Dcontext=${CONTEXT} -P${GAMES} -Dspring.profiles.active=${SPRING_PROFILES} ; \
          fi \
  && cp /tmp/codebattle-server/CodingDojo/builder/target/${CONTEXT}.war /var/lib/jetty/webapps
 
