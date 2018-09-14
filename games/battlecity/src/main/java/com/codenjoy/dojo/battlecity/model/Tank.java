@@ -245,6 +245,10 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         }
     }
 
+    public int getLifeCount() {
+        return health.getLives();
+    }
+
     public enum Type {
         Player, AI
     }

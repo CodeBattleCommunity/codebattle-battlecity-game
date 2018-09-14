@@ -26,4 +26,5 @@ public interface Health {
     boolean isAlive();
     void doDamage(int damagePower);
     void addLives(int livesCount);
+    int getLives();
 }

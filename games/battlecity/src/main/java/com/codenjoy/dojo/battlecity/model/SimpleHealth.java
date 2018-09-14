@@ -47,4 +47,9 @@ public class SimpleHealth implements Health {
     public void addLives(int livesCount) {
         lives += livesCount;
     }
+
+    @Override
+    public int getLives() {
+        return lives;
+    }
 }
