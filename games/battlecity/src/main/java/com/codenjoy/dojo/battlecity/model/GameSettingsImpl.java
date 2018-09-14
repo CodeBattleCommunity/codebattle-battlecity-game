@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 
 public class GameSettingsImpl implements GameSettings {
 
-
     private Parameter<Integer> initialPlayerAmmoCount;
     private Parameter<Integer> initialAIAmmoCount;
     private Parameter<String> gameModeName;
@@ -57,7 +56,6 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> maxMedKitBonusOnMap;
     private Parameter<Integer> minMedKitBonusLifeTime;
     private Parameter<Integer> maxMedKitBonusLifeTime;
-
 
     public GameSettingsImpl(Settings settings, LevelRegistry levelRegistry) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
