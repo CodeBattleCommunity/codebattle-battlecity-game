@@ -23,79 +23,32 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
-import com.codenjoy.dojo.services.LengthToXY;
-import com.codenjoy.dojo.services.Tickable;
-import com.codenjoy.dojo.services.settings.Parameter;
+import com.codenjoy.dojo.battlecity.model.controller.ElementController;
+import com.codenjoy.dojo.battlecity.model.controller.ElementControllerSettings;
+import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
-import java.util.Random;
 
-public class HedgeHogController implements Tickable {
+public class HedgeHogController extends ElementController<HedgeHog> {
 
-    private Field fieldController;
-    private final Parameter<Integer> maxHedgeHogsOnMap;
-    private final Parameter<Integer> ticksToUpdateHedgehogs;
-    private final Parameter<Integer> maxHedgehogLifetime;
-    private final Parameter<Integer> minHedgehogLifetime;
-    private Random random = new Random();
-    private int tick;
-    private boolean startGame = true;
-    private List<HedgeHog> hedgeHogs;
-
-
-    public HedgeHogController(Field fieldController, GameSettings gameSettings, List<HedgeHog> hedgeHogs) {
-        this.fieldController = fieldController;
-        // settings from admin's page
-        ticksToUpdateHedgehogs = gameSettings.getTicksToUpdateHedgehogs();
-        maxHedgeHogsOnMap = gameSettings.getMaxHedgeHogsOnMap();
-        maxHedgehogLifetime = gameSettings.getMaxHedgehogLifetime();
-        minHedgehogLifetime = gameSettings.getMinHedgehogLifetime();
-        this.hedgeHogs = hedgeHogs;
-    }
-
-    private void createNewHedgeHogs() {
-        if (!hasCorrectSettings()) {
-            return;
-        }
-
-        LengthToXY xy = new LengthToXY(fieldController.size());
-        final int numberOfHedgehogsForCreation =
-                maxHedgeHogsOnMap.getValue() - fieldController.getHedgeHogs().size();
-        int currentHedgeHogCount = 0;
-        int lifeCount = 0;
-        boolean fieldOccupied;
-        int coverage = fieldController.size() * fieldController.size();
-
-        if (tick >= ticksToUpdateHedgehogs.getValue() || startGame) {
-            while (currentHedgeHogCount < numberOfHedgehogsForCreation) {
-
-                int index = random.nextInt(coverage);
-                lifeCount = minHedgehogLifetime.getValue() + random.nextInt(maxHedgehogLifetime.getValue()); // время жизни для вновь созданных ежей
-                fieldOccupied = fieldController.isFieldOccupied(xy.getXY(index).getX(), xy.getXY(index).getY());
-                if (!fieldOccupied) {
-                    hedgeHogs.add(new HedgeHog(xy.getXY(index), lifeCount));
-                    currentHedgeHogCount++;
-                }
-            }
-            tick = 0;
-            startGame = false;
-        } else {
-            tick++;
-        }
-    }
-
-    private boolean hasCorrectSettings() {
-        return maxHedgehogLifetime.getValue() > 0 && maxHedgeHogsOnMap.getValue() > 0;
-    }
-
-    private void removeDeadHedgeHogs() {
-        hedgeHogs.removeIf(h -> !h.isAlive());
+    public HedgeHogController(Field fieldController, GameSettings settings, List<HedgeHog> elements, Dice dice) {
+        super(fieldController, settings, elements, dice);
     }
 
     @Override
-    public void tick() {
-        hedgeHogs.forEach(HedgeHog::tick);
-        removeDeadHedgeHogs();
-        createNewHedgeHogs();
+    protected HedgeHog createNewElement(Point point, int lifeCount) {
+        return new HedgeHog(point, lifeCount);
+    }
+
+    @Override
+    protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
+        ElementControllerSettings settings = new ElementControllerSettings();
+        settings.setMaxElementLifetime(gameSettings.getMaxHedgehogLifetime());
+        settings.setMinElementLifetime(gameSettings.getMinHedgehogLifetime());
+        settings.setMaxElementsOnMap(gameSettings.getMaxHedgeHogsOnMap());
+        settings.setTicksToUpdate(gameSettings.getTicksToUpdateHedgehogs());
+
+        return settings;
     }
 }

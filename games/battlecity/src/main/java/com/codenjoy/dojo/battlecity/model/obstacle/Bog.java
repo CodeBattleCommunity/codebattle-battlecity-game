@@ -38,6 +38,7 @@ public class Bog extends Obstacle {
 
     public Bog(Point point) {
         super(point);
+        this.mortal = false;
     }
 
     public Bog(Point point, int lifeCount) {
@@ -51,8 +52,10 @@ public class Bog extends Obstacle {
     }
 
     @Override
-    public ObstacleEffect getObstacleEffect(){
-        return new InfinityObstacleEffect();
+    public ObstacleEffect getObstacleEffect() {
+        if (this.mortal) {
+            return new FiniteObstacleEffect(lifeCount);
+        } else return new InfinityObstacleEffect();
     }
 
     @Override

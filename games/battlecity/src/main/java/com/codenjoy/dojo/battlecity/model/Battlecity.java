@@ -23,6 +23,7 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.controller.ElementController;
 import com.codenjoy.dojo.battlecity.model.events.YouKilledTankEvent;
 import com.codenjoy.dojo.battlecity.model.events.YourTankWasKilledEvent;
 import com.codenjoy.dojo.battlecity.model.levels.Level;
@@ -43,9 +44,7 @@ import com.codenjoy.dojo.services.RandomDice;
 import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Battlecity implements Tickable, ITanks, Field {
@@ -72,10 +71,11 @@ public class Battlecity implements Tickable, ITanks, Field {
     private GameController gameController;
     private GameModeRegistry modeRegistry;
     private LevelRegistry levelRegistry;
-    private HedgeHogController hedgeHogController;
+//    private HedgeHogController hedgeHogController;
     private AmmoBonusController ammoBonusController;
     private MedKitBonusController medKitBonusController;
-    private BogController bogController;
+//    private BogController bogController;
+    private List<ElementController> elementControllers;
 
     public Battlecity(TankFactory aiTankFactory,
                       GameSettings settings,
@@ -87,6 +87,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.settings = settings;
         this.adminControlService = adminControlService;
         this.gameController = new BattleCityGameController();
+        elementControllers = new ArrayList<>();
 
         setDice(new RandomDice()); // TODO вынести это чудо за пределы конструктора
     }
@@ -114,7 +115,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.borders = new LinkedList<>(level.getBorders());
         this.wormHoles = new LinkedList<>(level.getWormHoles());
         this.hedgeHogs = new LinkedList<>(level.getHedgeHogs());
-        hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
+//        hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
         this.bogs = new LinkedList<>(level.getBogs());
         this.sands = new LinkedList<>(level.getSands());
         this.moats = new LinkedList<>(level.getMoats());
@@ -123,7 +124,9 @@ public class Battlecity implements Tickable, ITanks, Field {
 
         ammoBonusController = new AmmoBonusController(this, settings, dice);
         medKitBonusController = new MedKitBonusController(this, settings, dice);
-        this.bogController = new BogController(this, settings, bogs);
+
+        elementControllers.add(new BogController(this, settings, bogs, dice));
+        elementControllers.add(new HedgeHogController(this, settings, hedgeHogs, dice));
     }
 
     @Override
@@ -202,10 +205,11 @@ public class Battlecity implements Tickable, ITanks, Field {
             }
         }
 
+        elementControllers.forEach(ElementController::tick);
+
         ammoBonusController.tick();
         medKitBonusController.tick();
-        hedgeHogController.tick();
-        bogController.tick();
+//        hedgeHogController.tick();
     }
 
     private void removeDeadTanks() {

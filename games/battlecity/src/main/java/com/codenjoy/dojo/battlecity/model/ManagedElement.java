@@ -22,42 +22,9 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
-import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.services.PointImpl;
-import com.codenjoy.dojo.services.State;
+
 import com.codenjoy.dojo.services.Tickable;
 
-public class MedKitBonus extends PointImpl implements Tickable, ManagedElement, State<Elements, Player> {
-
-    private final static int BONUS_LIVES = 1;
-
-    private int lifeCycle;
-
-    public MedKitBonus(Point p, int lifeTime) {
-        super(p);
-
-        lifeCycle = lifeTime;
-    }
-
-    public boolean isAlive() {
-        return lifeCycle > 0;
-    }
-
-    @Override
-    public Elements state(Player player, Object... alsoAtPoint) {
-        return Elements.MEDKIT;
-    }
-
-    @Override
-    public void tick() {
-        lifeCycle--;
-    }
-
-    public int getBonusLives() {
-        return BONUS_LIVES;
-    }
-
-    public void destroy() {
-        lifeCycle = 0;
-    }
+public interface ManagedElement extends Tickable {
+    boolean isAlive();
 }
