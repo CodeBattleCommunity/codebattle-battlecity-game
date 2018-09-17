@@ -28,6 +28,8 @@ import com.codenjoy.dojo.services.Point;
 
 public class Bog extends Obstacle {
 
+    private int lifeCount;
+    private boolean mortal = true;
     private static final int DELAY = -1;
 
     public Bog(int x, int y) {
@@ -36,6 +38,11 @@ public class Bog extends Obstacle {
 
     public Bog(Point point) {
         super(point);
+    }
+
+    public Bog(Point point, int lifeCount) {
+        super(point);
+        this.lifeCount = lifeCount;
     }
 
     @Override
@@ -51,6 +58,17 @@ public class Bog extends Obstacle {
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         return Elements.BOG;
+    }
+
+    public void tick() {
+        if(this.mortal) {
+            lifeCount--;
+        }
+    }
+
+    public boolean isAlive() {
+        if(!mortal || lifeCount > 0) return true;
+        return false;
     }
 }
 

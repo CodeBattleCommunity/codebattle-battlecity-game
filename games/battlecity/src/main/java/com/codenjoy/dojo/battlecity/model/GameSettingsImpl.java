@@ -56,6 +56,10 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> maxMedKitBonusOnMap;
     private Parameter<Integer> minMedKitBonusLifeTime;
     private Parameter<Integer> maxMedKitBonusLifeTime;
+    private Parameter<Integer> maxBogsOnMap;
+    private Parameter<Integer> ticksToUpdateBogs;
+    private Parameter<Integer> maxBogLifetime;
+    private Parameter<Integer> minBogLifetime;
 
     public GameSettingsImpl(Settings settings, LevelRegistry levelRegistry) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
@@ -91,6 +95,11 @@ public class GameSettingsImpl implements GameSettings {
         maxMedKitBonusOnMap = settings.addEditBox("Maximum MedKit Bonus On Map").type(Integer.class).def(5);
         minMedKitBonusLifeTime = settings.addEditBox("Minimum MedKit Bonus LifeTime").type(Integer.class).def(20);
         maxMedKitBonusLifeTime = settings.addEditBox("Maximum MedKit Bonus LifeTime").type(Integer.class).def(30);
+
+        ticksToUpdateBogs = settings.addEditBox("Ticks to update Bogs").type(Integer.class).def(10);
+        maxBogsOnMap = settings.addEditBox("Maximum Bogs on the map ").type(Integer.class).def(20);
+        minBogLifetime = settings.addEditBox("Minimum Bogs lifetime").type(Integer.class).def(4);
+        maxBogLifetime = settings.addEditBox("Maximum Bogs lifetime").type(Integer.class).def(30);
 
     }
 
@@ -208,4 +217,26 @@ public class GameSettingsImpl implements GameSettings {
     public Parameter<Integer> getMaxMedKitBonusLifeTime() {
         return maxMedKitBonusLifeTime;
     }
+
+    @Override
+    public Parameter<Integer> getMaxBogsOnMap() {
+        return maxBogsOnMap;
+    }
+
+    @Override
+    public Parameter<Integer> getTicksToUpdateBogs() {
+        return ticksToUpdateBogs;
+    }
+
+    @Override
+    public Parameter<Integer> getMaxBogLifetime() {
+        return maxBogLifetime;
+    }
+
+    @Override
+    public Parameter<Integer> getMinBogLifetime() {
+        return minBogLifetime;
+    }
+
+
 }

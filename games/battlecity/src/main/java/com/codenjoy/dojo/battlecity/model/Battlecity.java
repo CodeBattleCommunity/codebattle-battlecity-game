@@ -32,10 +32,7 @@ import com.codenjoy.dojo.battlecity.model.levels.LevelSettings;
 import com.codenjoy.dojo.battlecity.model.levels.LevelSettingsApplier;
 import com.codenjoy.dojo.battlecity.model.modes.BattlecityGameMode;
 import com.codenjoy.dojo.battlecity.model.modes.GameModeRegistry;
-import com.codenjoy.dojo.battlecity.model.obstacle.Bog;
-import com.codenjoy.dojo.battlecity.model.obstacle.Moat;
-import com.codenjoy.dojo.battlecity.model.obstacle.Obstacle;
-import com.codenjoy.dojo.battlecity.model.obstacle.Sand;
+import com.codenjoy.dojo.battlecity.model.obstacle.*;
 import com.codenjoy.dojo.battlecity.services.Scores;
 import com.codenjoy.dojo.services.AdminControlService;
 import com.codenjoy.dojo.services.Dice;
@@ -78,6 +75,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private HedgeHogController hedgeHogController;
     private AmmoBonusController ammoBonusController;
     private MedKitBonusController medKitBonusController;
+    private BogController bogController;
 
     public Battlecity(TankFactory aiTankFactory,
                       GameSettings settings,
@@ -125,6 +123,7 @@ public class Battlecity implements Tickable, ITanks, Field {
 
         ammoBonusController = new AmmoBonusController(this, settings, dice);
         medKitBonusController = new MedKitBonusController(this, settings, dice);
+        this.bogController = new BogController(this, settings, bogs);
     }
 
     @Override
@@ -206,6 +205,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         ammoBonusController.tick();
         medKitBonusController.tick();
         hedgeHogController.tick();
+        bogController.tick();
     }
 
     private void removeDeadTanks() {

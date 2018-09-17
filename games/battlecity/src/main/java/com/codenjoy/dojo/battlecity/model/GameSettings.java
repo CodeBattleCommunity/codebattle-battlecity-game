@@ -48,6 +48,10 @@ public interface GameSettings {
     Parameter<Integer> getMaxMedKitBonusOnMap();
     Parameter<Integer> getMinMedKitBonusLifeTime();
     Parameter<Integer> getMaxMedKitBonusLifeTime();
+    Parameter<Integer> getMaxBogsOnMap();
+    Parameter<Integer> getTicksToUpdateBogs();
+    Parameter<Integer> getMaxBogLifetime();
+    Parameter<Integer> getMinBogLifetime();
 
 
 }
