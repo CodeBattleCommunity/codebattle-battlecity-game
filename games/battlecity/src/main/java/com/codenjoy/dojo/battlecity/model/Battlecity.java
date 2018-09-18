@@ -23,7 +23,8 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
-import com.codenjoy.dojo.battlecity.model.controller.ElementController;
+import com.codenjoy.dojo.battlecity.model.controller.*;
+import com.codenjoy.dojo.battlecity.model.controller.elements.*;
 import com.codenjoy.dojo.battlecity.model.events.YouKilledTankEvent;
 import com.codenjoy.dojo.battlecity.model.events.YourTankWasKilledEvent;
 import com.codenjoy.dojo.battlecity.model.levels.Level;
@@ -71,7 +72,6 @@ public class Battlecity implements Tickable, ITanks, Field {
     private GameController gameController;
     private GameModeRegistry modeRegistry;
     private LevelRegistry levelRegistry;
-    private AmmoBonusController ammoBonusController;
     private List<ElementController> elementControllers;
 
     public Battlecity(TankFactory aiTankFactory,
@@ -118,13 +118,12 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.ammoBonuses = new LinkedList<>(level.getAmmoBonuses());
         this.medKitBonuses = new LinkedList<>(level.getMedKitBonuses());
 
-        ammoBonusController = new AmmoBonusController(this, settings, dice);
-
         elementControllers.add(new HedgeHogController(this, settings, hedgeHogs, dice));
         elementControllers.add(new MedKitBonusController(this, settings, medKitBonuses, dice));
         elementControllers.add(new BogController(this, settings, bogs, dice));
         elementControllers.add(new SandController(this, settings, sands, dice));
         elementControllers.add(new MoatController(this, settings, moats, dice));
+        elementControllers.add(new AmmoBonusController(this, settings, ammoBonuses, dice));
     }
 
     @Override
@@ -204,8 +203,6 @@ public class Battlecity implements Tickable, ITanks, Field {
         }
 
         elementControllers.forEach(ElementController::tick);
-
-        ammoBonusController.tick();
     }
 
     private void removeDeadTanks() {

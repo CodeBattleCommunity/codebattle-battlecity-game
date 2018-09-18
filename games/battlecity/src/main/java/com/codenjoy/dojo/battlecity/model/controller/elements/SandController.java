@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model;
+package com.codenjoy.dojo.battlecity.model.controller.elements;
 
 /*-
  * #%L
@@ -23,32 +23,35 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.Field;
+import com.codenjoy.dojo.battlecity.model.GameSettings;
 import com.codenjoy.dojo.battlecity.model.controller.ElementController;
 import com.codenjoy.dojo.battlecity.model.controller.ElementControllerSettings;
+import com.codenjoy.dojo.battlecity.model.obstacle.Sand;
 import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
 
-public class HedgeHogController extends ElementController<HedgeHog> {
+public class SandController extends ElementController<Sand>  {
 
-    public HedgeHogController(Field fieldController, GameSettings settings, List<HedgeHog> elements, Dice dice) {
+    public SandController(Field fieldController, GameSettings settings, List<Sand> elements, Dice dice) {
         super(fieldController, settings, elements, dice);
     }
 
     @Override
-    protected HedgeHog createNewElement(Point point, int lifeCount) {
-        return new HedgeHog(point, lifeCount);
+    protected Sand createNewElement(Point point, int lifeCount) {
+        return new Sand(point, lifeCount);
     }
 
     @Override
     protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
         ElementControllerSettings settings = new ElementControllerSettings();
-        settings.setMinElementLifetime(gameSettings.getMinHedgehogLifetime());
-        settings.setMaxElementLifetime(gameSettings.getMaxHedgehogLifetime());
-        settings.setMinElementsOnMap(gameSettings.getMinHedgeHogsOnMap());
-        settings.setMaxElementsOnMap(gameSettings.getMaxHedgeHogsOnMap());
-        settings.setTicksToUpdate(gameSettings.getTicksToUpdateHedgehogs());
+        settings.setMinElementsOnMap(gameSettings.getMinSandsOnMap());
+        settings.setMaxElementsOnMap(gameSettings.getMaxSandsOnMap());
+        settings.setMaxElementLifetime(gameSettings.getMaxSandLifetime());
+        settings.setMinElementLifetime(gameSettings.getMinSandLifetime());
+        settings.setTicksToUpdate(gameSettings.getTicksToUpdateSands());
 
         return settings;
     }

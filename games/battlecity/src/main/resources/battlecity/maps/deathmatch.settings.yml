@@ -3,7 +3,8 @@ gameSpeed: 200
 initialPlayerAmmoCount: 15
 initialAIAmmoCount: 200
 
-ammoBonusCountOnMap: 5
+minAmmoBonusOnMap: 2
+maxAmmoBonusOnMap: 5
 minAmmoBonusLifeCycle: 20
 maxAmmoBonusLifeCycle: 30
 ammoBonusGenerationCycle: 20

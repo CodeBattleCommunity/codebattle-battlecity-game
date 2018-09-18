@@ -29,7 +29,8 @@ public interface GameSettings {
     Parameter<Integer> getInitialAIAmmoCount();
     Parameter<String> getGameMode();
     Parameter<String> getMap();
-    Parameter<Integer> getAmmoBonusCountOnMap();
+    Parameter<Integer> getMinAmmoBonusOnMap();
+    Parameter<Integer> getMaxAmmoBonusOnMap();
     Parameter<Integer> getMaxAmmoBonusLifeCycle();
     Parameter<Integer> getMinAmmoBonusLifeCycle();
     Parameter<Integer> getAmmoBonusGenerationCycle();

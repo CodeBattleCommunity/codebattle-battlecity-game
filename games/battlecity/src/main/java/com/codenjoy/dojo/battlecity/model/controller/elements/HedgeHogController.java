@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model.obstacle;
+package com.codenjoy.dojo.battlecity.model.controller.elements;
 
 /*-
  * #%L
@@ -25,6 +25,7 @@ package com.codenjoy.dojo.battlecity.model.obstacle;
 
 import com.codenjoy.dojo.battlecity.model.Field;
 import com.codenjoy.dojo.battlecity.model.GameSettings;
+import com.codenjoy.dojo.battlecity.model.HedgeHog;
 import com.codenjoy.dojo.battlecity.model.controller.ElementController;
 import com.codenjoy.dojo.battlecity.model.controller.ElementControllerSettings;
 import com.codenjoy.dojo.services.Dice;
@@ -32,25 +33,25 @@ import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
 
-public class SandController extends ElementController<Sand>  {
+public class HedgeHogController extends ElementController<HedgeHog> {
 
-    public SandController(Field fieldController, GameSettings settings, List<Sand> elements, Dice dice) {
+    public HedgeHogController(Field fieldController, GameSettings settings, List<HedgeHog> elements, Dice dice) {
         super(fieldController, settings, elements, dice);
     }
 
     @Override
-    protected Sand createNewElement(Point point, int lifeCount) {
-        return new Sand(point, lifeCount);
+    protected HedgeHog createNewElement(Point point, int lifeCount) {
+        return new HedgeHog(point, lifeCount);
     }
 
     @Override
     protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
         ElementControllerSettings settings = new ElementControllerSettings();
-        settings.setMinElementsOnMap(gameSettings.getMinSandsOnMap());
-        settings.setMaxElementsOnMap(gameSettings.getMaxSandsOnMap());
-        settings.setMaxElementLifetime(gameSettings.getMaxSandLifetime());
-        settings.setMinElementLifetime(gameSettings.getMinSandLifetime());
-        settings.setTicksToUpdate(gameSettings.getTicksToUpdateSands());
+        settings.setMinElementLifetime(gameSettings.getMinHedgehogLifetime());
+        settings.setMaxElementLifetime(gameSettings.getMaxHedgehogLifetime());
+        settings.setMinElementsOnMap(gameSettings.getMinHedgeHogsOnMap());
+        settings.setMaxElementsOnMap(gameSettings.getMaxHedgeHogsOnMap());
+        settings.setTicksToUpdate(gameSettings.getTicksToUpdateHedgehogs());
 
         return settings;
     }

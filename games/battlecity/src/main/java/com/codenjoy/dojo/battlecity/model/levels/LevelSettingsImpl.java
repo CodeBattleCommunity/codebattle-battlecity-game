@@ -29,7 +29,8 @@ public class LevelSettingsImpl implements LevelSettings {
     private String gameMode;
     private Integer initialPlayerAmmoCount;
     private Integer initialAIAmmoCount;
-    private Integer ammoBonusCountOnMap;
+    private Integer minAmmoBonusOnMap;
+    private Integer maxAmmoBonusOnMap;
     private Integer minAmmoBonusLifeCycle;
     private Integer maxAmmoBonusLifeCycle;
     private Integer ammoBonusGenerationCycle;
@@ -81,8 +82,13 @@ public class LevelSettingsImpl implements LevelSettings {
     }
 
     @Override
-    public Optional<Integer> getAmmoBonusCountOnMap() {
-        return Optional.ofNullable(ammoBonusCountOnMap);
+    public Optional<Integer> getMinAmmoBonusOnMap() {
+        return Optional.ofNullable(minAmmoBonusOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMaxAmmoBonusOnMap() {
+        return Optional.ofNullable(maxAmmoBonusOnMap);
     }
 
     @Override
@@ -142,8 +148,12 @@ public class LevelSettingsImpl implements LevelSettings {
         this.initialAIAmmoCount = initialAIAmmoCount;
     }
 
-    public void setAmmoBonusCountOnMap(Integer ammoBonusCountOnMap) {
-        this.ammoBonusCountOnMap = ammoBonusCountOnMap;
+    public void setMinAmmoBonusOnMap(Integer minAmmoBonusOnMap) {
+        this.minAmmoBonusOnMap = minAmmoBonusOnMap;
+    }
+
+    public void setMaxAmmoBonusOnMap(Integer maxAmmoBonusOnMap) {
+        this.maxAmmoBonusOnMap = maxAmmoBonusOnMap;
     }
 
     public void setAmmoBonusLifeCycle(Integer ammoBonusLifeCycle) {

@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model.obstacle;
+package com.codenjoy.dojo.battlecity.model.controller.elements;
 
 /*-
  * #%L
@@ -22,9 +22,9 @@ package com.codenjoy.dojo.battlecity.model.obstacle;
  * #L%
  */
 
-
 import com.codenjoy.dojo.battlecity.model.Field;
 import com.codenjoy.dojo.battlecity.model.GameSettings;
+import com.codenjoy.dojo.battlecity.model.MedKitBonus;
 import com.codenjoy.dojo.battlecity.model.controller.ElementController;
 import com.codenjoy.dojo.battlecity.model.controller.ElementControllerSettings;
 import com.codenjoy.dojo.services.Dice;
@@ -32,25 +32,25 @@ import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
 
-public class BogController extends ElementController<Bog>  {
+public class MedKitBonusController extends ElementController<MedKitBonus> {
 
-    public BogController(Field fieldController, GameSettings settings, List<Bog> elements, Dice dice) {
+    public MedKitBonusController(Field fieldController, GameSettings settings, List<MedKitBonus> elements, Dice dice) {
         super(fieldController, settings, elements, dice);
     }
 
     @Override
-    protected Bog createNewElement(Point point, int lifeCount) {
-        return new Bog(point, lifeCount);
+    protected MedKitBonus createNewElement(Point point, int lifeCount) {
+        return new MedKitBonus(point, lifeCount);
     }
 
     @Override
     protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
         ElementControllerSettings settings = new ElementControllerSettings();
-        settings.setMinElementsOnMap(gameSettings.getMinBogsOnMap());
-        settings.setMaxElementsOnMap(gameSettings.getMaxBogsOnMap());
-        settings.setMaxElementLifetime(gameSettings.getMaxBogLifetime());
-        settings.setMinElementLifetime(gameSettings.getMinBogLifetime());
-        settings.setTicksToUpdate(gameSettings.getTicksToUpdateBogs());
+        settings.setMinElementLifetime(gameSettings.getMinMedKitBonusLifeTime());
+        settings.setMaxElementLifetime(gameSettings.getMaxMedKitBonusLifeTime());
+        settings.setMinElementsOnMap(gameSettings.getMinMedKitBonusOnMap());
+        settings.setMaxElementsOnMap(gameSettings.getMaxMedKitBonusOnMap());
+        settings.setTicksToUpdate(gameSettings.getMedKitBonusGenerationCycle());
 
         return settings;
     }

@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model.obstacle;
+package com.codenjoy.dojo.battlecity.model.controller.elements;
 
 /*-
  * #%L
@@ -22,37 +22,39 @@ package com.codenjoy.dojo.battlecity.model.obstacle;
  * #L%
  */
 
-
+import com.codenjoy.dojo.battlecity.model.AmmoBonus;
 import com.codenjoy.dojo.battlecity.model.Field;
 import com.codenjoy.dojo.battlecity.model.GameSettings;
 import com.codenjoy.dojo.battlecity.model.controller.ElementController;
 import com.codenjoy.dojo.battlecity.model.controller.ElementControllerSettings;
 import com.codenjoy.dojo.services.Dice;
 import com.codenjoy.dojo.services.Point;
+import com.codenjoy.dojo.services.settings.Parameter;
 
 import java.util.List;
 
-public class MoatController extends ElementController<Moat>  {
+public class AmmoBonusController  extends ElementController<AmmoBonus> {
 
-    private Dice dice;
+    private final Parameter<Integer> ammoQuantityInAmmoBonus;
 
-    public MoatController(Field fieldController, GameSettings settings, List<Moat> elements, Dice dice) {
+    public AmmoBonusController(Field fieldController, GameSettings settings, List<AmmoBonus> elements, Dice dice) {
         super(fieldController, settings, elements, dice);
+        ammoQuantityInAmmoBonus = settings.getAmmoQuantityInAmmoBonus();
     }
 
     @Override
-    protected Moat createNewElement(Point point, int lifeCount) {
-        return new Moat(point, lifeCount);
+    protected AmmoBonus createNewElement(Point xy, int lifeCount) {
+        return new AmmoBonus(xy,lifeCount, ammoQuantityInAmmoBonus.getValue());
     }
 
     @Override
     protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
         ElementControllerSettings settings = new ElementControllerSettings();
-        settings.setMinElementsOnMap(gameSettings.getMinMoatsOnMap());
-        settings.setMaxElementsOnMap(gameSettings.getMaxMoatsOnMap());
-        settings.setMaxElementLifetime(gameSettings.getMaxMoatLifetime());
-        settings.setMinElementLifetime(gameSettings.getMinMoatLifetime());
-        settings.setTicksToUpdate(gameSettings.getTicksToUpdateMoats());
+        settings.setMinElementsOnMap(gameSettings.getMinAmmoBonusOnMap());
+        settings.setMaxElementsOnMap(gameSettings.getMaxAmmoBonusOnMap());
+        settings.setMaxElementLifetime(gameSettings.getMaxAmmoBonusLifeCycle());
+        settings.setMinElementLifetime(gameSettings.getMinAmmoBonusLifeCycle());
+        settings.setTicksToUpdate(gameSettings.getAmmoBonusGenerationCycle());
 
         return settings;
     }

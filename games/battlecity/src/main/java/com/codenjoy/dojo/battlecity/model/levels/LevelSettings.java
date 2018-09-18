@@ -28,7 +28,8 @@ public interface LevelSettings {
     Optional<String> getGameMode();
     Optional<Integer> getInitialPlayerAmmoCount();
     Optional<Integer> getInitialAIAmmoCount();
-    Optional<Integer> getAmmoBonusCountOnMap();
+    Optional<Integer> getMinAmmoBonusOnMap();
+    Optional<Integer> getMaxAmmoBonusOnMap();
     Optional<Integer> getMaxAmmoBonusLifeCycle();
     Optional<Integer> getMinAmmoBonusLifeCycle();
     Optional<Integer> getAmmoBonusGenerationCycle();
