@@ -46,9 +46,10 @@ public class BogController extends ElementController<Bog>  {
     @Override
     protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
         ElementControllerSettings settings = new ElementControllerSettings();
+        settings.setMinElementsOnMap(gameSettings.getMinBogsOnMap());
+        settings.setMaxElementsOnMap(gameSettings.getMaxBogsOnMap());
         settings.setMaxElementLifetime(gameSettings.getMaxBogLifetime());
         settings.setMinElementLifetime(gameSettings.getMinBogLifetime());
-        settings.setMaxElementsOnMap(gameSettings.getMaxBogsOnMap());
         settings.setTicksToUpdate(gameSettings.getTicksToUpdateBogs());
 
         return settings;

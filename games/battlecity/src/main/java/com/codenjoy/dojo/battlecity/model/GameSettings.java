@@ -34,6 +34,7 @@ public interface GameSettings {
     Parameter<Integer> getMinAmmoBonusLifeCycle();
     Parameter<Integer> getAmmoBonusGenerationCycle();
     Parameter<Integer> getAmmoQuantityInAmmoBonus();
+    Parameter<Integer> getMinHedgeHogsOnMap();
     Parameter<Integer> getMaxHedgeHogsOnMap();
     Parameter<Integer> getTicksToUpdateHedgehogs();
     Parameter<Integer> getMaxHedgehogLifetime();
@@ -48,10 +49,21 @@ public interface GameSettings {
     Parameter<Integer> getMaxMedKitBonusOnMap();
     Parameter<Integer> getMinMedKitBonusLifeTime();
     Parameter<Integer> getMaxMedKitBonusLifeTime();
+    Parameter<Integer> getMinBogsOnMap();
     Parameter<Integer> getMaxBogsOnMap();
     Parameter<Integer> getTicksToUpdateBogs();
     Parameter<Integer> getMaxBogLifetime();
     Parameter<Integer> getMinBogLifetime();
+    Parameter<Integer> getMinSandsOnMap();
+    Parameter<Integer> getMaxSandsOnMap();
+    Parameter<Integer> getTicksToUpdateSands();
+    Parameter<Integer> getMaxSandLifetime();
+    Parameter<Integer> getMinSandLifetime();
+    Parameter<Integer> getMinMoatsOnMap();
+    Parameter<Integer> getMaxMoatsOnMap();
+    Parameter<Integer> getTicksToUpdateMoats();
+    Parameter<Integer> getMaxMoatLifetime();
+    Parameter<Integer> getMinMoatLifetime();
 
 
 }

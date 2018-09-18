@@ -9,7 +9,8 @@ maxAmmoBonusLifeCycle: 40
 ammoBonusGenerationCycle: 40
 ammoQuantityInAmmoBonus: 5
 
-maxHedgeHogsOnMap: 5
+minHedgeHogsOnMap: 5
+maxHedgeHogsOnMap: 10
 ticksToUpdateHedgehogs: 20
 maxHedgehogLifetime: 30
 minHedgehogLifetime: 15
@@ -21,3 +22,21 @@ minMedKitBonusOnMap: 2
 maxMedKitBonusOnMap: 4
 minMedKitBonusLifeTime: 30
 maxMedKitBonusLifeTime: 40
+
+minBogsOnMap: 5
+maxBogsOnMap: 10
+ticksToUpdateBogs: 20
+maxBogLifetime: 30
+minBogLifetime: 20
+
+minSandsOnMap: 5
+maxSandsOnMap: 10
+ticksToUpdateSands: 20
+maxSandLifetime: 30
+minSandLifetime: 20
+
+minMoatsOnMap: 5
+maxMoatsOnMap: 10
+ticksToUpdateMoats: 20
+maxMoatLifetime: 30
+minMoatLifetime: 20

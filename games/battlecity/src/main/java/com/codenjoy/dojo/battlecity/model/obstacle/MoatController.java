@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model;
+package com.codenjoy.dojo.battlecity.model.obstacle;
 
 /*-
  * #%L
@@ -23,6 +23,8 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.Field;
+import com.codenjoy.dojo.battlecity.model.GameSettings;
 import com.codenjoy.dojo.battlecity.model.controller.ElementController;
 import com.codenjoy.dojo.battlecity.model.controller.ElementControllerSettings;
 import com.codenjoy.dojo.services.Dice;
@@ -30,25 +32,27 @@ import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
 
-public class HedgeHogController extends ElementController<HedgeHog> {
+public class MoatController extends ElementController<Moat>  {
 
-    public HedgeHogController(Field fieldController, GameSettings settings, List<HedgeHog> elements, Dice dice) {
+    private Dice dice;
+
+    public MoatController(Field fieldController, GameSettings settings, List<Moat> elements, Dice dice) {
         super(fieldController, settings, elements, dice);
     }
 
     @Override
-    protected HedgeHog createNewElement(Point point, int lifeCount) {
-        return new HedgeHog(point, lifeCount);
+    protected Moat createNewElement(Point point, int lifeCount) {
+        return new Moat(point, lifeCount);
     }
 
     @Override
     protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
         ElementControllerSettings settings = new ElementControllerSettings();
-        settings.setMinElementLifetime(gameSettings.getMinHedgehogLifetime());
-        settings.setMaxElementLifetime(gameSettings.getMaxHedgehogLifetime());
-        settings.setMinElementsOnMap(gameSettings.getMinHedgeHogsOnMap());
-        settings.setMaxElementsOnMap(gameSettings.getMaxHedgeHogsOnMap());
-        settings.setTicksToUpdate(gameSettings.getTicksToUpdateHedgehogs());
+        settings.setMinElementsOnMap(gameSettings.getMinMoatsOnMap());
+        settings.setMaxElementsOnMap(gameSettings.getMaxMoatsOnMap());
+        settings.setMaxElementLifetime(gameSettings.getMaxMoatLifetime());
+        settings.setMinElementLifetime(gameSettings.getMinMoatLifetime());
+        settings.setTicksToUpdate(gameSettings.getTicksToUpdateMoats());
 
         return settings;
     }

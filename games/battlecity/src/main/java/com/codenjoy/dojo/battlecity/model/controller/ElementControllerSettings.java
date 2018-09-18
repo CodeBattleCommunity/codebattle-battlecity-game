@@ -28,6 +28,7 @@ import com.codenjoy.dojo.services.settings.Parameter;
 public class ElementControllerSettings {
     private Parameter<Integer> ticksToUpdate;
     private Parameter<Integer> maxElementsOnMap;
+    private Parameter<Integer> minElementsOnMap;
     private Parameter<Integer> maxElementLifetime;
     private Parameter<Integer> minElementLifetime;
 
@@ -45,6 +46,14 @@ public class ElementControllerSettings {
 
     public void setMaxElementsOnMap(Parameter<Integer> maxElementsOnMap) {
         this.maxElementsOnMap = maxElementsOnMap;
+    }
+
+    public Parameter<Integer> getMinElementsOnMap() {
+        return minElementsOnMap;
+    }
+
+    public void setMinElementsOnMap(Parameter<Integer> minElementsOnMap) {
+        this.minElementsOnMap = minElementsOnMap;
     }
 
     public Parameter<Integer> getMaxElementLifetime() {

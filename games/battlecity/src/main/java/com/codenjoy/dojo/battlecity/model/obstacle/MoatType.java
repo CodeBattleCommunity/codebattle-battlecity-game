@@ -22,6 +22,13 @@ package com.codenjoy.dojo.battlecity.model.obstacle;
  * #L%
  */
 
+import java.util.Random;
+
 public enum MoatType {
     HORIZONTAL, VERTICAL;
+
+    public static MoatType getRandomMoatType() {
+        Random random = new Random();
+        return values()[random.nextInt(values().length)];
+    }
 }

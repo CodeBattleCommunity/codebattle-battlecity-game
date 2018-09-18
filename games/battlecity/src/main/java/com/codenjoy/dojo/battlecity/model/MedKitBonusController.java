@@ -22,100 +22,33 @@ package com.codenjoy.dojo.battlecity.model;
  * #L%
  */
 
+import com.codenjoy.dojo.battlecity.model.controller.ElementController;
+import com.codenjoy.dojo.battlecity.model.controller.ElementControllerSettings;
 import com.codenjoy.dojo.services.Dice;
-import com.codenjoy.dojo.services.LengthToXY;
-import com.codenjoy.dojo.services.Tickable;
-import com.codenjoy.dojo.services.settings.Parameter;
+import com.codenjoy.dojo.services.Point;
 
 import java.util.List;
 
-public class MedKitBonusController implements Tickable {
+public class MedKitBonusController extends ElementController<MedKitBonus> {
 
-    private Field field;
-    private Dice dice;
-
-    private List<MedKitBonus> elements;
-    private int tick;
-    private Parameter<Integer> ticksToUpdateGeneration;
-    private final Parameter<Integer> minElementsOnMap;
-    private final Parameter<Integer> maxElementsOnMap;
-    private final Parameter<Integer> minLifeTime;
-    private final Parameter<Integer> maxLifeTime;
-
-    public MedKitBonusController(Field field, GameSettings settings, Dice dice) {
-        this.field = field;
-        this.dice = dice;
-        tick = 0;
-
-        ticksToUpdateGeneration = settings.getMedKitBonusGenerationCycle();
-        minElementsOnMap = settings.getMinMedKitBonusOnMap();
-        maxElementsOnMap = settings.getMaxMedKitBonusOnMap();
-        minLifeTime = settings.getMinMedKitBonusLifeTime();
-        maxLifeTime = settings.getMaxMedKitBonusLifeTime();
-
-        elements = field.getMedKitBonuses();
+    public MedKitBonusController(Field fieldController, GameSettings settings, List<MedKitBonus> elements, Dice dice) {
+        super(fieldController, settings, elements, dice);
     }
 
     @Override
-    public void tick() {
-        elements.forEach(MedKitBonus::tick);
-        removeDeadMedKitBonuses();
-        createNewMedKitBonuses();
+    protected MedKitBonus createNewElement(Point point, int lifeCount) {
+        return new MedKitBonus(point, lifeCount);
     }
 
-    private void createNewMedKitBonuses() {
-        if (!hasCorrectSettings()) {
-            return;
-        }
+    @Override
+    protected ElementControllerSettings getElementSettings(GameSettings gameSettings) {
+        ElementControllerSettings settings = new ElementControllerSettings();
+        settings.setMinElementLifetime(gameSettings.getMinMedKitBonusLifeTime());
+        settings.setMaxElementLifetime(gameSettings.getMaxMedKitBonusLifeTime());
+        settings.setMinElementsOnMap(gameSettings.getMinMedKitBonusOnMap());
+        settings.setMaxElementsOnMap(gameSettings.getMaxMedKitBonusOnMap());
+        settings.setTicksToUpdate(gameSettings.getMedKitBonusGenerationCycle());
 
-        if (tick >= ticksToUpdateGeneration.getValue()) {
-            LengthToXY xy = new LengthToXY(field.size());
-
-            final int numberOfElementsForCreation = howManyElementsToCreate();
-
-            int coverage = field.size() * field.size();
-
-            int createdElements = 0;
-
-            while (createdElements < numberOfElementsForCreation) {
-                int index = dice.next(coverage);
-                int lifeCount = getLifeTime();
-
-                boolean fieldOccupied = field.isFieldOccupied(xy.getXY(index).getX(), xy.getXY(index).getY());
-                if (!fieldOccupied) {
-                    elements.add(new MedKitBonus(xy.getXY(index), lifeCount));
-                    createdElements++;
-                }
-            }
-            tick = 0;
-        } else {
-            tick++;
-        }
-
-    }
-
-    private boolean hasCorrectSettings() {
-        return maxElementsOnMap.getValue() > 0 && maxLifeTime.getValue() > 0;
-    }
-
-    private int howManyElementsToCreate() {
-        return randomElementsCount(minElementsOnMap, maxElementsOnMap) - elements.size();
-    }
-
-    private int randomElementsCount(Parameter<Integer> minElementsOnMap, Parameter<Integer> maxElementsOnMap) {
-        if (maxElementsOnMap.getValue() <= 0) {
-            return 0;
-        }
-
-        return minElementsOnMap.getValue()
-                + dice.next(maxElementsOnMap.getValue() - minElementsOnMap.getValue());
-    }
-
-    private int getLifeTime() {
-        return randomElementsCount(minLifeTime, maxLifeTime);
-    }
-
-    private void removeDeadMedKitBonuses() {
-        elements.removeIf(h -> !h.isAlive());
+        return settings;
     }
 }

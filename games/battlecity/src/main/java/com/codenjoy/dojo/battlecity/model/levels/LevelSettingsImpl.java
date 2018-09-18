@@ -34,6 +34,7 @@ public class LevelSettingsImpl implements LevelSettings {
     private Integer maxAmmoBonusLifeCycle;
     private Integer ammoBonusGenerationCycle;
     private Integer ammoQuantityInAmmoBonus;
+    private Integer minHedgeHogsOnMap;
     private Integer maxHedgeHogsOnMap;
     private Integer ticksToUpdateHedgehogs;
     private Integer maxHedgehogLifetime;
@@ -48,6 +49,21 @@ public class LevelSettingsImpl implements LevelSettings {
     private Integer maxMedKitBonusOnMap;
     private Integer minMedKitBonusLifeTime;
     private Integer maxMedKitBonusLifeTime;
+    private Integer minBogsOnMap;
+    private Integer maxBogsOnMap;
+    private Integer minBogLifetime;
+    private Integer maxBogLifetime;
+    private Integer ticksToUpdateBogs;
+    private Integer minSandsOnMap;
+    private Integer maxSandsOnMap;
+    private Integer minSandLifetime;
+    private Integer maxSandLifetime;
+    private Integer ticksToUpdateSands;
+    private Integer minMoatsOnMap;
+    private Integer maxMoatsOnMap;
+    private Integer minMoatLifetime;
+    private Integer maxMoatLifetime;
+    private Integer ticksToUpdateMoats;
 
     @Override
     public Optional<String> getGameMode() {
@@ -87,6 +103,11 @@ public class LevelSettingsImpl implements LevelSettings {
     @Override
     public Optional<Integer> getAmmoQuantityInAmmoBonus() {
         return Optional.ofNullable(ammoQuantityInAmmoBonus);
+    }
+
+    @Override
+    public Optional<Integer> getMinHedgeHogsOnMap() {
+        return Optional.ofNullable(minHedgeHogsOnMap);
     }
 
     @Override
@@ -130,6 +151,10 @@ public class LevelSettingsImpl implements LevelSettings {
 
     public void setAmmoQuantityInAmmoBonus(Integer ammoQuantityInAmmoBonus) {
         this.ammoQuantityInAmmoBonus = ammoQuantityInAmmoBonus;
+    }
+
+    public void setMinHedgeHogsOnMap(Integer minHedgeHogsOnMap) {
+        this.minHedgeHogsOnMap = minHedgeHogsOnMap;
     }
 
     public void setMaxHedgeHogsOnMap(Integer maxHedgeHogsOnMap) {
@@ -208,6 +233,81 @@ public class LevelSettingsImpl implements LevelSettings {
         return Optional.ofNullable(maxMedKitBonusOnMap);
     }
 
+    @Override
+    public Optional<Integer> getMinBogsOnMap() {
+        return Optional.ofNullable(minBogsOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMaxBogsOnMap() {
+        return Optional.ofNullable(maxBogsOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMinBogLifetime() {
+        return Optional.ofNullable(minBogLifetime);
+    }
+
+    @Override
+    public Optional<Integer> getMaxBogLifetime() {
+        return Optional.ofNullable(maxBogLifetime);
+    }
+
+    @Override
+    public Optional<Integer> getTicksToUpdateBogs() {
+        return Optional.ofNullable(ticksToUpdateBogs);
+    }
+
+    @Override
+    public Optional<Integer> getMinSandsOnMap() {
+        return Optional.ofNullable(minSandsOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMaxSandsOnMap() {
+        return Optional.ofNullable(maxSandsOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMinSandLifetime() {
+        return Optional.ofNullable(minSandLifetime);
+    }
+
+    @Override
+    public Optional<Integer> getMaxSandLifetime() {
+        return Optional.ofNullable(maxSandLifetime);
+    }
+
+    @Override
+    public Optional<Integer> getTicksToUpdateSands() {
+        return Optional.ofNullable(ticksToUpdateSands);
+    }
+
+    @Override
+    public Optional<Integer> getMinMoatsOnMap() {
+        return Optional.ofNullable(minMoatsOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMaxMoatsOnMap() {
+        return Optional.ofNullable(maxMoatsOnMap);
+    }
+
+    @Override
+    public Optional<Integer> getMinMoatLifetime() {
+        return Optional.ofNullable(minMoatLifetime);
+    }
+
+    @Override
+    public Optional<Integer> getMaxMoatLifetime() {
+        return Optional.ofNullable(maxMoatLifetime);
+    }
+
+    @Override
+    public Optional<Integer> getTicksToUpdateMoats() {
+        return Optional.ofNullable(ticksToUpdateMoats);
+    }
+
     public void setMedKitBonusLifeCycle(Integer medKitBonusLifeCycle) {
         this.medKitBonusLifeCycle = medKitBonusLifeCycle;
     }
@@ -248,5 +348,65 @@ public class LevelSettingsImpl implements LevelSettings {
 
     public void setAmmoBonusGenerationCycle(Integer ammoBonusGenerationCycle) {
         this.ammoBonusGenerationCycle = ammoBonusGenerationCycle;
+    }
+
+    public void setMaxBogsOnMap(Integer maxBogsOnMap) {
+        this.maxBogsOnMap = maxBogsOnMap;
+    }
+
+    public void setMinBogsOnMap(Integer minBogsOnMap) {
+        this.minBogsOnMap = minBogsOnMap;
+    }
+
+    public void setMinBogLifetime(Integer minBogLifetime) {
+        this.minBogLifetime = minBogLifetime;
+    }
+
+    public void setMaxBogLifetime(Integer maxBogLifetime) {
+        this.maxBogLifetime = maxBogLifetime;
+    }
+
+    public void setTicksToUpdateBogs(Integer ticksToUpdateBogs) {
+        this.ticksToUpdateBogs = ticksToUpdateBogs;
+    }
+
+    public void setMaxSandsOnMap(Integer maxSandsOnMap) {
+        this.maxSandsOnMap = maxSandsOnMap;
+    }
+
+    public void setMinSandsOnMap(Integer minSandsOnMap) {
+        this.minSandsOnMap = minSandsOnMap;
+    }
+
+    public void setMinSandLifetime(Integer minSandLifetime) {
+        this.minSandLifetime = minSandLifetime;
+    }
+
+    public void setMaxSandLifetime(Integer maxSandLifetime) {
+        this.maxSandLifetime = maxSandLifetime;
+    }
+
+    public void setTicksToUpdateSands(Integer ticksToUpdateSands) {
+        this.ticksToUpdateSands = ticksToUpdateSands;
+    }
+
+    public void setMaxMoatsOnMap(Integer maxMoatsOnMap) {
+        this.maxMoatsOnMap = maxMoatsOnMap;
+    }
+
+    public void setMinMoatsOnMap(Integer minMoatsOnMap) {
+        this.minMoatsOnMap = minMoatsOnMap;
+    }
+
+    public void setMinMoatLifetime(Integer minMoatLifetime) {
+        this.minMoatLifetime = minMoatLifetime;
+    }
+
+    public void setMaxMoatLifetime(Integer maxMoatLifetime) {
+        this.maxMoatLifetime = maxMoatLifetime;
+    }
+
+    public void setTicksToUpdateMoats(Integer ticksToUpdateMoats) {
+        this.ticksToUpdateMoats = ticksToUpdateMoats;
     }
 }

@@ -71,10 +71,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private GameController gameController;
     private GameModeRegistry modeRegistry;
     private LevelRegistry levelRegistry;
-//    private HedgeHogController hedgeHogController;
     private AmmoBonusController ammoBonusController;
-    private MedKitBonusController medKitBonusController;
-//    private BogController bogController;
     private List<ElementController> elementControllers;
 
     public Battlecity(TankFactory aiTankFactory,
@@ -115,7 +112,6 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.borders = new LinkedList<>(level.getBorders());
         this.wormHoles = new LinkedList<>(level.getWormHoles());
         this.hedgeHogs = new LinkedList<>(level.getHedgeHogs());
-//        hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
         this.bogs = new LinkedList<>(level.getBogs());
         this.sands = new LinkedList<>(level.getSands());
         this.moats = new LinkedList<>(level.getMoats());
@@ -123,10 +119,12 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.medKitBonuses = new LinkedList<>(level.getMedKitBonuses());
 
         ammoBonusController = new AmmoBonusController(this, settings, dice);
-        medKitBonusController = new MedKitBonusController(this, settings, dice);
 
-        elementControllers.add(new BogController(this, settings, bogs, dice));
         elementControllers.add(new HedgeHogController(this, settings, hedgeHogs, dice));
+        elementControllers.add(new MedKitBonusController(this, settings, medKitBonuses, dice));
+        elementControllers.add(new BogController(this, settings, bogs, dice));
+        elementControllers.add(new SandController(this, settings, sands, dice));
+        elementControllers.add(new MoatController(this, settings, moats, dice));
     }
 
     @Override
@@ -208,8 +206,6 @@ public class Battlecity implements Tickable, ITanks, Field {
         elementControllers.forEach(ElementController::tick);
 
         ammoBonusController.tick();
-        medKitBonusController.tick();
-//        hedgeHogController.tick();
     }
 
     private void removeDeadTanks() {

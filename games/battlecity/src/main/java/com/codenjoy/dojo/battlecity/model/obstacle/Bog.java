@@ -34,6 +34,7 @@ public class Bog extends Obstacle {
 
     public Bog(int x, int y) {
         super(x, y);
+        this.mortal = false;
     }
 
     public Bog(Point point) {
@@ -63,15 +64,16 @@ public class Bog extends Obstacle {
         return Elements.BOG;
     }
 
+    @Override
     public void tick() {
         if(this.mortal) {
             lifeCount--;
         }
     }
 
+    @Override
     public boolean isAlive() {
-        if(!mortal || lifeCount > 0) return true;
-        return false;
+        return !mortal || lifeCount > 0;
     }
 }
 

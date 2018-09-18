@@ -59,6 +59,7 @@ public abstract class ElementController<T extends ManagedElement> implements Tic
 
         Parameter<Integer> ticksToUpdate = elementSettings.getTicksToUpdate();
         Parameter<Integer> maxElementsOnMap = elementSettings.getMaxElementsOnMap();
+        Parameter<Integer> minElementsOnMap = elementSettings.getMinElementsOnMap();
         Parameter<Integer> maxElementLifetime = elementSettings.getMaxElementLifetime();
         Parameter<Integer> minElementLifetime = elementSettings.getMinElementLifetime();
 
@@ -67,8 +68,7 @@ public abstract class ElementController<T extends ManagedElement> implements Tic
         }
 
         LengthToXY xy = new LengthToXY(fieldController.size());
-        final int numberOfElementsForCreation =
-                maxElementsOnMap.getValue() - elements.size();
+        final int numberOfElementsForCreation = howManyElementsToCreate(minElementsOnMap.getValue(), maxElementsOnMap.getValue());
         int currentElementCount = 0;
         int lifeCount = 0;
         boolean fieldOccupied;
@@ -98,6 +98,21 @@ public abstract class ElementController<T extends ManagedElement> implements Tic
 
     private boolean hasCorrectSettings(int maxElementLifetime, int maxElementsOnMap) {
         return maxElementLifetime > 0 && maxElementsOnMap > 0;
+    }
+
+    private int howManyElementsToCreate(int minElementsOnMap, int maxElementsOnMap) {
+        return randomElementsCount(minElementsOnMap, maxElementsOnMap) - elements.size();
+    }
+
+    private int randomElementsCount(int minElementsOnMap, int maxElementsOnMap) {
+        if (maxElementsOnMap <= 0) {
+            return 0;
+        }
+
+        if (minElementsOnMap == maxElementsOnMap) {
+            return minElementsOnMap;
+        } else return minElementsOnMap
+                + dice.next(maxElementsOnMap - minElementsOnMap);
     }
 
     private void removeDeadElements() {

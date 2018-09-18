@@ -58,8 +58,7 @@ public class HedgeHog extends PointImpl implements State<Elements, Player>, Mana
     }
 
     public boolean isAlive() {
-        if(!mortal || lifeCount > 0) return true;
-        return false;
+        return !mortal || lifeCount > 0;
     }
 }
 
