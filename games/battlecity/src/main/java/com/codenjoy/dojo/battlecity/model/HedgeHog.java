@@ -27,7 +27,7 @@ import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
 
-public class HedgeHog extends PointImpl implements State<Elements, Player> {
+public class HedgeHog extends PointImpl implements State<Elements, Player>, ManagedElement {
 
     private int lifeCount;
     private boolean mortal = true;
@@ -36,14 +36,14 @@ public class HedgeHog extends PointImpl implements State<Elements, Player> {
         super(x, y);
     }
 
-    public HedgeHog(Point point, int lifeCount) {
-        super(point);
-        this.lifeCount = lifeCount;
-    }
-
     public HedgeHog(Point point){
         super(point);
         this.mortal = false;
+    }
+
+    public HedgeHog(Point point, int lifeCount) {
+        super(point);
+        this.lifeCount = lifeCount;
     }
 
     @Override
@@ -52,14 +52,13 @@ public class HedgeHog extends PointImpl implements State<Elements, Player> {
     }
 
     public void tick() {
-        if(this.mortal) { // если смертный не статический Hedgehog
+        if(this.mortal) {
             lifeCount--;
         }
     }
 
     public boolean isAlive() {
-        if(!mortal || lifeCount > 0) return true;
-        return false;
+        return !mortal || lifeCount > 0;
     }
 }
 

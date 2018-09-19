@@ -28,11 +28,13 @@ public interface LevelSettings {
     Optional<String> getGameMode();
     Optional<Integer> getInitialPlayerAmmoCount();
     Optional<Integer> getInitialAIAmmoCount();
-    Optional<Integer> getAmmoBonusCountOnMap();
+    Optional<Integer> getMinAmmoBonusOnMap();
+    Optional<Integer> getMaxAmmoBonusOnMap();
     Optional<Integer> getMaxAmmoBonusLifeCycle();
     Optional<Integer> getMinAmmoBonusLifeCycle();
     Optional<Integer> getAmmoBonusGenerationCycle();
     Optional<Integer> getAmmoQuantityInAmmoBonus();
+    Optional<Integer> getMinHedgeHogsOnMap();
     Optional<Integer> getMaxHedgeHogsOnMap();
     Optional<Integer> getTicksToUpdateHedgehogs();
     Optional<Integer> getMaxHedgehogLifetime();
@@ -47,4 +49,19 @@ public interface LevelSettings {
     Optional<Integer> getMaxMedKitBonusOnMap();
     Optional<Integer> getMinMedKitBonusLifeTime();
     Optional<Integer> getMaxMedKitBonusLifeTime();
+    Optional<Integer> getMinBogsOnMap();
+    Optional<Integer> getMaxBogsOnMap();
+    Optional<Integer> getMinBogLifetime();
+    Optional<Integer> getMaxBogLifetime();
+    Optional<Integer> getTicksToUpdateBogs();
+    Optional<Integer> getMinSandsOnMap();
+    Optional<Integer> getMaxSandsOnMap();
+    Optional<Integer> getMinSandLifetime();
+    Optional<Integer> getMaxSandLifetime();
+    Optional<Integer> getTicksToUpdateSands();
+    Optional<Integer> getMinMoatsOnMap();
+    Optional<Integer> getMaxMoatsOnMap();
+    Optional<Integer> getMinMoatLifetime();
+    Optional<Integer> getMaxMoatLifetime();
+    Optional<Integer> getTicksToUpdateMoats();
 }
