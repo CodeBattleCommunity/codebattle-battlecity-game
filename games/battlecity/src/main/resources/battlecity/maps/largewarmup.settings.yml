@@ -1,0 +1,43 @@
+gameMode: 'Classic'
+gameSpeed: 400
+initialPlayerAmmoCount: 20
+initialAIAmmoCount: 500
+
+minAmmoBonusOnMap: 2
+maxAmmoBonusOnMap: 5
+minAmmoBonusLifeCycle: 30
+maxAmmoBonusLifeCycle: 40
+ammoBonusGenerationCycle: 40
+ammoQuantityInAmmoBonus: 5
+
+minHedgeHogsOnMap: 0
+maxHedgeHogsOnMap: 0
+ticksToUpdateHedgehogs: 10
+maxHedgehogLifetime: 20
+minHedgehogLifetime: 10
+playerTicksPerBullet: 4
+aiTicksPerBullet: 1
+
+medKitBonusLifeCycle: 40
+minMedKitBonusOnMap: 3
+maxMedKitBonusOnMap: 5
+minMedKitBonusLifeTime: 30
+maxMedKitBonusLifeTime: 40
+
+minBogsOnMap: 0
+maxBogsOnMap: 0
+ticksToUpdateBogs: 10
+maxBogLifetime: 20
+minBogLifetime: 10
+
+minSandsOnMap: 0
+maxSandsOnMap: 0
+ticksToUpdateSands: 10
+maxSandLifetime: 20
+minSandLifetime: 10
+
+minMoatsOnMap: 0
+maxMoatsOnMap: 0
+ticksToUpdateMoats: 10
+maxMoatLifetime: 20
+minMoatLifetime: 10
