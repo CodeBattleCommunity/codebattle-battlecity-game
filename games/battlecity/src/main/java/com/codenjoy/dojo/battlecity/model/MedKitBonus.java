@@ -27,7 +27,7 @@ import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
 import com.codenjoy.dojo.services.Tickable;
 
-public class MedKitBonus extends PointImpl implements Tickable, State<Elements, Player> {
+public class MedKitBonus extends PointImpl implements Tickable, ManagedElement, State<Elements, Player> {
 
     private final static int BONUS_LIVES = 1;
 

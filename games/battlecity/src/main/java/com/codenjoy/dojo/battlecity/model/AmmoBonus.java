@@ -26,7 +26,7 @@ package com.codenjoy.dojo.battlecity.model;
 import com.codenjoy.dojo.services.*;
 
 
-public class AmmoBonus extends PointImpl implements Tickable, State<Elements, Player> {
+public class AmmoBonus extends PointImpl implements ManagedElement, State<Elements, Player> {
 
 
 
