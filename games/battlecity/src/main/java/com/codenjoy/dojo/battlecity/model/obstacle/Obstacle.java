@@ -23,12 +23,13 @@ package com.codenjoy.dojo.battlecity.model.obstacle;
  */
 
 import com.codenjoy.dojo.battlecity.model.Elements;
+import com.codenjoy.dojo.battlecity.model.ManagedElement;
 import com.codenjoy.dojo.battlecity.model.Player;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.PointImpl;
 import com.codenjoy.dojo.services.State;
 
-public abstract class Obstacle extends PointImpl implements State<Elements, Player> {
+public abstract class Obstacle extends PointImpl implements State<Elements, Player>, ManagedElement {
 
     public Obstacle(int x, int y) {
         super(x, y);
@@ -40,4 +41,14 @@ public abstract class Obstacle extends PointImpl implements State<Elements, Play
 
     public abstract int getDelay();
     public abstract ObstacleEffect getObstacleEffect();
+
+    @Override
+    public boolean isAlive() {
+        return true;
+    }
+
+    @Override
+    public void tick() {
+
+    }
 }

@@ -23,6 +23,8 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.controller.*;
+import com.codenjoy.dojo.battlecity.model.controller.elements.*;
 import com.codenjoy.dojo.battlecity.model.events.YouKilledTankEvent;
 import com.codenjoy.dojo.battlecity.model.events.YourTankWasKilledEvent;
 import com.codenjoy.dojo.battlecity.model.levels.Level;
@@ -32,10 +34,7 @@ import com.codenjoy.dojo.battlecity.model.levels.LevelSettings;
 import com.codenjoy.dojo.battlecity.model.levels.LevelSettingsApplier;
 import com.codenjoy.dojo.battlecity.model.modes.BattlecityGameMode;
 import com.codenjoy.dojo.battlecity.model.modes.GameModeRegistry;
-import com.codenjoy.dojo.battlecity.model.obstacle.Bog;
-import com.codenjoy.dojo.battlecity.model.obstacle.Moat;
-import com.codenjoy.dojo.battlecity.model.obstacle.Obstacle;
-import com.codenjoy.dojo.battlecity.model.obstacle.Sand;
+import com.codenjoy.dojo.battlecity.model.obstacle.*;
 import com.codenjoy.dojo.battlecity.services.Scores;
 import com.codenjoy.dojo.services.AdminControlService;
 import com.codenjoy.dojo.services.Dice;
@@ -46,9 +45,7 @@ import com.codenjoy.dojo.services.RandomDice;
 import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Battlecity implements Tickable, ITanks, Field {
@@ -75,9 +72,7 @@ public class Battlecity implements Tickable, ITanks, Field {
     private GameController gameController;
     private GameModeRegistry modeRegistry;
     private LevelRegistry levelRegistry;
-    private HedgeHogController hedgeHogController;
-    private AmmoBonusController ammoBonusController;
-    private MedKitBonusController medKitBonusController;
+    private List<ElementController> elementControllers;
 
     public Battlecity(TankFactory aiTankFactory,
                       GameSettings settings,
@@ -89,6 +84,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.settings = settings;
         this.adminControlService = adminControlService;
         this.gameController = new BattleCityGameController();
+        elementControllers = new ArrayList<>();
 
         setDice(new RandomDice()); // TODO вынести это чудо за пределы конструктора
     }
@@ -116,15 +112,18 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.borders = new LinkedList<>(level.getBorders());
         this.wormHoles = new LinkedList<>(level.getWormHoles());
         this.hedgeHogs = new LinkedList<>(level.getHedgeHogs());
-        hedgeHogController = new HedgeHogController(this, settings, hedgeHogs);
         this.bogs = new LinkedList<>(level.getBogs());
         this.sands = new LinkedList<>(level.getSands());
         this.moats = new LinkedList<>(level.getMoats());
         this.ammoBonuses = new LinkedList<>(level.getAmmoBonuses());
         this.medKitBonuses = new LinkedList<>(level.getMedKitBonuses());
 
-        ammoBonusController = new AmmoBonusController(this, settings, dice);
-        medKitBonusController = new MedKitBonusController(this, settings, dice);
+        elementControllers.add(new HedgeHogController(this, settings, hedgeHogs, dice));
+        elementControllers.add(new MedKitBonusController(this, settings, medKitBonuses, dice));
+        elementControllers.add(new BogController(this, settings, bogs, dice));
+        elementControllers.add(new SandController(this, settings, sands, dice));
+        elementControllers.add(new MoatController(this, settings, moats, dice));
+        elementControllers.add(new AmmoBonusController(this, settings, ammoBonuses, dice));
     }
 
     @Override
@@ -203,9 +202,7 @@ public class Battlecity implements Tickable, ITanks, Field {
             }
         }
 
-        ammoBonusController.tick();
-        medKitBonusController.tick();
-        hedgeHogController.tick();
+        elementControllers.forEach(ElementController::tick);
     }
 
     private void removeDeadTanks() {

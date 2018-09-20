@@ -45,7 +45,8 @@ public class LevelSettingsLoaderImplTest {
         assertThat(settings.getGameMode(), equalTo(Optional.of("gameMode")));
         assertThat(settings.getInitialPlayerAmmoCount(), equalTo(Optional.of(1)));
         assertThat(settings.getInitialAIAmmoCount(), equalTo(Optional.of(2)));
-        assertThat(settings.getAmmoBonusCountOnMap(), equalTo(Optional.of(3)));
+        assertThat(settings.getMinAmmoBonusOnMap(), equalTo(Optional.of(3)));
+        assertThat(settings.getMaxAmmoBonusOnMap(), equalTo(Optional.of(4)));
         assertThat(settings.getAmmoQuantityInAmmoBonus(), equalTo(Optional.of(5)));
         assertThat(settings.getMaxHedgeHogsOnMap(), equalTo(Optional.of(6)));
         assertThat(settings.getTicksToUpdateHedgehogs(), equalTo(Optional.of(7)));

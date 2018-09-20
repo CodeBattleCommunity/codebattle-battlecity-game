@@ -29,15 +29,25 @@ import com.codenjoy.dojo.services.Point;
 public class Moat extends Obstacle {
 
     private MoatType type;
+    private int lifeCount;
+    private boolean mortal = true;
     private static final int DELAY = 1;
 
     public Moat(int x, int y) {
         super(x, y);
+        this.mortal = false;
     }
 
     public Moat(Point point, MoatType type) {
         super(point);
         this.type = type;
+        this.mortal = false;
+    }
+
+    public Moat(Point point, int lifeCount) {
+        super(point);
+        this.type = MoatType.getRandomMoatType();
+        this.lifeCount = lifeCount;
     }
 
     @Override
@@ -57,6 +67,18 @@ public class Moat extends Obstacle {
             case VERTICAL: return Elements.MOAT_VERTICAL;
             default: throw new RuntimeException("Неправильное состояние рва!");
         }
+    }
+
+    @Override
+    public void tick() {
+        if(this.mortal) {
+            lifeCount--;
+        }
+    }
+
+    @Override
+    public boolean isAlive() {
+        return !mortal || lifeCount > 0;
     }
 
 }

@@ -15,11 +15,13 @@ RUN cd /tmp/codebattle-server/CodingDojo/ \
 RUN cd /tmp/codebattle-server/CodingDojo/builder \
  && if [ "x$GAMES" = "x" ] ; \
          then \
-             mvn clean install -DskipTests -Dcontext=${CONTEXT} -DallGames -Dspring.profiles.active=${SPRING_PROFILES} ; \
+             mvn clean install -DskipTests -Dcontext=${CONTEXT} -DallGames ; \
          else \
-             mvn clean install -DskipTests -Dcontext=${CONTEXT} -P${GAMES} -Dspring.profiles.active=${SPRING_PROFILES} ; \
+             mvn clean install -DskipTests -Dcontext=${CONTEXT} -P${GAMES} ; \
          fi \
  && cp /tmp/codebattle-server/CodingDojo/builder/target/${CONTEXT}.war /var/lib/jetty/webapps
 
 EXPOSE 8080
+
+USER jetty
 # -----------------------------------------------------------------------
