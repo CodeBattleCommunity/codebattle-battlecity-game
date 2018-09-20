@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.battlecity.model.obstacle;
+package com.codenjoy.dojo.battlecity.model;
 
 /*-
  * #%L
@@ -22,13 +22,9 @@ package com.codenjoy.dojo.battlecity.model.obstacle;
  * #L%
  */
 
-import java.util.Random;
 
-public enum MoatType {
-    HORIZONTAL, VERTICAL;
+import com.codenjoy.dojo.services.Tickable;
 
-    public static MoatType getRandomMoatType() {
-        Random random = new Random();
-        return values()[random.nextInt(values().length)];
-    }
+public interface ManagedElement extends Tickable {
+    boolean isAlive();
 }

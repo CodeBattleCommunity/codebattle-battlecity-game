@@ -28,14 +28,23 @@ import com.codenjoy.dojo.services.Point;
 
 public class Sand extends Obstacle {
 
+    private int lifeCount;
+    private boolean mortal = true;
     private static final int DELAY = 1;
 
     public Sand(int x, int y) {
         super(x, y);
+        this.mortal = false;
     }
 
     public Sand(Point point) {
         super(point);
+        this.mortal = false;
+    }
+
+    public Sand(Point point, int lifeCount) {
+        super(point);
+        this.lifeCount = lifeCount;
     }
 
     @Override
@@ -51,6 +60,18 @@ public class Sand extends Obstacle {
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         return Elements.SAND;
+    }
+
+    @Override
+    public void tick() {
+        if(this.mortal) {
+            lifeCount--;
+        }
+    }
+
+    @Override
+    public boolean isAlive() {
+        return !mortal || lifeCount > 0;
     }
 
 }

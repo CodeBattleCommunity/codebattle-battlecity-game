@@ -28,14 +28,23 @@ import com.codenjoy.dojo.services.Point;
 
 public class Bog extends Obstacle {
 
+    private int lifeCount;
+    private boolean mortal = true;
     private static final int DELAY = -1;
 
     public Bog(int x, int y) {
         super(x, y);
+        this.mortal = false;
     }
 
     public Bog(Point point) {
         super(point);
+        this.mortal = false;
+    }
+
+    public Bog(Point point, int lifeCount) {
+        super(point);
+        this.lifeCount = lifeCount;
     }
 
     @Override
@@ -44,13 +53,27 @@ public class Bog extends Obstacle {
     }
 
     @Override
-    public ObstacleEffect getObstacleEffect(){
-        return new InfinityObstacleEffect();
+    public ObstacleEffect getObstacleEffect() {
+        if (this.mortal) {
+            return new FiniteObstacleEffect(lifeCount);
+        } else return new InfinityObstacleEffect();
     }
 
     @Override
     public Elements state(Player player, Object... alsoAtPoint) {
         return Elements.BOG;
+    }
+
+    @Override
+    public void tick() {
+        if(this.mortal) {
+            lifeCount--;
+        }
+    }
+
+    @Override
+    public boolean isAlive() {
+        return !mortal || lifeCount > 0;
     }
 }
 
