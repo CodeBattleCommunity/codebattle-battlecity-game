@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.services;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -24,57 +24,75 @@ package com.codenjoy.dojo.battlecity.services;
 
 
 import com.codenjoy.dojo.services.PlayerScores;
-import com.codenjoy.dojo.services.settings.Parameter;
+import com.codenjoy.dojo.services.ScoreData;
 import com.codenjoy.dojo.services.settings.Settings;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Scores implements PlayerScores {
 
-    private final Parameter<Integer> killYourTankPenalty;
-    private final Parameter<Integer> killOtherTankScore;
-    private final Parameter<Integer> killAliasTankScore;
+    private AtomicInteger killsCount;
+    private AtomicInteger deathsCount;
+    private AtomicReference<BigDecimal> efficiency;
 
-    private AtomicInteger score;
+    public Scores(ScoreData initScore, Settings settings) {
+        killsCount = new AtomicInteger(initScore.getKills());
+        deathsCount = new AtomicInteger(initScore.getDeaths());
+        efficiency = new AtomicReference<>(calculateEfficiency(killsCount.get(), deathsCount.get()));
+    }
 
-    public Scores(int startScore, Settings settings) {
-        this.score = new AtomicInteger(startScore);
-
-        killYourTankPenalty = settings.addEditBox("Kill your tank penalty").type(Integer.class).def(50);
-        killOtherTankScore = settings.addEditBox("Kill other tank score").type(Integer.class).def(100);
-        killAliasTankScore = settings.addEditBox("Kill alias tank score").type(Integer.class).def(60);
+    private BigDecimal calculateEfficiency(int killsCount, int deathsCount) {
+        return new BigDecimal(killsCount / (deathsCount + 1.0));
     }
 
     @Override
     public int clear() {
-        score.set(0);
-        return score.get();
+        killsCount.set(0);
+        deathsCount.set(0);
+
+        return (int)getScore();
     }
 
     @Override
-    public Integer getScore() {
-        return score.get();
+    public Object getScore() {
+        return efficiency.get()
+                .setScale(1, RoundingMode.HALF_UP).intValue();
     }
 
-    public void incrementScore(int addScore) {
-        score.addAndGet(addScore);
+    public int addKills(int kills) {
+        int newKills = killsCount.addAndGet(kills);
+        updateEfficiency();
+
+        return newKills;
     }
 
-    public void decrementScore(int subtractScore) {
-        if (score.addAndGet(-subtractScore) < 0) {
-            score.set(0);
-        }
+    public int addDeath() {
+        int newDeaths = deathsCount.incrementAndGet();
+        updateEfficiency();
+
+        return newDeaths;
     }
 
-    public int getKillYourTankPenalty() {
-        return killYourTankPenalty.getValue();
+    private void updateEfficiency() {
+        BigDecimal efficiency = calculateEfficiency(killsCount.get(), deathsCount.get());
+        this.efficiency.set(efficiency);
     }
 
-    public int getKillOtherTankScore() {
-        return killOtherTankScore.getValue();
+    @Override
+    public int getDeaths() {
+        return deathsCount.get();
     }
 
-    public int getKillAliasTankScore() {
-        return killAliasTankScore.getValue();
+    @Override
+    public int getKills() {
+        return killsCount.get();
+    }
+
+    @Override
+    public BigDecimal getEfficiency() {
+        return efficiency.get();
     }
 }
