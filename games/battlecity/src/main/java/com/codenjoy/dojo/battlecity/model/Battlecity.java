@@ -118,12 +118,12 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.ammoBonuses = new LinkedList<>(level.getAmmoBonuses());
         this.medKitBonuses = new LinkedList<>(level.getMedKitBonuses());
 
-        elementControllers.add(new HedgeHogController(this, settings, hedgeHogs, dice));
-        elementControllers.add(new MedKitBonusController(this, settings, medKitBonuses, dice));
-        elementControllers.add(new BogController(this, settings, bogs, dice));
-        elementControllers.add(new SandController(this, settings, sands, dice));
-        elementControllers.add(new MoatController(this, settings, moats, dice));
-        elementControllers.add(new AmmoBonusController(this, settings, ammoBonuses, dice));
+        elementControllers = Arrays.asList(new HedgeHogController(this, settings, hedgeHogs, dice),
+                new MedKitBonusController(this, settings, medKitBonuses, dice),
+                new BogController(this, settings, bogs, dice),
+                new SandController(this, settings, sands, dice),
+                new MoatController(this, settings, moats, dice),
+                new AmmoBonusController(this, settings, ammoBonuses, dice));
     }
 
     @Override
