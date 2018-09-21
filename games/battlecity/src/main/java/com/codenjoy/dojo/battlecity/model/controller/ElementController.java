@@ -34,7 +34,6 @@ import com.codenjoy.dojo.services.Tickable;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -94,23 +93,20 @@ public abstract class ElementController<T extends ManagedElement & Point> implem
         int maxIterations = getCoverage() / 2;
         int cycles = 0;
 
-        if (tick >= ticksToUpdate || startGame) {
+        if (tick >= ticksToUpdate - 1 || startGame) {
             while (elements.size() < numberOfElementsForCreation && cycles < maxIterations) {
-                int lifeCount = minElementLifetime + dice.next(maxElementLifetime);
+                int lifeCount = randomElementsCount(minElementLifetime, maxElementLifetime);
 
-                Optional<Point> placeForElement = creationStrategy.findPlaceForElement(xy, getCoverage());
+                Point point = creationStrategy.findPlaceForElement(xy, getCoverage());
 
-                if (placeForElement.isPresent()) {
-                    Point point = placeForElement.get();
-
-                    boolean fieldOccupied = fieldController.isFieldOccupied(point.getX(), point.getY());
-                    if (!fieldOccupied) {
-                        elements.add(createNewElement(point, lifeCount));
-                    }
+                boolean fieldOccupied = fieldController.isFieldOccupied(point.getX(), point.getY());
+                if (!fieldOccupied) {
+                    elements.add(createNewElement(point, lifeCount));
                 }
                 cycles++;
             }
             tick = 0;
+
             startGame = false;
         } else {
             tick++;
@@ -154,7 +150,7 @@ public abstract class ElementController<T extends ManagedElement & Point> implem
     private interface CreationStrategy {
         int howManyElementsToCreate(int minElementsOnMap, int maxElementsOnMap);
 
-        Optional<Point> findPlaceForElement(LengthToXY xy, int coverage);
+        Point findPlaceForElement(LengthToXY xy, int coverage);
     }
 
     private class AllFieldsCreationStrategy implements CreationStrategy {
@@ -164,30 +160,26 @@ public abstract class ElementController<T extends ManagedElement & Point> implem
         }
 
         @Override
-        public Optional<Point> findPlaceForElement(LengthToXY xy, int coverage) {
+        public Point findPlaceForElement(LengthToXY xy, int coverage) {
             int index = dice.next(coverage);
-            return Optional.of(xy.getXY(index));
+            return xy.getXY(index);
         }
     }
 
     private class FixedRespawnPlacesCreationStrategy implements CreationStrategy {
         @Override
         public int howManyElementsToCreate(int minElementsOnMap, int maxElementsOnMap) {
-            int random = randomElementsCount(minElementsOnMap, maxElementsOnMap) - elements.size();
-            int freeRespawnPlacesSize = getFreeRespawnPlaces().size();
-
-            return Math.min(freeRespawnPlacesSize, random);
+            return randomElementsCount(minElementsOnMap, maxElementsOnMap) - elements.size();
         }
 
         @Override
-        public Optional<Point> findPlaceForElement(LengthToXY xy, int coverage) {
+        public Point findPlaceForElement(LengthToXY xy, int coverage) {
             List<Point> freeRespawnPlaces = getFreeRespawnPlaces();
 
             if (!freeRespawnPlaces.isEmpty()) {
-                return Optional.of(
-                        freeRespawnPlaces.get(dice.next(freeRespawnPlaces.size())));
+                return freeRespawnPlaces.get(dice.next(freeRespawnPlaces.size()));
             } else {
-                return Optional.empty();
+                return xy.getXY(dice.next(coverage));
             }
         }
 
