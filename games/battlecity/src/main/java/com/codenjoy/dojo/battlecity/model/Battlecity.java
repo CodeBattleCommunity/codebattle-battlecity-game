@@ -451,7 +451,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         if (!players.contains(player)) {
             players.add(player);
             alivePlayers.add(player);
-            
+
             player.newHero(this);
         } else {
             gameMode.onPlayerIsDead(this, player);
@@ -466,11 +466,9 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public BoardReader reader() {
         return new BoardReader() {
-            private int size = Battlecity.this.size;
-
             @Override
             public int size() {
-                return size;
+                return Battlecity.this.size();
             }
 
             @Override
