@@ -568,11 +568,12 @@ public class Battlecity implements Tickable, ITanks, Field {
         @Override
         public void newAI() {
             for (int count = aiTanks.size(); count < aiCount; count++) {
-                int y = size - 2;
-                int x = 0;
+                int y;
+                int x;
                 int c = 0;
                 do {
                     x = dice.next(size);
+                    y = dice.next(size);
                     c++;
                 } while (isFieldOccupied(x, y) && c < size);
 
