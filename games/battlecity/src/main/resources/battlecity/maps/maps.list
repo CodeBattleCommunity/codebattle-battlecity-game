@@ -3,5 +3,6 @@ warmup
 deathmatch
 easy
 hard
-largewarmup
-largewarmupfirst
+secondwarmup
+firstwarmupfirstiter
+firstwarmupseconditer

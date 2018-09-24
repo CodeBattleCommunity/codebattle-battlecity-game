@@ -32,7 +32,6 @@ public class MedKitBonus extends PointImpl implements Tickable, ManagedElement, 
     private final static int BONUS_LIVES = 1;
 
     private int lifeCycle;
-
     public MedKitBonus(Point p, int lifeTime) {
         super(p);
 
