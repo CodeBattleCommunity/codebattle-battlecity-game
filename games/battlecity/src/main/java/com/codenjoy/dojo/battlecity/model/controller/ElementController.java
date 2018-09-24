@@ -125,15 +125,15 @@ public abstract class ElementController<T extends ManagedElement & Point> implem
         return maxElementLifetime > 0 && maxElementsOnMap > 0;
     }
 
-    private int randomElementsCount(int minElementsOnMap, int maxElementsOnMap) {
-        if (maxElementsOnMap <= 0) {
+    private int randomElementsCount(int minBoundary, int maxBoundary) {
+        if (maxBoundary <= 0) {
             return 0;
         }
 
-        if (minElementsOnMap == maxElementsOnMap) {
-            return minElementsOnMap;
-        } else return minElementsOnMap
-                + dice.next(maxElementsOnMap - minElementsOnMap);
+        if (minBoundary == maxBoundary) {
+            return minBoundary;
+        } else return minBoundary
+                + dice.next(maxBoundary - minBoundary);
     }
 
     private void removeDeadElements() {

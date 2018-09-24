@@ -3,26 +3,26 @@ gameSpeed: 400
 initialPlayerAmmoCount: 20
 initialAIAmmoCount: 500
 
-minAmmoBonusOnMap: 2
-maxAmmoBonusOnMap: 5
+minAmmoBonusOnMap: 25
+maxAmmoBonusOnMap: 30
 minAmmoBonusLifeCycle: 30
-maxAmmoBonusLifeCycle: 40
+maxAmmoBonusLifeCycle: 60
 ammoBonusGenerationCycle: 40
 ammoQuantityInAmmoBonus: 5
 
-minHedgeHogsOnMap: 0
-maxHedgeHogsOnMap: 0
+minHedgeHogsOnMap: 30
+maxHedgeHogsOnMap: 45
 ticksToUpdateHedgehogs: 10
-maxHedgehogLifetime: 20
-minHedgehogLifetime: 10
+maxHedgehogLifetime: 50
+minHedgehogLifetime: 30
 playerTicksPerBullet: 4
 aiTicksPerBullet: 1
 
-medKitBonusLifeCycle: 40
-minMedKitBonusOnMap: 3
-maxMedKitBonusOnMap: 5
-minMedKitBonusLifeTime: 30
-maxMedKitBonusLifeTime: 40
+medKitBonusLifeCycle: 70
+minMedKitBonusOnMap: 10
+maxMedKitBonusOnMap: 10
+minMedKitBonusLifeTime: 70
+maxMedKitBonusLifeTime: 70
 
 minBogsOnMap: 0
 maxBogsOnMap: 0

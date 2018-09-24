@@ -4,7 +4,8 @@ deathmatch
 easy
 hard
 semifinal
-largewarmup
-largewarmupfirst
 final
 quarterfinal
+secondwarmup
+firstwarmupfirstiter
+firstwarmupseconditer
