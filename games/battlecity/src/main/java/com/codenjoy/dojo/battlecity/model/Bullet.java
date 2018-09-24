@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -27,11 +27,21 @@ import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.Point;
 import com.codenjoy.dojo.services.State;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Bullet extends MovingObject implements State<Elements, Player> {
 
     private Field field;
     private Tank owner;
     private OnDestroy onDestroy;
+
+    private static Map<Direction, Elements> DIRECTION_STATES = new HashMap<Direction, Elements>() {{
+        put(Direction.LEFT, Elements.BULLET_LEFT);
+        put(Direction.UP, Elements.BULLET_UP);
+        put(Direction.RIGHT, Elements.BULLET_RIGHT);
+        put(Direction.DOWN, Elements.BULLET_DOWN);
+    }};
 
     public Bullet(Field field, Direction tankDirection, Point from, Tank owner, OnDestroy onDestroy) {
         super(from.getX(), from.getY(), tankDirection);
@@ -78,7 +88,7 @@ public class Bullet extends MovingObject implements State<Elements, Player> {
         if (destroyed()) {
             return Elements.BANG;
         } else {
-            return Elements.BULLET;
+            return DIRECTION_STATES.get(direction);
         }
     }
 }

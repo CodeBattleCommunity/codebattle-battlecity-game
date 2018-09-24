@@ -118,12 +118,12 @@ public class Battlecity implements Tickable, ITanks, Field {
         this.ammoBonuses = new LinkedList<>(level.getAmmoBonuses());
         this.medKitBonuses = new LinkedList<>(level.getMedKitBonuses());
 
-        elementControllers.add(new HedgeHogController(this, settings, hedgeHogs, dice));
-        elementControllers.add(new MedKitBonusController(this, settings, medKitBonuses, dice));
-        elementControllers.add(new BogController(this, settings, bogs, dice));
-        elementControllers.add(new SandController(this, settings, sands, dice));
-        elementControllers.add(new MoatController(this, settings, moats, dice));
-        elementControllers.add(new AmmoBonusController(this, settings, ammoBonuses, dice));
+        elementControllers = Arrays.asList(new HedgeHogController(this, settings, hedgeHogs, dice),
+                new MedKitBonusController(this, settings, medKitBonuses, dice),
+                new BogController(this, settings, bogs, dice),
+                new SandController(this, settings, sands, dice),
+                new MoatController(this, settings, moats, dice),
+                new AmmoBonusController(this, settings, ammoBonuses, dice));
     }
 
     @Override
@@ -451,7 +451,7 @@ public class Battlecity implements Tickable, ITanks, Field {
         if (!players.contains(player)) {
             players.add(player);
             alivePlayers.add(player);
-            
+
             player.newHero(this);
         } else {
             gameMode.onPlayerIsDead(this, player);
@@ -466,11 +466,9 @@ public class Battlecity implements Tickable, ITanks, Field {
     @Override
     public BoardReader reader() {
         return new BoardReader() {
-            private int size = Battlecity.this.size;
-
             @Override
             public int size() {
-                return size;
+                return Battlecity.this.size();
             }
 
             @Override
@@ -570,11 +568,12 @@ public class Battlecity implements Tickable, ITanks, Field {
         @Override
         public void newAI() {
             for (int count = aiTanks.size(); count < aiCount; count++) {
-                int y = size - 2;
-                int x = 0;
+                int y;
+                int x;
                 int c = 0;
                 do {
                     x = dice.next(size);
+                    y = dice.next(size);
                     c++;
                 } while (isFieldOccupied(x, y) && c < size);
 
