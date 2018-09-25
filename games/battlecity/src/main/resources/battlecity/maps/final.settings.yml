@@ -1,6 +1,6 @@
 gameMode: 'Classic'
 gameSpeed: 400
-initialPlayerAmmoCount: 20
+initialPlayerAmmoCount: 10
 initialAIAmmoCount: 500
 
 minAmmoBonusOnMap: 2
@@ -18,11 +18,11 @@ minHedgehogLifetime: 10
 playerTicksPerBullet: 4
 aiTicksPerBullet: 1
 
-medKitBonusLifeCycle: 40
-minMedKitBonusOnMap: 3
-maxMedKitBonusOnMap: 5
-minMedKitBonusLifeTime: 30
-maxMedKitBonusLifeTime: 40
+medKitBonusLifeCycle: 100
+minMedKitBonusOnMap: 1
+maxMedKitBonusOnMap: 1
+minMedKitBonusLifeTime: 100
+maxMedKitBonusLifeTime: 100
 
 minBogsOnMap: 0
 maxBogsOnMap: 0
