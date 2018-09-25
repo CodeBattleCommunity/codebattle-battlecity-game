@@ -231,7 +231,7 @@ public class GameSettingsImpl implements GameSettings {
     }
 
     @Override
-    public Parameter<Integer> getMedKitBonusGenerationCycle() {
+    public Parameter<Integer> getMedKitBonusLifeCycle() {
         return medKitBonusLifeCycle;
     }
 

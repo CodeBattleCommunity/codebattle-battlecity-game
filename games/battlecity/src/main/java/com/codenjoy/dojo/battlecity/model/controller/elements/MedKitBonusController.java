@@ -50,7 +50,7 @@ public class MedKitBonusController extends ElementController<MedKitBonus> {
         settings.setMaxElementLifetime(gameSettings.getMaxMedKitBonusLifeTime());
         settings.setMinElementsOnMap(gameSettings.getMinMedKitBonusOnMap());
         settings.setMaxElementsOnMap(gameSettings.getMaxMedKitBonusOnMap());
-        settings.setTicksToUpdate(gameSettings.getMedKitBonusGenerationCycle());
+        settings.setTicksToUpdate(gameSettings.getMedKitBonusLifeCycle());
 
         return settings;
     }

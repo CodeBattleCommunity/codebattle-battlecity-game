@@ -67,13 +67,17 @@ public class LevelSettingsApplier {
                     Method readMethod = propertyDescriptor.getReadMethod();
                     Optional<?> levelPropertyValue = (Optional<?>) readMethod.invoke(levelSettings);
 
-                    if (levelPropertyValue.isPresent() && descriptorMap.containsKey(readMethod.getName())) {
-                        logger.info("Override setting by level parameter {} = {}",
-                                propertyDescriptor.getName(), levelPropertyValue.get());
+                    if (descriptorMap.containsKey(readMethod.getName())) {
+                        if (levelPropertyValue.isPresent()) {
+                            logger.info("Override setting by level parameter {} = {}",
+                                    propertyDescriptor.getName(), levelPropertyValue.get());
 
-                        PropertyDescriptor gameSettingsProperty = descriptorMap.get(readMethod.getName());
-                        Parameter parameter = (Parameter<?>) gameSettingsProperty.getReadMethod().invoke(settings);
-                        parameter.update(levelPropertyValue.get());
+                            PropertyDescriptor gameSettingsProperty = descriptorMap.get(readMethod.getName());
+                            Parameter parameter = (Parameter<?>) gameSettingsProperty.getReadMethod().invoke(settings);
+                            parameter.update(levelPropertyValue.get());
+                        }
+                    } else {
+                        logger.warn("Not found level setting {} in game settings", readMethod.getName());
                     }
                 }
 
