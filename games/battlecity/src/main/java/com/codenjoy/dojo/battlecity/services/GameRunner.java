@@ -98,7 +98,7 @@ public class GameRunner extends AbstractGameType implements GameType {
 
     @Override
     public PlayerScores getPlayerScores(ScoreData score) {
-        return new Scores(score, settings) {
+        return new Scores(score, gameSettings) {
             @Override
             public void event(Object event) {
                 battleCityGame.onScoresEvent(event, this);
