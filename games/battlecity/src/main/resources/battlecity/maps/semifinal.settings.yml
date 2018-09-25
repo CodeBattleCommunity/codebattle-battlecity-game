@@ -1,6 +1,6 @@
 gameMode: 'Classic'
 gameSpeed: 300
-initialPlayerAmmoCount: 100
+initialPlayerAmmoCount: 20
 initialAIAmmoCount: 200
 
 minAmmoBonusOnMap: 0
@@ -8,7 +8,7 @@ maxAmmoBonusOnMap: 8
 minAmmoBonusLifeCycle: 30
 maxAmmoBonusLifeCycle: 40
 ammoBonusGenerationCycle: 40
-ammoQuantityInAmmoBonus: 5
+ammoQuantityInAmmoBonus: 10
 
 minHedgeHogsOnMap: 20
 maxHedgeHogsOnMap: 30

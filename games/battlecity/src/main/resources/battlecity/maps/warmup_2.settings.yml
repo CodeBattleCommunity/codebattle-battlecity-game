@@ -8,7 +8,7 @@ maxAmmoBonusOnMap: 40
 minAmmoBonusLifeCycle: 30
 maxAmmoBonusLifeCycle: 40
 ammoBonusGenerationCycle: 40
-ammoQuantityInAmmoBonus: 5
+ammoQuantityInAmmoBonus: 10
 
 minHedgeHogsOnMap: 30
 maxHedgeHogsOnMap: 45
