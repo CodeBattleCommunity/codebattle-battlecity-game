@@ -1,11 +1,6 @@
-default
-warmup
-deathmatch
-easy
-hard
+warmup_1
+warmup_2
+warmup_3
+quarterfinal
 semifinal
 final
-quarterfinal
-secondwarmup
-firstwarmupfirstiter
-firstwarmupseconditer
