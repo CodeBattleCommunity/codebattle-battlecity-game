@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -47,6 +47,8 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     private ObstacleEffect obstacleEffect;
     private final Health health;
 
+    private static final int TANK_MAX_LIVES = 3;
+
     public Tank(int x, int y, Direction direction, Dice dice, int ticksPerBullets, Parameter<Integer> initialAmmo, int startLives) {
         super(x, y, direction);
         gun = new Gun(ticksPerBullets);
@@ -56,7 +58,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         alive = true;
         this.dice = dice;
         this.ammunition = new Ammunition(initialAmmo);
-        this.health = new SimpleHealth(startLives);
+        this.health = new SimpleHealth(startLives, TANK_MAX_LIVES);
     }
 
     void turn(Direction direction) {
@@ -201,7 +203,7 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
     @Override
     public void tick() {
         gun.tick();
-        
+
         if (tankHasObstacleEffect()) {
             obstacleEffect.tick();
         }
