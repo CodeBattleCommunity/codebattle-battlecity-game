@@ -66,5 +66,5 @@ public interface GameSettings {
     Parameter<Integer> getMaxMoatLifetime();
     Parameter<Integer> getMinMoatLifetime();
 
-
+    Parameter<Boolean> isScoreRecordingEnabled();
 }

@@ -23,9 +23,9 @@ package com.codenjoy.dojo.battlecity.services;
  */
 
 
+import com.codenjoy.dojo.battlecity.model.GameSettings;
 import com.codenjoy.dojo.services.PlayerScores;
 import com.codenjoy.dojo.services.ScoreData;
-import com.codenjoy.dojo.services.settings.Settings;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -36,11 +36,13 @@ public abstract class Scores implements PlayerScores {
 
     private AtomicInteger killsCount;
     private AtomicInteger deathsCount;
+    private GameSettings gameSettings;
     private AtomicReference<BigDecimal> efficiency;
 
-    public Scores(ScoreData initScore, Settings settings) {
+    public Scores(ScoreData initScore, GameSettings gameSettings) {
         killsCount = new AtomicInteger(initScore.getKills());
         deathsCount = new AtomicInteger(initScore.getDeaths());
+        this.gameSettings = gameSettings;
         efficiency = new AtomicReference<>(calculateEfficiency(killsCount.get(), deathsCount.get()));
     }
 
@@ -63,17 +65,29 @@ public abstract class Scores implements PlayerScores {
     }
 
     public int addKills(int kills) {
-        int newKills = killsCount.addAndGet(kills);
-        updateEfficiency();
+        if (isScoresRecordingEnabled()) {
+            int newKills = killsCount.addAndGet(kills);
+            updateEfficiency();
 
-        return newKills;
+            return newKills;
+        } else {
+            return killsCount.get();
+        }
     }
 
     public int addDeath() {
-        int newDeaths = deathsCount.incrementAndGet();
-        updateEfficiency();
+        if (isScoresRecordingEnabled()) {
+            int newDeaths = deathsCount.incrementAndGet();
+            updateEfficiency();
 
-        return newDeaths;
+            return newDeaths;
+        } else {
+            return deathsCount.get();
+        }
+    }
+
+    private Boolean isScoresRecordingEnabled() {
+        return gameSettings.isScoreRecordingEnabled().getValue();
     }
 
     private void updateEfficiency() {

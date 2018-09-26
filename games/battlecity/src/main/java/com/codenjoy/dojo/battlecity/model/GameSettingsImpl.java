@@ -73,6 +73,7 @@ public class GameSettingsImpl implements GameSettings {
     private Parameter<Integer> ticksToUpdateMoats;
     private Parameter<Integer> maxMoatLifetime;
     private Parameter<Integer> minMoatLifetime;
+    private Parameter<Boolean> scoreRecordingEnabled;
 
     public GameSettingsImpl(Settings settings, LevelRegistry levelRegistry) {
         initialPlayerAmmoCount = settings.addEditBox("Initial Player Ammo Count").type(Integer.class).def(10);
@@ -128,6 +129,7 @@ public class GameSettingsImpl implements GameSettings {
         minMoatLifetime = settings.addEditBox("Minimum Moats lifetime").type(Integer.class).def(20);
         maxMoatLifetime = settings.addEditBox("Maximum Moats lifetime").type(Integer.class).def(30);
 
+        scoreRecordingEnabled = settings.addCheckBox("Scores Recording").type(Boolean.class).def(true);
     }
 
     private List<Object> getGameModes() {
@@ -328,5 +330,10 @@ public class GameSettingsImpl implements GameSettings {
     @Override
     public Parameter<Integer> getMinMoatLifetime() {
         return minMoatLifetime;
+    }
+
+    @Override
+    public Parameter<Boolean> isScoreRecordingEnabled() {
+        return scoreRecordingEnabled;
     }
 }
