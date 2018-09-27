@@ -18,11 +18,11 @@ minHedgehogLifetime: 15
 playerTicksPerBullet: 4
 aiTicksPerBullet: 1
 
-medKitBonusLifeCycle: 40
-minMedKitBonusOnMap: 0
+medKitBonusLifeCycle: 50
+minMedKitBonusOnMap: 1
 maxMedKitBonusOnMap: 1
-minMedKitBonusLifeTime: 30
-maxMedKitBonusLifeTime: 40
+minMedKitBonusLifeTime: 50
+maxMedKitBonusLifeTime: 50
 
 minBogsOnMap: 5
 maxBogsOnMap: 10
