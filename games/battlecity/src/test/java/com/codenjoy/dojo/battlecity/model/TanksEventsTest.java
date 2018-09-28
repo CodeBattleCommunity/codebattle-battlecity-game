@@ -23,6 +23,7 @@ package com.codenjoy.dojo.battlecity.model;
  */
 
 
+import com.codenjoy.dojo.battlecity.matchers.EqualFields;
 import com.codenjoy.dojo.battlecity.model.events.Event;
 import com.codenjoy.dojo.battlecity.model.events.YouKilledTankEvent;
 import com.codenjoy.dojo.battlecity.model.events.YourTankWasKilledEvent;
@@ -47,6 +48,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertFalse;
@@ -54,6 +60,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TanksEventsTest {
@@ -320,12 +327,20 @@ public class TanksEventsTest {
         noEvents(events2);
     }
 
-    private void onlyEvent(EventListener ev, Event event) {
+    private void onlyEvent(EventListener ev, Event event, Event... otherEvents) {
         ArgumentCaptor<Event> fooCaptor = ArgumentCaptor.forClass(Event.class);
 
-        Mockito.verify(ev).event(fooCaptor.capture());
+        Mockito.verify(ev, times(1 + otherEvents.length)).event(fooCaptor.capture());
 
-        assertThat(fooCaptor.getValue().getClass(), equalTo(event.getClass()));
+        List<Event> expectedEvents = new ArrayList<>();
+        expectedEvents.add(event);
+        expectedEvents.addAll(Arrays.stream(otherEvents).collect(Collectors.toList()));
+
+        List<Event> allValues = fooCaptor.getAllValues();
+
+        for (int i = 0; i < allValues.size(); i++) {
+            assertThat(allValues.get(i).getClass(), equalTo(expectedEvents.get(i).getClass()));
+        }
 
         noEvents(ev);
         reset(events);
@@ -595,6 +610,67 @@ public class TanksEventsTest {
                 "☼☼☼☼☼☼☼\n");
     }
 
+    @Test
+    public void tanksShouldBeKilledIfTheyAreAtAdjacentCellsAndFiring() {
+        EventListener events2 = mock(EventListener.class);
+        Player player2 = player(2, 1, Direction.LEFT, events2);
+
+        player.getTank().direction = Direction.RIGHT;
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼►˂   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+
+        player2.getTank().act();
+        player.getTank().act();
+
+        game.tick();
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼ѠѠ   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+
+        onlyEvent(events, new YourTankWasKilledEvent(), new YouKilledTankEvent(Tank.Type.Player));
+    }
+
+    @Test
+    public void tankShouldSurviveIfIsEscapedFromCellUnderFire() {
+        EventListener events2 = mock(EventListener.class);
+        Player player2 = player(2, 1, Direction.LEFT, events2);
+
+        player.getTank().direction = Direction.RIGHT;
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼►˂   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+
+        player2.getTank().act();
+        player.getTank().act();
+        player.getTank().up();
+
+        game.tick();
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼▲    ☼\n" +
+                "☼ Ѡ   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+    }
+
     private Player player(int x, int y, Direction direction, EventListener listener) {
         Player player = utils.player(x, y, direction, listener, playerTankFactory);
         game.newGame(player);
@@ -604,24 +680,4 @@ public class TanksEventsTest {
     private Player player(int x, int y, Direction direction) {
         return player(x, y, direction, mock(EventListener.class));
     }
-
-    public static class EqualFields<T> extends IsEqual<T> {
-        private T expectedValue;
-
-        public EqualFields(T gotValue) {
-            super(gotValue);
-            this.expectedValue = gotValue;
-        }
-
-        @Override
-        public void describeTo(Description description) {
-            description.appendText("\n" + expectedValue.toString());
-        }
-
-        @Override
-        public void describeMismatch(Object item, Description description) {
-            description.appendText("was \n").appendText(item.toString());
-        }
-    }
-
 }

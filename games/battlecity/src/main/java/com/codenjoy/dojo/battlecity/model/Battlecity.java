@@ -558,6 +558,12 @@ public class Battlecity implements Tickable, ITanks, Field {
         }
     }
 
+    @Override
+    public boolean isFieldOccupiedByTank(int x, int y) {
+        return getTanks().stream()
+                .anyMatch(p -> p.itsMe(x, y));
+    }
+
     class BattleCityGameController implements GameController {
         @Override
         public void createAITanks() {

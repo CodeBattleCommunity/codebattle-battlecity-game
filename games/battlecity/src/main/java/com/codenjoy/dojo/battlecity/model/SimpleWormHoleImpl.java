@@ -10,12 +10,12 @@ package com.codenjoy.dojo.battlecity.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -49,18 +49,20 @@ public class SimpleWormHoleImpl extends PointImpl implements WormHole {
     }
 
     @Override
-    public Optional<Point> getExit(Direction direction) {
+    public Optional<Point> getExit(Direction direction, Field field) {
         if (Direction.DOWN.equals(direction) ||
                 Direction.UP.equals(direction)) {
 
             return allWormHoles.stream()
                     .filter(hole -> x == hole.getX() && y != hole.getY())
+                    .filter(h -> !field.isBarrier(h.getX(), h.getY()))
                     .findAny()
                     .map(exitHole -> calculateTankExit(exitHole.getX(), exitHole.getY(), direction));
 
         } else {
             return allWormHoles.stream()
                     .filter(hole -> y == hole.getY() && x != hole.getX())
+                    .filter(h -> !field.isBarrier(h.getX(), h.getY()))
                     .findAny()
                     .map(exitHole -> calculateTankExit(exitHole.getX(), exitHole.getY(), direction));
         }

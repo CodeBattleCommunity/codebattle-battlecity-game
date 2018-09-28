@@ -99,10 +99,14 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             // do nothing
         } else if (field.isWormHole(newX, newY)) {
             WormHole wormHole = field.getWormHole(newX, newY);
-            Optional<Point> wormHoleExit = wormHole.getExit(getMovingDirection(x, y, newX, newY));
+            Optional<Point> wormHoleExit = wormHole.getExit(getMovingDirection(x, y, newX, newY), field);
+
+            if (!wormHoleExit.isPresent()) {
+                setTankPosition(wormHole.getX(), wormHole.getY());
+            }
 
             wormHoleExit.ifPresent(p -> {
-                if (!field.outOfField(p.getX(), p.getY()) && !field.isBarrier(p.getX(), p.getY())) {
+                if (!field.outOfField(p.getX(), p.getY())) {
                     setTankPosition(p.getX(), p.getY());
                 }
             });

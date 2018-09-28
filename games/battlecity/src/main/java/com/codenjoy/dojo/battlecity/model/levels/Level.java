@@ -282,6 +282,11 @@ public class Level implements Field {
     }
 
     @Override
+    public boolean isFieldOccupiedByTank(int x, int y) {
+        return false;
+    }
+
+    @Override
     public List<Bog> getBogs() {
         List<Bog> result = new LinkedList<>();
         for (int index = 0; index < map.length(); index++) {
