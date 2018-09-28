@@ -477,6 +477,7 @@ public class Battlecity implements Tickable, ITanks, Field {
                 result.addAll(Battlecity.this.getBorders());
                 result.addAll(Battlecity.this.getTanks());
                 result.addAll(Battlecity.this.getConstructions());
+                result.addAll(Battlecity.this.getBullets());
                 result.addAll(Battlecity.this.getWormHoles());
                 result.addAll(Battlecity.this.getHedgeHogs());
                 result.addAll(Battlecity.this.getBogs());
@@ -484,7 +485,6 @@ public class Battlecity implements Tickable, ITanks, Field {
                 result.addAll(Battlecity.this.getMoats());
                 result.addAll(Battlecity.this.getAmmoBonuses());
                 result.addAll(Battlecity.this.getMedKitBonuses());
-                result.addAll(Battlecity.this.getBullets());
                 return result;
             }
         };
