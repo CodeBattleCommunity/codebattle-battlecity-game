@@ -51,7 +51,7 @@ import java.util.stream.Stream;
 public class Battlecity implements Tickable, ITanks, Field {
 
     private Dice dice;
-    private LinkedList<Tank> aiTanks;
+    private LinkedList<Tank> aiTanks = new LinkedList<>();
     private int aiCount;
     private int size;
     private List<Construction> constructions;
@@ -225,7 +225,7 @@ public class Battlecity implements Tickable, ITanks, Field {
 
     void addAI(Tank tank) {
         if (tank != null) {
-            tank.locateTankOnRandomField(this);
+            tank.locateTankOnPositionOrRandonly(this);
             aiTanks.add(tank);
         }
     }

@@ -159,6 +159,14 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             Bullet bullet = new Bullet(field, direction, copy(), this,
                     bullet1 -> Tank.this.bullets.remove(bullet1));
 
+            /*
+              Place bullet one cell ahead of tank
+              to prevent issue when tank is not killed
+              by another pursuing tank if last tank has fired
+             */
+            Point nextPoint = bullet.direction.change(this);
+            bullet.move(nextPoint);
+
             ammunition.ammoAfterShotDecrement();
 
             if (!bullets.contains(bullet)) {
@@ -176,16 +184,24 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
         return new LinkedList<>(bullets);
     }
 
-    public void locateTankOnRandomField(Field field) {
+    public void locateTankOnPositionOrRandonly(Field field) {
         this.field = field;
-        int xx = x;
-        int yy = y;
-        while (field.isFieldOccupied(xx, yy)) {
-            xx = dice.next(field.size());
-            yy = dice.next(field.size());
+
+        if (isOnDefaultPosition()) {
+            int xx = x;
+            int yy = y;
+            while (field.isFieldOccupied(xx, yy)) {
+                xx = dice.next(field.size());
+                yy = dice.next(field.size());
+            }
+            setTankPosition(xx, yy);
         }
-        setTankPosition(xx, yy);
+
         alive = true;
+    }
+
+    private boolean isOnDefaultPosition() {
+        return x == 0 && y == 0;
     }
 
     public void kill(Bullet bullet) {
