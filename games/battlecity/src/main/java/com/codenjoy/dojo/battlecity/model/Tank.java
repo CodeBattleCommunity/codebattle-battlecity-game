@@ -163,14 +163,6 @@ public class Tank extends MovingObject implements Joystick, Tickable, State<Elem
             Bullet bullet = new Bullet(field, direction, copy(), this,
                     bullet1 -> Tank.this.bullets.remove(bullet1));
 
-            /*
-              Place bullet one cell ahead of tank
-              to prevent issue when tank is not killed
-              by another pursuing tank if last tank has fired
-             */
-            Point nextPoint = bullet.direction.change(this);
-            bullet.move(nextPoint);
-
             ammunition.ammoAfterShotDecrement();
 
             if (!bullets.contains(bullet)) {
