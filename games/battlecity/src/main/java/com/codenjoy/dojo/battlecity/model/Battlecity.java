@@ -531,6 +531,11 @@ public class Battlecity implements Tickable, ITanks, Field {
         return moats;
     }
 
+    @Override
+    public void addConstruction(Construction construction) {
+        constructions.add(construction);
+    }
+
     public void setDice(Dice dice) {
         this.dice = dice;
     }

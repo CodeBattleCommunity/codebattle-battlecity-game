@@ -84,5 +84,7 @@ public interface Field {
 
     MedKitBonus getMedKitBonus(int newX, int newY);
 
+    void addConstruction(Construction construction);
+
 
 }
