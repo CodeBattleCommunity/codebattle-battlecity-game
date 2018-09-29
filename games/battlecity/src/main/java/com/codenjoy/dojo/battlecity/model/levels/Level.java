@@ -331,4 +331,9 @@ public class Level implements Field {
     public MedKitBonus getMedKitBonus(int newX, int newY) {
         return null;
     }
+
+    @Override
+    public void addConstruction(Construction construction) {
+        // do nothing
+    }
 }

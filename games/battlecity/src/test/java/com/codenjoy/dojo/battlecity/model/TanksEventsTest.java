@@ -38,8 +38,6 @@ import com.codenjoy.dojo.services.RandomDice;
 import com.codenjoy.dojo.services.printer.PrinterFactory;
 import com.codenjoy.dojo.services.printer.PrinterFactoryImpl;
 
-import org.hamcrest.Description;
-import org.hamcrest.core.IsEqual;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -637,8 +635,6 @@ public class TanksEventsTest {
                 "☼     ☼\n" +
                 "☼ѠѠ   ☼\n" +
                 "☼☼☼☼☼☼☼\n");
-
-        onlyEvent(events, new YourTankWasKilledEvent(), new YouKilledTankEvent(Tank.Type.Player));
     }
 
     @Test
@@ -668,6 +664,68 @@ public class TanksEventsTest {
                 "☼     ☼\n" +
                 "☼▲    ☼\n" +
                 "☼ Ѡ   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+    }
+
+    @Test
+    public void tankShouldNotBeAbleToFireThroughConstruction() {
+        player.getTank().direction = Direction.RIGHT;
+
+        game.addConstruction(new Construction(2, 1));
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼►╬   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+
+        player.getTank().act();
+        game.tick();
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼►╠   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+    }
+
+    @Test
+    public void tankShouldNotBeAbleToFireThroughWall() {
+        player.getTank().direction = Direction.RIGHT;
+
+        game.getBorders().add(new Border(2, 1));
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼►☼   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+
+        player.getTank().act();
+        game.tick();
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼►☼   ☼\n" +
+                "☼☼☼☼☼☼☼\n");
+
+        game.tick();
+
+        assertD("☼☼☼☼☼☼☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼     ☼\n" +
+                "☼►☼   ☼\n" +
                 "☼☼☼☼☼☼☼\n");
     }
 

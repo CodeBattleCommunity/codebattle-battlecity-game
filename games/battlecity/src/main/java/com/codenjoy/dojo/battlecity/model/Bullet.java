@@ -35,6 +35,7 @@ public class Bullet extends MovingObject implements State<Elements, Player> {
     private Field field;
     private Tank owner;
     private OnDestroy onDestroy;
+    private boolean firstMove = true;
 
     private static Map<Direction, Elements> DIRECTION_STATES = new HashMap<Direction, Elements>() {{
         put(Direction.LEFT, Elements.BULLET_LEFT);
@@ -67,6 +68,25 @@ public class Bullet extends MovingObject implements State<Elements, Player> {
             x = newX;
             y = newY;
             field.affect(this);
+        }
+    }
+
+    @Override
+    public void move() {
+        /*
+          To handle case when the tank has just fired
+          and bullet will appear 1 square ahead of tank
+          first move will be done using (speed - 1)
+         */
+        if (firstMove) {
+            field.affect(this);
+
+            speed = speed - 1;
+            super.move();
+            speed = speed + 1;
+            firstMove = false;
+        } else {
+            super.move();
         }
     }
 
